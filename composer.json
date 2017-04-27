@@ -1,0 +1,31 @@
+{
+    "name": "wordplate/wordplate",
+    "description": "A modern WordPress stack. Don't repeat yourself.",
+    "keywords": ["wordplate", "wordpress", "boilerplate", "plate"],
+    "license": "MIT",
+    "require": {
+        "php": "^7.0"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://wpackagist.org"
+        }
+    ],
+    "scripts": {
+        "post-root-package-install": [
+            "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ]
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "extra": {
+        "installer-paths": {
+            "public/mu-plugins/{$name}": ["type:wordpress-muplugin"],
+            "public/plugins/{$name}": ["type:wordpress-plugin"],
+            "public/themes/{$name}": ["type:wordpress-theme"]
+        },
+        "wordpress-install-dir": "public/wordpress"
+    }
+}

@@ -1,0 +1,56 @@
+@mixin media-sm {
+	@media (min-width : 540px) {
+		@content;
+	}
+}
+
+@mixin media-md {
+	@media (min-width : 768px) {
+		@content;
+	}
+}
+
+@mixin media-lg {
+	@media (min-width : 960px) {
+		@content;
+	}
+}
+
+@mixin media-xl {
+	@media (min-width :1140px) {
+		@content;
+	}
+}
+
+@mixin clearfix() {
+  &::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
+@mixin vertical-align {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+  > .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}

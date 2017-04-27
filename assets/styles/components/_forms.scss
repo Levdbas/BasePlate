@@ -1,0 +1,38 @@
+// Search form
+.search-form {
+  @extend .form-inline;
+}
+.search-form label {
+  font-weight: normal;
+  @extend .form-group;
+}
+.search-form .search-field {
+  @extend .form-control;
+}
+.search-form .search-submit {
+  @extend .btn;
+  @extend .btn-secondary;
+}
+.wpcf7-form {
+    input, textarea {
+        width: 100%;
+        background: transparant;
+        border: 1px solid $nnz;
+        padding: 5px;
+        &:focus{
+          border:1px solid $green;
+        }
+    }
+    .wpcf7-submit {
+        border: 0px none;
+        display: inline;
+        color: $nnz;
+        font-weight: bold;
+        width: auto;
+        background: transparent;
+        padding: 0;
+        &:hover{
+            color: $green;
+        }
+    }
+}
