@@ -84,28 +84,46 @@ add_filter( 'body_class', 'add_featured_image_body_class' );
 /**
  * Theme assets
  */
+
+ function assetBase($type = null) {
+   if (!isset($type)){
+     return get_template_directory_uri(). '/dist';
+   } else{
+     return get_template_directory_uri(). '/dist/' . $type;
+   }
+ }
+ add_filter('assetBase','assetBase');
+
+
 function assets() {
+
   // vraag de mix-manifest file op
   $manifest = (__DIR__ . '/../dist/mix-manifest.json');
+
   //echo $manifest;
   if (file_exists($manifest)){
     $manifest = file_get_contents($manifest);
     $json = json_decode($manifest, true);
+
     // lees waarde uit json files
-    $jsFile = $json['/scripts/app.js'];
     $cssFile = $json['/styles/app.css'];
+    $jsFile = $json['/scripts/app.js'];
+
     // enque de twee files uit de manist file
-    wp_enqueue_style('sage/css', Assets\asset_path($cssFile), false, null);
-    wp_enqueue_script('sage/js', Assets\asset_path($jsFile), ['jquery'], null, true);
+    wp_enqueue_style( 'baseplate/css', assetBase() . $cssFile);
+    wp_enqueue_script('baseplate/js', assetBase()  . $jsFile);
   }
+
   else{
     wp_die(__('Draai webpack voor de eerste keer om de manifest file te genereren', 'sage'));
   }
+
   // leest de comment reply alleen in op het moment dat deze nodig is
   if (is_single() && comments_open() && get_option('thread_comments')) {
     wp_enqueue_script('comment-reply');
   }
 }
+
 add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\assets', 100);
 
 function remove_thumbnail_dimensions( $html, $post_id, $post_image_id ) {

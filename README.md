@@ -25,20 +25,20 @@ BasePlate has integrated [Laravel Mix](https://laravel.com/docs/5.4/mix) out of 
 
 #### How do I use it?
 
-```bash
-npm run development
-```
-for development Building
-
-```bash
-npm run production
-```
-to enable cache busting and minifying
-
+Run BrowserSync and check for changes and auto-compile on the go:
 ```bash
 npm run watch
 ```
-to run BrowserSync and check for changes and auto compile on the go.
+During development:
+```bash
+npm run development
+```
+
+Enable cache busting and minifying for production use:
+```bash
+npm run production
+```
+
 ## Plugins
 
 [WordPress Packagist](https://wpackagist.org) comes straight out of the box with WordPlate. It mirrors the WordPress [plugin](https://plugins.svn.wordpress.org) and [theme](https://themes.svn.wordpress.org) directories as a Composer repository.
@@ -65,6 +65,17 @@ This is an example of how your `composer.json` file might look like.
 ```
 
 Please visit [WordPress Packagist](https://wpackagist.org) website for more information and examples.
+
+## Helpers
+
+Asset helper:
+```php
+echo assetBase('images') // for images folder
+echo assetBase('styles') // for style folder
+echo assetBase('scripts') // for scripts folder
+echo assetBase('fonts') // for fonts folder
+```
+
 
 ## Post Types
 
