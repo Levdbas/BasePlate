@@ -52,7 +52,7 @@ function my_admin_menu() {
      //remove_menu_page( 'tools.php' );
 }
 add_action('load-press-this.php', function() {
-  wp_die('"Press This" functionality has been disabled.');
+  wp_die(__('Press-this is uitgeschakeld', 'sage'));
 });
 function disable_feed() {
     die();
@@ -86,15 +86,21 @@ add_filter( 'body_class', 'add_featured_image_body_class' );
  */
 function assets() {
   // vraag de mix-manifest file op
-  $str = file_get_contents(__DIR__ . '/../dist/mix-manifest.json');
-  // decode json
-  $json = json_decode($str, true);
-  // lees waarde uit json files
-  $jsFile = $json['/scripts/app.js'];
-  $cssFile = $json['/styles/app.css'];
-  // enque de twee files uit de manist file
-  wp_enqueue_style('sage/css', Assets\asset_path($cssFile), false, null);
-  wp_enqueue_script('sage/js', Assets\asset_path($jsFile), ['jquery'], null, true);
+  $manifest = (__DIR__ . '/../dist/mix-manifest.json');
+  //echo $manifest;
+  if (file_exists($manifest)){
+    $manifest = file_get_contents($manifest);
+    $json = json_decode($manifest, true);
+    // lees waarde uit json files
+    $jsFile = $json['/scripts/app.js'];
+    $cssFile = $json['/styles/app.css'];
+    // enque de twee files uit de manist file
+    wp_enqueue_style('sage/css', Assets\asset_path($cssFile), false, null);
+    wp_enqueue_script('sage/js', Assets\asset_path($jsFile), ['jquery'], null, true);
+  }
+  else{
+    wp_die(__('Draai webpack voor de eerste keer om de manifest file te genereren', 'sage'));
+  }
   // leest de comment reply alleen in op het moment dat deze nodig is
   if (is_single() && comments_open() && get_option('thread_comments')) {
     wp_enqueue_script('comment-reply');
