@@ -1,0 +1,59 @@
+::selection{
+  background: $color-secondary;
+  color:white;
+}
+body{
+  font-family: 'Athiti', sans-serif;
+  background-image: url("../images/schweickhardt.jpg");
+  @include media-breakpoint-up(sm) {
+    background-size: cover;
+  }
+  background-attachment: fixed;
+  background-position: center;
+}
+h1{
+  @include media-breakpoint-down(sm) {
+    font-size: 40px;
+  }
+  font-size: 70px;
+  margin-bottom: 40px;
+  font-weight:normal;
+}
+h2{
+  @extend h1;
+  font-weight: 400;
+  font-size: 45px;
+  margin-top: 40px;
+}
+.holder{
+  max-width: 1200px;
+  margin: 0 auto;
+  > .row{
+    padding: 0;
+    margin: 0;
+  }
+}
+img{
+  max-width: 100%;
+}
+p{
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 30px;
+}
+strong{
+  font-weight: bold;
+}
+.tablepress tr, .tablepress td{
+  border-top: 0 !important;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 30px;
+  padding: 0;
+}
+a{
+  color: $color-secondary;
+  &:hover{
+    color: $color-secondary;
+  }
+}

@@ -1,5 +1,4 @@
 const mix = require('laravel-mix').mix;
-let ImageminPlugin = require( 'imagemin-webpack-plugin' ).default;
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -16,22 +15,15 @@ const themePath = 'app';
 const assetsPath = `${themePath}/dist`;
 
 mix.setPublicPath(assetsPath);
-mix.setResourceRoot('./');
+mix.setResourceRoot('../');
 
-mix.webpackConfig( {
-    plugins: [
-        new ImageminPlugin( {
-//            disable: process.env.NODE_ENV !== 'production', // Disable during development
-            pngquant: {
-                quality: '95-100',
-            },
-            test: /\.(jpe?g|png|gif|svg)$/i,
-        } ),
-    ],
-} );
+mix.autoload({
+    jquery: ['$', 'window.jQuery', 'jQuery'],
+    tether: ['window.Tether', 'Tether']
+});
 
 mix.browserSync({
-    proxy: 'testenviroment.dev',
+    proxy: 'uithetrijks.dev',
     files: [
         `${themePath}/**/*.php`,
         `${assetsPath}/**/*.js`,
@@ -39,11 +31,14 @@ mix.browserSync({
     ]
 });
 
-mix.js(`${resources}/scripts/app.js`, `scripts`);
-
-mix.sass(`${resources}/styles/app.scss`, `styles`, {
+mix.js(`${resources}/scripts/app.js`, `scripts`, {
     includePaths: ['node_modules']
 });
+mix.sass(`${resources}/styles/app.scss`, `styles`, {
+    includePaths: ['node_modules'],
+}).options({
+    processCssUrls: false
+ });
 mix.copyDirectory(`${resources}/images`, `${assetsPath}/images`);
 // Hash and version files in production.
 if (mix.config.inProduction) {
