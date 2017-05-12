@@ -1,6 +1,9 @@
 <?php get_header(); ?>
-<div class="col-12 col-sm-12 col-md-12 col-lg-8">
-        <div class="area">
+<div class="wrap">
+      <div class="holder row">
+        <div  class="col-sm-10 col-xs-offset-1 col-xs-10">
+          <div id="intro" class="row">
+            <div class="col-sm-10">
               <?php
               if ( have_posts() ) {
                 while ( have_posts() ) {
@@ -13,5 +16,8 @@
           } // end if
           ?>
         </div>
-      </div>
+      </div><!-- /intro -->
+    </div><!-- /col -->
+  </div><!--/holder -->
+</div><!-- /wrap -->
 <?php get_footer(); ?>

@@ -111,7 +111,6 @@ function assets() {
 
     // enque de twee files uit de manist file
     wp_enqueue_style( 'baseplate/css', assetBase() . $cssFile);
-    //wp_enqueue_script('jquery');
     wp_enqueue_script('baseplate/js', assetBase()  . $jsFile);
   }
 

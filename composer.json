@@ -20,12 +20,15 @@
     "config": {
         "preferred-install": "dist"
     },
+    "require": {
+        "aws/aws-sdk-php":"*",
+        "wpackagist-plugin/akismet":"dev-trunk",
+        "wpackagist-plugin/captcha":">=3.9",
+        "wpackagist-theme/hueman":"*"
+    },
     "extra": {
         "installer-paths": {
-            "public/mu-plugins/{$name}": ["type:wordpress-muplugin"],
-            "public/plugins/{$name}": ["type:wordpress-plugin"],
-            "public/themes/{$name}": ["type:wordpress-theme"]
-        },
-        "wordpress-install-dir": "public/wordpress"
+            ".../plugins/{$name}": ["type:wordpress-plugin"]
+        }
     }
 }
