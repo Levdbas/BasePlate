@@ -5,7 +5,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title><?php bloginfo('name'); ?><?php echo "&nbsp;| ".the_title( $before, $after, $echo ); ?></title>
   <meta name="description" content="<?php bloginfo('description'); ?>">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="apple-touch-icon" href="<?php echo assetBase('images'); ?>/apple-touch-icon.png">
   <!-- Place favicon.ico in the root directory -->
   <?php wp_head(); ?>

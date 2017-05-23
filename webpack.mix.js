@@ -11,8 +11,7 @@ const mix = require('laravel-mix').mix;
  */
 
 const resources = 'assets';
-const themePath = 'app';
-const assetsPath = `${themePath}/dist`;
+const assetsPath = `app/dist`;
 
 mix.setPublicPath(assetsPath);
 mix.setResourceRoot('../');
@@ -23,7 +22,7 @@ mix.autoload({
 });
 
 mix.browserSync({
-    proxy: 'uithetrijks.dev',
+    proxy: 'yoursite.dev',
     files: [
         `${themePath}/**/*.php`,
         `${assetsPath}/**/*.js`,

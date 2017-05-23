@@ -7,21 +7,19 @@ use Roots\Sage\Assets;
  * Theme setup
  */
 function setup() {
-  // Make theme available for translation
-  // Community translations can be found at https://github.com/roots/sage-translations
-  load_theme_textdomain('sage', get_template_directory() . '/lang');
+  load_theme_textdomain('BasePlate', get_template_directory() . '/lang');
 
   // Register wp_nav_menu() menus
   // http://codex.wordpress.org/Function_Reference/register_nav_menus
   register_nav_menus([
-    'primary_navigation' => __('hoofdmenu', 'sage')
+    'primary_navigation' => __('Main menu', 'BasePlate')
   ]);
 
   add_theme_support('post-thumbnails');
   add_theme_support('post-formats', ['aside', 'gallery', 'link', 'image', 'quote', 'video', 'audio']);
   add_theme_support('html5', ['caption', 'comment-form', 'comment-list', 'gallery', 'search-form']);
 }
-// remove bullshit.
+
 add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
 remove_action( 'wp_head', 'feed_links', 2 );
 remove_action( 'wp_head', 'feed_links_extra', 3 );
@@ -49,21 +47,23 @@ function my_admin_menu() {
      remove_menu_page( 'edit-comments.php' );
      remove_menu_page( 'edit.php' );
      remove_menu_page( 'post-new.php' );
-     //remove_menu_page( 'tools.php' );
 }
+
 add_action('load-press-this.php', function() {
-  wp_die(__('Press-this is uitgeschakeld', 'sage'));
+  wp_die(__('Press-this is uitgeschakeld', 'BasePlate'));
 });
 function disable_feed() {
     die();
 }
 define('DISALLOW_FILE_EDIT', true);
 // new posts verwijderen uit admin bar
-function remove_wp_nodes()
-{
+
+
+function remove_wp_nodes( ){
     global $wp_admin_bar;
     $wp_admin_bar->remove_node( 'new-post' );
 }
+
 function vc_remove_wp_ver_css_js( $src ) {
     if ( strpos( $src, 'ver=' . get_bloginfo( 'version' ) ) )
         $src = remove_query_arg( 'ver', $src );
@@ -71,7 +71,6 @@ function vc_remove_wp_ver_css_js( $src ) {
 }
 add_filter( 'style_loader_src', 'vc_remove_wp_ver_css_js', 9999 );
 add_filter( 'script_loader_src', 'vc_remove_wp_ver_css_js', 9999 );
-
 
 function add_featured_image_body_class( $classes ) {
     global $post;
@@ -81,10 +80,9 @@ function add_featured_image_body_class( $classes ) {
     return $classes;
 }
 add_filter( 'body_class', 'add_featured_image_body_class' );
-/**
- * Theme assets
- */
 
+
+// theme asset base
  function assetBase($type = null) {
    if (!isset($type)){
      return get_template_directory_uri(). '/dist';
@@ -96,11 +94,9 @@ add_filter( 'body_class', 'add_featured_image_body_class' );
 
 
 function assets() {
-
   // vraag de mix-manifest file op
   $manifest = (__DIR__ . '/../dist/mix-manifest.json');
 
-  //echo $manifest;
   if (file_exists($manifest)){
     $manifest = file_get_contents($manifest);
     $json = json_decode($manifest, true);
@@ -110,12 +106,12 @@ function assets() {
     $jsFile = $json['/scripts/app.js'];
 
     // enque de twee files uit de manist file
-    wp_enqueue_style( 'baseplate/css', assetBase() . $cssFile);
-    wp_enqueue_script('baseplate/js', assetBase()  . $jsFile);
+    wp_enqueue_style( 'BasePlate/css', assetBase() . $cssFile);
+    wp_enqueue_script('BasePlate/js', assetBase() . $jsFile);
   }
 
   else{
-    wp_die(__('Draai webpack voor de eerste keer om de manifest file te genereren', 'sage'));
+    wp_die(__('Draai webpack voor de eerste keer om de manifest file te genereren', 'BasePlate'));
   }
 
   // leest de comment reply alleen in op het moment dat deze nodig is
@@ -134,13 +130,11 @@ add_filter( 'post_thumbnail_html', 'remove_thumbnail_dimensions', 10, 3 );
 /* security */
 function my_htaccess_contents( $rules )
 {
-    // echo '<pre>'. $rules .'</pre>';
-    // exit();
     return $rules . "
-#Stop spam attack logins and comments
-<Files 'xmlrpc.php'>
-Order Allow,Deny
-deny from all
-</Files>\n";
+    #Stop spam attack logins and comments
+    <Files 'xmlrpc.php'>
+    Order Allow,Deny
+    deny from all
+    </Files>\n";
 }
 add_filter('mod_rewrite_rules', 'my_htaccess_contents');
