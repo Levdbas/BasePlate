@@ -12,7 +12,7 @@ function setup() {
   // Register wp_nav_menu() menus
   // http://codex.wordpress.org/Function_Reference/register_nav_menus
   register_nav_menus([
-    'primary_navigation' => __('Main menu', 'BasePlate')
+    'primary_navigation' => __('Main menu', 'BasePlate'),
   ]);
 
   add_theme_support('post-thumbnails');
@@ -55,10 +55,9 @@ add_action('load-press-this.php', function() {
 function disable_feed() {
     die();
 }
+
 define('DISALLOW_FILE_EDIT', true);
 // new posts verwijderen uit admin bar
-
-
 function remove_wp_nodes( ){
     global $wp_admin_bar;
     $wp_admin_bar->remove_node( 'new-post' );
@@ -92,7 +91,6 @@ add_filter( 'body_class', 'add_featured_image_body_class' );
  }
  add_filter('assetBase','assetBase');
 
-
 function assets() {
   // vraag de mix-manifest file op
   $manifest = (__DIR__ . '/../dist/mix-manifest.json');
@@ -120,6 +118,11 @@ function assets() {
   }
 }
 add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\assets', 100);
+
+if ( class_exists( 'TriggerBrowsersync' )  && strpos(get_site_url(), '.dev') !== false ) {
+  new TriggerBrowsersync();
+}
+
 
 function remove_thumbnail_dimensions( $html, $post_id, $post_image_id ) {
 	$html = preg_replace( '/(width|height)=\"\d*\"\s/', '', $html );

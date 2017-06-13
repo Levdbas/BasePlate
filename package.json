@@ -6,7 +6,7 @@
         "production": "node node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
-        "laravel-mix": "^0.11.4",
+        "laravel-mix": "^0.12.1",
         "imagemin-webpack-plugin": "^1.4.4"
     },
     "dependencies": {

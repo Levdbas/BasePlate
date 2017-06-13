@@ -24,7 +24,7 @@ mix.autoload({
 mix.browserSync({
     proxy: 'yoursite.dev',
     files: [
-        `${themePath}/**/*.php`,
+        `app/**/*.php`,
         `${assetsPath}/**/*.js`,
         `${assetsPath}/**/*.css`
     ]
