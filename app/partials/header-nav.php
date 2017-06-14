@@ -9,8 +9,9 @@
       'depth' => 3,
       'container' => false,
       'menu_class' => 'nav navbar-nav',
-      //Process nav menu using our custom nav walker
-      'walker' => new wp_bootstrap_navwalker())
+      'fallback_cb'     => 'bs4navwalker::fallback',
+      'walker'          => new bs4navwalker()
+      )
     );
     ?>
   </div>
