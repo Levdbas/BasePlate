@@ -41,13 +41,14 @@ add_action( 'do_feed_rdf', 'disable_feed', 1 );
 add_action( 'do_feed_rss', 'disable_feed', 1 );
 add_action( 'do_feed_rss2', 'disable_feed', 1 );
 add_action( 'do_feed_atom', 'disable_feed', 1 );
-add_action( 'admin_menu', 'my_admin_menu' );
+
 function my_admin_menu() {
      remove_menu_page( 'link-manager.php' );
      remove_menu_page( 'edit-comments.php' );
      remove_menu_page( 'edit.php' );
      remove_menu_page( 'post-new.php' );
 }
+add_action( 'admin_menu', 'my_admin_menu' );
 
 add_action('load-press-this.php', function() {
   wp_die(__('Press-this is uitgeschakeld', 'BasePlate'));
@@ -58,10 +59,11 @@ function disable_feed() {
 
 define('DISALLOW_FILE_EDIT', true);
 // new posts verwijderen uit admin bar
-function remove_wp_nodes( ){
+function remove_wp_nodes(){
     global $wp_admin_bar;
     $wp_admin_bar->remove_node( 'new-post' );
 }
+add_action( 'admin_bar_menu', 'remove_wp_nodes', 999 );
 
 function vc_remove_wp_ver_css_js( $src ) {
     if ( strpos( $src, 'ver=' . get_bloginfo( 'version' ) ) )
