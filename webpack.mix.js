@@ -1,45 +1,51 @@
-const mix = require('laravel-mix').mix;
+const mix = require('laravel-mix');
 /*
- |--------------------------------------------------------------------------
- | Mix Asset Management
- |--------------------------------------------------------------------------
- |
- | Mix provides a clean, fluent API for defining some Webpack build steps
- | for your Laravel application. By default, we are compiling the Sass
- | file for your application, as well as bundling up your JS files.
- |
- */
+|--------------------------------------------------------------------------
+| Mix Asset Management
+|--------------------------------------------------------------------------
+|
+| Mix provides a clean, fluent API for defining some Webpack build steps
+| for your Laravel application. By default, we are compiling the Sass
+| file for your application, as well as bundling up your JS files.
+|
+*/
 
 const resources = 'assets';
-const assetsPath = `app/dist`;
+// const assetsPath = `app/dist/`;
 
-mix.setPublicPath(assetsPath);
-mix.setResourceRoot('../');
+//mix.setPublicPath(assetsPath);
+//mix.setResourceRoot('../');
+
+mix.setResourceRoot(path.normalize('app/dist'));
+mix.setPublicPath(path.normalize('app/dist'));
 
 mix.autoload({
-    jquery: ['$', 'window.jQuery', 'jQuery'],
-    tether: ['window.Tether', 'Tether']
+  jquery: ['$', 'window.jQuery',"jQuery","window.$","jquery","window.jquery"],
+  'popper.js/dist/umd/popper.js': ['Popper']
 });
 
 mix.browserSync({
-    proxy: 'yoursite.dev',
-    files: [
-        `app/**/*.php`,
-        `${assetsPath}/**/*.js`,
-        `${assetsPath}/**/*.css`
-    ]
+  proxy: 'yoursite.dev',
+  files: [
+    `app/**/*.php`,
+    `app/dist/**/*.js`,
+    `app/dist/**/*.css`
+  ]
 });
 
-mix.js(`${resources}/scripts/app.js`, `scripts`, {
-    includePaths: ['node_modules']
-});
-mix.sass(`${resources}/styles/app.scss`, `styles`, {
-    includePaths: ['node_modules'],
+
+
+mix.sass(`${resources}/styles/app.scss`, `app/dist/styles`, {
+  includePaths: ['node_modules'],
 }).options({
-    processCssUrls: false
- });
-mix.copyDirectory(`${resources}/images`, `${assetsPath}/images`);
+  processCssUrls: false
+}).js(`${resources}/scripts/app.js`, `app/dist/scripts`, {
+  includePaths: ['node_modules']
+});
+
+mix.copyDirectory('assets/images', 'app/dist/images');
 // Hash and version files in production.
-if (mix.config.inProduction) {
-    mix.version();
-}
+Config.sourcemaps;
+Config.notifications; // true
+
+mix.version();

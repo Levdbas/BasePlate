@@ -100,7 +100,7 @@ function assets() {
   if (file_exists($manifest)){
     $manifest = file_get_contents($manifest);
     $json = json_decode($manifest, true);
-
+    wp_deregister_script('jquery');
     // lees waarde uit json files
     $cssFile = $json['/styles/app.css'];
     $jsFile = $json['/scripts/app.js'];
