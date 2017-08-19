@@ -2,6 +2,9 @@
 
 BasePlate is a bare theme for WordPress that includes an up-to-date assets manager via laravel-mix/WebPack. BasePlate lends a lot of code from Sage and WordPlate. By combining these two templates an easy to use and easy to maintain template was created. It ditches the full WP installation from WordPlate while maintaining the buildtools and uses core code from sage while ditching the blade template modules.
 
+[![Latest Version](https://img.shields.io/github/release/wordplate/wordplate.svg?style=flat)](https://github.com/wordplate/wordplate/releases)
+[![License](https://img.shields.io/packagist/l/wordplate/wordplate.svg?style=flat)](https://packagist.org/packages/wordplate/wordplate)
+
 ## Installation
 
 To use BasePlate, you need to have PHP 7.0+ installed on your machine. You'll also optionally need [Node.js](https://nodejs.org/en) and [NPM](https://www.npmjs.com) installed if you want to use [Laravel Mix](https://laravel.com/docs/5.4/mix) to compile your CSS and Javascript and maintain your images.
