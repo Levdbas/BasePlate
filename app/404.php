@@ -5,7 +5,7 @@
       <div id="intro" class="row">
         <div class="col-sm-10">
           <div class="alert alert-warning">
-            <?php _e('Sorry, but the page you were trying to view does not exist.', 'sage'); ?>
+            <?php _e('Sorry, but the page you were trying to view does not exist.', 'BasePlate'); ?>
           </div>
         </div><!-- /intro -->
       </div><!-- /col -->

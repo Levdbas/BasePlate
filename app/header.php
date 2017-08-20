@@ -5,7 +5,8 @@
       <header id="header" class="row">
         <div id="logo" class="col-sm-3 col-xs-12">
           <a href="<?php echo site_url(); ?>" title="<?php bloginfo( 'name' ); ?>">
-            <img alt="Logo <?php bloginfo( 'name' ); ?>" src="<?php echo assetBase('images'); ?>/logo.png">
+            <?php /* NOTE: you can load images from the dist/images dir by: <?php echo assetBase('images'); ?>/name.extention */ ?>
+            <img alt="Logo <?php bloginfo( 'name' ); ?>" src="">
           </a>
         </div>
         <div id="menu-holder" class="row">

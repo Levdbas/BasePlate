@@ -1,6 +1,7 @@
 # BasePlate
 
-BasePlate is a bare theme for WordPress that includes an up-to-date assets manager via laravel-mix/WebPack. BasePlate lends a lot of code from Sage and WordPlate. By combining these two templates an easy to use and easy to maintain template was created. It ditches the full WP installation from WordPlate while maintaining the buildtools and uses core code from sage while ditching the blade template modules.
+BasePlate is a bare theme for WordPress that includes an up-to-date assets manager via laravel-mix/WebPack. BasePlate lends a lot of code from Sage and WordPlate. By combining these two templates a lightweight (only two files, compressed ~ 330kb, featuring full bootstrap 4 css and js and [jQuery slim](https://stackoverflow.com/questions/35424053/what-are-the-differences-between-normal-and-slim-package-of-jquery)), easy to use template was created.
+It ditches the full WP installation from WordPlate while maintaining the buildtools and uses core code from sage while ditching the blade template modules.
 
 [![Latest Version](https://img.shields.io/github/release/Levdbas/BasePlate.svg?style=flat)](https://github.com/Levdbas/BasePlate/releases)
 
@@ -51,17 +52,24 @@ npm run production
 
 ## Plugins
 
-Manage your plugins via composer by adding them to composer.json.
+Manage
 
-[WordPress Packagist](https://wpackagist.org) comes straight out of the box with WordPlate. It mirrors the WordPress [plugin](https://plugins.svn.wordpress.org) and [theme](https://themes.svn.wordpress.org) directories as a Composer repository.
+[WordPress Packagist](https://wpackagist.org) comes straight out of the box with BasePlate. It mirrors the WordPress [plugin](https://plugins.svn.wordpress.org) and [theme](https://themes.svn.wordpress.org) directories as a Composer repository.
 
 #### How do I use it?
 
-Require the desired plugin or theme using `wpackagist-plugin` or `wpackagist-theme` as the vendor name.
+Require the desired plugin or theme using `wpackagist-plugin` or `wpackagist-theme` as the vendor name or add your plugins by adding them to composer.json.
 
 ```bash
 composer require wpackagist-plugin/polylang
 ```
+run
+
+```bash
+composer install
+```
+
+to load desired plugins.
 
 #### Example
 
@@ -69,8 +77,8 @@ This is an example of how your `composer.json` file might look like.
 
 ```json
 "require": {
-    "wordplate/framework": "^5.0",
     "wpackagist-plugin/polylang": "^2.1",
+
 },
 ```
 

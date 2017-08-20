@@ -94,18 +94,22 @@ add_filter( 'body_class', 'add_featured_image_body_class' );
  add_filter('assetBase','assetBase');
 
 function assets() {
-  // vraag de mix-manifest file op
+
+  // Look for the manifest file.
   $manifest = (__DIR__ . '/../dist/mix-manifest.json');
 
   if (file_exists($manifest)){
+
     $manifest = file_get_contents($manifest);
     $json = json_decode($manifest, true);
-    wp_deregister_script('jquery');
-    // lees waarde uit json files
+
+
+    // read values from our manifest file.
     $cssFile = $json['/styles/app.css'];
     $jsFile = $json['/scripts/app.js'];
 
-    // enque de twee files uit de manist file
+    // remove jQuery as we included it in our app.js
+    wp_deregister_script('jquery');
     wp_enqueue_style( 'BasePlate/css', assetBase() . $cssFile);
     wp_enqueue_script('BasePlate/js', assetBase() . $jsFile);
   }

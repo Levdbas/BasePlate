@@ -10,19 +10,15 @@ const mix = require('laravel-mix');
 |
 */
 
-const resources = 'assets';
-// const assetsPath = `app/dist/`;
-
-//mix.setPublicPath(assetsPath);
-//mix.setResourceRoot('../');
-
 mix.setResourceRoot(path.normalize('app/dist'));
 mix.setPublicPath(path.normalize('app/dist'));
 
+
 mix.autoload({
-  jquery: ['$', 'window.jQuery',"jQuery","window.$","jquery","window.jquery"],
+  'jquery/dist/jquery.slim.js': ['$', 'window.jQuery',"jQuery","window.$","jquery","window.jquery"],
   'popper.js/dist/umd/popper.js': ['Popper']
 });
+
 
 mix.browserSync({
   proxy: 'yoursite.dev',
@@ -34,18 +30,23 @@ mix.browserSync({
 });
 
 
-
-mix.sass(`${resources}/styles/app.scss`, `app/dist/styles`, {
+mix.sass(`assets/styles/app.scss`, `app/dist/styles`, {
   includePaths: ['node_modules'],
 }).options({
   processCssUrls: false
-}).js(`${resources}/scripts/app.js`, `app/dist/scripts`, {
+}).js(`assets/scripts/app.js`, `app/dist/scripts`, {
   includePaths: ['node_modules']
 });
 
-mix.copyDirectory('assets/images', 'app/dist/images');
-// Hash and version files in production.
+
+mix.copyDirectory('assets/images', 'app/dist/images', false);
+mix.copyDirectory('assets/fonts', 'app/dist/fonts');
+
+
 Config.sourcemaps;
 Config.notifications; // true
 
-mix.version();
+
+if (mix.inProduction()) {
+    mix.version();
+}
