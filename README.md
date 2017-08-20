@@ -4,11 +4,19 @@ BasePlate is a bare theme for WordPress that includes an up-to-date assets manag
 
 [![Latest Version](https://img.shields.io/github/release/Levdbas/BasePlate.svg?style=flat)](https://github.com/Levdbas/BasePlate/releases)
 
+## Features
+
+* Sass for stylesheets
+* [Laravel Mix](https://laravel.com/docs/5.4/mix) for compiling assets, moving images, concatenating & minifying files and last but not least, cache busting.
+* [Browsersync](http://www.browsersync.io/) for synchronized browser testing
+* [Bootstrap 4 beta](http://getbootstrap.com/)
+* [Font Awesome](http://fontawesome.io/)
+
 ## Installation
 
-To use BasePlate, you need to have PHP 7.0+ installed on your machine. You'll also optionally need [Node.js](https://nodejs.org/en) and [NPM](https://www.npmjs.com) installed if you want to use [Laravel Mix](https://laravel.com/docs/5.4/mix) to compile your CSS and Javascript and maintain your images.
+To use BasePlate, you need to have PHP 7.0+ installed on your machine. You'll also need a recent version of [Node.js](https://nodejs.org/en) and [NPM](https://www.npmjs.com) installed if you want to use [Laravel Mix](https://laravel.com/docs/5.4/mix) to compile your CSS and Javascript and maintain your images.
 
-Make sure your server meets the following requirements:
+We strongly recommend going for the following server/hosting specifications:
 
 - PHP >= 7.0
 - Mbstring PHP Extension
@@ -43,6 +51,8 @@ npm run production
 
 ## Plugins
 
+Manage your plugins via composer by adding them to composer.json.
+
 [WordPress Packagist](https://wpackagist.org) comes straight out of the box with WordPlate. It mirrors the WordPress [plugin](https://plugins.svn.wordpress.org) and [theme](https://themes.svn.wordpress.org) directories as a Composer repository.
 
 #### How do I use it?
@@ -52,8 +62,6 @@ Require the desired plugin or theme using `wpackagist-plugin` or `wpackagist-the
 ```bash
 composer require wpackagist-plugin/polylang
 ```
-
-Packages are installed to `public/plugins` or `public/themes`.
 
 #### Example
 
