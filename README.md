@@ -17,20 +17,16 @@ It ditches the full WP installation from WordPlate while maintaining the buildto
 
 To use BasePlate, you need to have PHP 7.0+ installed on your machine. You'll also need a recent version of [Node.js](https://nodejs.org/en) and [NPM](https://www.npmjs.com) installed if you want to use [Laravel Mix](https://laravel.com/docs/5.4/mix) to compile your CSS and Javascript and maintain your images.
 
-We strongly recommend going for the following server/hosting specifications:
+Install WordPress locally on your AMP stack with a virtual hostname, create a new folder in ```wp-content/themes``` with the desired name of your template. Clone the latest version of BasePlate inside your new folder.
 
-- PHP >= 7.0
-- Mbstring PHP Extension
-
-
-After copying the contents in a new theme folder, don't forget to set the proxy adress for BrowserSync in the webpack.mix.js file.
+Next step is to set the proxy adress for BrowserSync in the webpack.mix.js file.
 
 To install required node modules:
 
 ```bash
 npm install
 ```
-## Use Webpack & MIX
+## Useage of Laravel-mix
 
 BasePlate has integrated [Laravel Mix](https://laravel.com/docs/5.4/mix) out of the box. It provides a clean, fluent API for defining basic Webpack build steps for your BasePlate template.
 
