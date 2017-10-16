@@ -8,39 +8,16 @@ use Roots\Sage\Assets;
  */
 function setup() {
   load_theme_textdomain('BasePlate', get_template_directory() . '/lang');
-
-  // Register wp_nav_menu() menus
-  // http://codex.wordpress.org/Function_Reference/register_nav_menus
   register_nav_menus([
     'primary_navigation' => __('Main menu', 'BasePlate'),
   ]);
-
   add_theme_support('post-thumbnails');
   add_theme_support('post-formats', ['aside', 'gallery', 'link', 'image', 'quote', 'video', 'audio']);
   add_theme_support('html5', ['caption', 'comment-form', 'comment-list', 'gallery', 'search-form']);
 }
-
 add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
-remove_action( 'wp_head', 'feed_links', 2 );
-remove_action( 'wp_head', 'feed_links_extra', 3 );
-remove_action( 'wp_head', 'rsd_link' );
-remove_action( 'wp_head', 'wlwmanifest_link' );
-remove_action( 'wp_head', 'index_rel_link' );
-remove_action( 'wp_head', 'parent_post_rel_link', 10, 0 );
-remove_action( 'wp_head', 'start_post_rel_link', 10, 0 );
-remove_action( 'wp_head', 'rel_canonical', 10, 0 );
-remove_action( 'wp_head', 'adjacent_posts_rel_link', 10, 0 );
-remove_action( 'wp_head', 'wp_generator' );
-remove_action( 'wp_head', 'wp_shortlink_wp_head', 10, 0 );
-remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
-remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
-remove_action( 'wp_print_styles', 'print_emoji_styles' );
-remove_action( 'admin_print_styles', 'print_emoji_styles' );
-add_action( 'do_feed', 'disable_feed', 1 );
-add_action( 'do_feed_rdf', 'disable_feed', 1 );
-add_action( 'do_feed_rss', 'disable_feed', 1 );
-add_action( 'do_feed_rss2', 'disable_feed', 1 );
-add_action( 'do_feed_atom', 'disable_feed', 1 );
+
+
 
 function my_admin_menu() {
      remove_menu_page( 'link-manager.php' );
@@ -50,14 +27,6 @@ function my_admin_menu() {
 }
 add_action( 'admin_menu', 'my_admin_menu' );
 
-add_action('load-press-this.php', function() {
-  wp_die(__('Press-this is uitgeschakeld', 'BasePlate'));
-});
-function disable_feed() {
-    die();
-}
-
-define('DISALLOW_FILE_EDIT', true);
 // new posts verwijderen uit admin bar
 function remove_wp_nodes(){
     global $wp_admin_bar;
@@ -65,13 +34,7 @@ function remove_wp_nodes(){
 }
 add_action( 'admin_bar_menu', 'remove_wp_nodes', 999 );
 
-function vc_remove_wp_ver_css_js( $src ) {
-    if ( strpos( $src, 'ver=' . get_bloginfo( 'version' ) ) )
-        $src = remove_query_arg( 'ver', $src );
-    return $src;
-}
-add_filter( 'style_loader_src', 'vc_remove_wp_ver_css_js', 9999 );
-add_filter( 'script_loader_src', 'vc_remove_wp_ver_css_js', 9999 );
+
 
 function add_featured_image_body_class( $classes ) {
     global $post;
@@ -84,40 +47,50 @@ add_filter( 'body_class', 'add_featured_image_body_class' );
 
 
 // theme asset base
- function assetBase($type = null) {
-   if (!isset($type)){
-     return get_template_directory_uri(). '/dist';
+ function getAssetBase($type = null, $filename = null) {
+   if (!isset($type) || $type == false){
+     $privAssetDir = get_template_directory().'/dist/';
+     $pubAssetDir = get_template_directory_uri(). '/dist/';
    } else{
-     return get_template_directory_uri(). '/dist/' . $type;
+     $privAssetDir = get_template_directory(). '/dist/' . $type.'/';
+     $pubAssetDir = get_template_directory_uri(). '/dist/' . $type.'/';
    }
+   if (isset($filename)){
+     $filename = preg_split('~.(?=[^.]*$)~', $filename);
+     $filename = glob($privAssetDir.$filename[0].'*'.$filename[1]);
+     $file = str_replace($privAssetDir, $pubAssetDir, $filename);
+   }
+   return $file[0];
  }
- add_filter('assetBase','assetBase');
+ add_filter('getAssetBase','getAssetBase');
+
+function assetbase($type = null, $filename = null){
+  echo getAssetBase($type, $filename);
+}
+add_filter('assetBase','assetBase');
 
 function assets() {
 
   // Look for the manifest file.
-  $manifest = (__DIR__ . '/../dist/mix-manifest.json');
+  $manifest = (__DIR__ . '/../dist/manifest.json');
 
   if (file_exists($manifest)){
 
     $manifest = file_get_contents($manifest);
     $json = json_decode($manifest, true);
 
-
     // read values from our manifest file.
-    $cssFile = $json['/styles/app.css'];
-    $jsFile = $json['/scripts/app.js'];
-
+    $cssFile = $json['app.css'];
+    $jsFile = $json['app.js'];
     // remove jQuery as we included it in our app.js
     wp_deregister_script('jquery');
-    wp_enqueue_style( 'BasePlate/css', assetBase() . $cssFile);
-    wp_enqueue_script('BasePlate/js', assetBase() . $jsFile);
+    wp_enqueue_style( 'BasePlate/css', getAssetBase(false, $cssFile));
+    wp_enqueue_script('BasePlate/js', getAssetBase(false, $jsFile), false, false, true);
   }
 
   else{
     wp_die(__('Draai webpack voor de eerste keer om de manifest file te genereren', 'BasePlate'));
   }
-
   // leest de comment reply alleen in op het moment dat deze nodig is
   if (is_single() && comments_open() && get_option('thread_comments')) {
     wp_enqueue_script('comment-reply');
@@ -128,13 +101,6 @@ add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\assets', 100);
 if ( class_exists( 'TriggerBrowsersync' )  && strpos(get_site_url(), '.dev') !== false ) {
   new TriggerBrowsersync();
 }
-
-
-function remove_thumbnail_dimensions( $html, $post_id, $post_image_id ) {
-	$html = preg_replace( '/(width|height)=\"\d*\"\s/', '', $html );
-	return $html;
-}
-add_filter( 'post_thumbnail_html', 'remove_thumbnail_dimensions', 10, 3 );
 
 /* security */
 function my_htaccess_contents( $rules )
