@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npm run development",
     "development": "cross-env NODE_ENV=development webpack --progress --hide-modules",
-    "watch": "webpack --watch",
+    "watch": "cross-env NODE_ENV=development webpack --progress --hide-modules --watch",
     "production": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "keywords": [

@@ -1,10 +1,6 @@
 <?php
 
-namespace Roots\Sage\Cleanup;
-
-use Roots\Sage\Setup;
 define('DISALLOW_FILE_EDIT', true);
-
 remove_action( 'wp_head', 'feed_links', 2 );
 remove_action( 'wp_head', 'feed_links_extra', 3 );
 remove_action( 'wp_head', 'rsd_link' );
@@ -38,11 +34,11 @@ function remove_wp_ver_css_js( $src ) {
         $src = remove_query_arg( 'ver', $src );
     return $src;
 }
-add_filter( 'style_loader_src', __NAMESPACE__ . '\\remove_wp_ver_css_js', 9999 );
-add_filter( 'script_loader_src', __NAMESPACE__ . '\\remove_wp_ver_css_js', 9999 );
+add_filter( 'style_loader_src', 'remove_wp_ver_css_js', 9999 );
+add_filter( 'script_loader_src', 'remove_wp_ver_css_js', 9999 );
 
 function remove_thumbnail_dimensions( $html, $post_id, $post_image_id ) {
 	$html = preg_replace( '/(width|height)=\"\d*\"\s/', '', $html );
 	return $html;
 }
-add_filter( 'post_thumbnail_html', __NAMESPACE__ . '\\remove_thumbnail_dimensions', 10, 3 );
+add_filter( 'post_thumbnail_html', 'remove_thumbnail_dimensions', 10, 3 );

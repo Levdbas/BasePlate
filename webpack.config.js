@@ -5,7 +5,7 @@
 process.noDeprecation = true;
 
 const localServer = {
-  path: 'localhost/',
+  path: 'testenviroment.dev',
   port: 3000
 };
 
@@ -15,7 +15,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const ExtractNormalCSS  = new ExtractTextPlugin(process.env.NODE_ENV === 'production' ? 'styles/[name].[chunkhash].css' : 'styles/[name].css');
-const ExtractCriticalCSS  = new ExtractTextPlugin('../partials/critical.php');
+const ExtractCriticalCSS  = new ExtractTextPlugin('styles/critical.php');
 
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const UglifyJSPlugin = require('webpack-uglifyes-plugin');
@@ -73,8 +73,7 @@ const config = {
       ]
     }
   ),
-  new WebpackAssetsManifest(),
-  new CleanWebpackPlugin('app/dist/')
+  new WebpackAssetsManifest()
 ]
 };
 
@@ -87,29 +86,29 @@ if (process.env.NODE_ENV === 'production') {
     new ImageminPlugin({
       disable: process.env.NODE_ENV !== 'production',
       test: /\.(jpe?g|png|gif|svg)$/i
-    })
+    }),
+    new CleanWebpackPlugin('app/dist/')
   );
 }
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'development') {
   config.plugins.push(
-  new BrowserSyncPlugin({
-    proxy: localServer.path,
-    port: localServer.port,
-    files: [],
-    ghostMode: {
-      clicks: false,
-      location: false,
-      forms: false,
-      scroll: false
-    },
-    injectChanges: true,
-    logFileChanges: true,
-    logLevel: 'debug',
-    logPrefix: 'wepback',
-    notify: true,
-    reloadDelay: 0
-  })
-)
+    new BrowserSyncPlugin({
+      proxy: localServer.path,
+      port: localServer.port,
+      files: [
+        'app/**/*.php',
+        'app/dist/**/*.js',
+        'app/dist/**/*.css'
+      ],
+      injectChanges: true,
+      logFileChanges: true,
+      logLevel: 'debug',
+      logPrefix: 'wepback',
+      notify: true,
+      open: "local",
+      reloadDelay: 0
+    })
+  )
 }
 
 module.exports = config

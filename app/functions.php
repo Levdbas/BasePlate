@@ -3,6 +3,7 @@
 $basePlate_includes = [
   'lib/cleanup.php',     // Theme setup
   'lib/setup.php',     // Theme setup
+  'lib/assets.php',     // Theme setup
   '/lib/wp_bootstrap_navwalker.php',    // navwalker
   '/lib/shortcodes/_require.php',    // shotcodes
   '/lib/widgets/_require.php',    // shotcodes
