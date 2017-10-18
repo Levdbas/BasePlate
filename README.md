@@ -1,14 +1,16 @@
 # BasePlate
 
-BasePlate is a bare theme for WordPress that includes an up-to-date assets manager via laravel-mix/WebPack. BasePlate lends a lot of code from Sage and WordPlate. By combining these two templates a lightweight (only two files, compressed ~ 330kb, featuring full bootstrap 4 css and js and [jQuery slim](https://stackoverflow.com/questions/35424053/what-are-the-differences-between-normal-and-slim-package-of-jquery)), easy to use template was created.
-It ditches the full WP installation from WordPlate while maintaining the buildtools and uses core code from sage while ditching the blade template modules.
+BasePlate is a bare theme for WordPress that includes an up-to-date assets manager via WebPack. BasePlate lends some code from Sage. By combining these two templates a lightweight (only two files, compressed ~ 330kb, featuring full bootstrap 4 css and js and [jQuery slim](https://stackoverflow.com/questions/35424053/what-are-the-differences-between-normal-and-slim-package-of-jquery)), easy to use template was created.
+It comes with a custom WebPack build for compiling css, js, importing jQuery, Bootstrap and manages assets such as fonts and images. Last but not least, it bust caches by randomizing filenames.
 
 [![Latest Version](https://img.shields.io/github/release/Levdbas/BasePlate.svg?style=flat)](https://github.com/Levdbas/BasePlate/releases)
 
 ## Features
 
 * Sass for stylesheets
-* [Laravel Mix](https://laravel.com/docs/5.4/mix) for compiling assets, moving images, concatenating & minifying files and last but not least, cache busting.
+* Stylesheet in footer, critical css from ```critical.scss``` gets loaded into the header.
+* Modular JavaScript via import
+* WebPack for compiling assets, moving & optimizing images, concatenating & minifying files and last but not least, cache busting.
 * [Browsersync](http://www.browsersync.io/) for synchronized browser testing
 * [Bootstrap 4 beta](http://getbootstrap.com/)
 * [Font Awesome](http://fontawesome.io/)
@@ -26,11 +28,9 @@ To install required node modules:
 ```bash
 npm install
 ```
-## Useage of Laravel-mix
+set correct proxy url in webpack.config.js on line 8
 
-BasePlate has integrated [Laravel Mix](https://laravel.com/docs/5.4/mix) out of the box. It provides a clean, fluent API for defining basic Webpack build steps for your BasePlate template.
-
-#### How do I use it?
+#### How do I use webpack it?
 
 Run BrowserSync and check for changes and auto-compile on the go:
 ```bash
@@ -41,7 +41,7 @@ During development:
 npm run development
 ```
 
-Enable cache busting and minifying for production use:
+Enable cache busting, optimizing images & minifying for production use:
 ```bash
 npm run production
 ```
@@ -81,13 +81,25 @@ This is an example of how your `composer.json` file might look like.
 Please visit [WordPress Packagist](https://wpackagist.org) website for more information and examples.
 
 ## Helpers
+You can import JS files into the app.js to modulize your code.
+```js
+//app.js
+import exampleImport from './exampleImport';
+...
+exampleImport();
+//exampleImport.js
+
+function exampleImport(  ) {
+  ...
+}
+export default exampleImport;
+```
 
 Asset helper:
+
 ```php
-echo assetBase('images') // for images folder
-echo assetBase('styles') // for style folder
-echo assetBase('scripts') // for scripts folder
-echo assetBase('fonts') // for fonts folder
+getAssetBase'folder','file.ext'); // returns URL to asset
+assetBase'folder','file.ext'); // echoes url to asset
 ```
 
 

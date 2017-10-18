@@ -34,7 +34,6 @@ function assetName($asset) {
     $manifest = file_get_contents($manifest);
     $json = json_decode($manifest, true);
     $file = $json[$asset];
-    //wp_enqueue_style( 'BasePlate/css', get_template_directory_uri().'/dist/'.$cssFile);
     return $file;
   }
   else{
@@ -51,12 +50,13 @@ add_action( 'wp_head', 'criticalstyles_in_header' );
 
 function scripts_in_footer(){
   wp_deregister_script('jquery');
+  //wp_enqueue_style( 'BasePlate/css', get_template_directory_uri().'/dist/'.assetName('app.css'));
   wp_enqueue_script('BasePlate/js', get_template_directory_uri().'/dist/'.assetName('app.js'), false, false, true);
   if (is_single() && comments_open() && get_option('thread_comments')) {
     wp_enqueue_script('comment-reply');
   }
 }
-add_action('scripts_in_footer', 'assets', 100);
+add_action('wp_enqueue_scripts', 'scripts_in_footer', 100);
 
 function styles_in_footer() {
 	echo '<link rel="stylesheet" href="'.get_template_directory_uri().'/dist/'.assetName('app.css').'" type="text/css" media="all" />';

@@ -1,13 +1,2 @@
-#test{
-  display: block;
-  ul{
-    padding: 0;
-  }
-}
-.preloader{
-  position: absolute;
-  z-index: 5;
-  width: 100%;
-  height:100%;
-  background: red;
-}
+
+/* all critical css that must be loaded inside the header goes here. */
