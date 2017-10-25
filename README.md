@@ -30,7 +30,7 @@ npm install
 ```
 set correct proxy url in webpack.config.js on line 8
 
-#### How do I use webpack it?
+#### How do I use webpack?
 
 Run BrowserSync and check for changes and auto-compile on the go:
 ```bash
