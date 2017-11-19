@@ -38,9 +38,24 @@ const config = {
         }
       },
       {
-        test: /\.scss$/,
-        exclude: /critical.scss$/,
-        use: ExtractNormalCSS.extract([ 'css-loader', 'sass-loader' ])
+        test: /\.(css|scss|sass)$/,
+        include: path.join(__dirname, 'assets/styles'),
+        exclude: /critical.scss$/
+        use: ExtractNormalCSS.extract({
+          fallback: 'style-loader',
+          use: [
+            {loader: 'css-loader'},
+            {
+              loader: 'postcss-loader'
+              options:{
+                config:{
+                  path: 'path/to/postcss.config.js'
+                }
+              }
+            },
+            {loader: 'sass-loader'}
+          ],
+        }),
       },
       {
         test: /critical.scss$/,
@@ -60,6 +75,13 @@ const config = {
   output: {
     filename: process.env.NODE_ENV === 'production' ? 'scripts/[name].[chunkhash].js' : 'scripts/[name].js',
     path: path.resolve(__dirname, 'app/dist')
+  },
+  resolve: {
+
+    alias: {
+      'styles': path.resolve(__dirname, 'assets/styles'),
+      'images': path.resolve(__dirname, 'assets/assets')
+    }
   },
   plugins: [
     ExtractNormalCSS,
@@ -108,7 +130,7 @@ if (process.env.NODE_ENV === 'development') {
       ],
       injectChanges: true,
       logFileChanges: true,
-      logLevel: 'debug',
+      logLevel: 'info',
       logPrefix: 'wepback',
       notify: true,
       open: "local",
