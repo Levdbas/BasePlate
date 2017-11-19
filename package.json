@@ -5,16 +5,10 @@
   "main": "app.js",
   "scripts": {
     "dev": "npm run development",
-    "development": "cross-env NODE_ENV=development webpack --progress --hide-modules",
-    "watch": "cross-env NODE_ENV=development webpack --progress --hide-modules --watch",
-    "production": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "development": "cross-env NODE_ENV=development webpack --progress --hide-modules --config assets/build/webpack.config.js",
+    "watch": "cross-env NODE_ENV=development webpack --progress --hide-modules --watch --config assets/build/webpack.config.js",
+    "production": "cross-env NODE_ENV=production webpack --progress --hide-modules --config assets/build/webpack.config.js"
   },
-  "keywords": [
-    "webpack",
-    "boilerplate",
-    "setup"
-  ],
-  "author": "WeAreAthlon",
   "license": "GPL-3.0",
   "devDependencies": {
     "autoprefixer": "^7.1.1",
@@ -26,22 +20,24 @@
     "copy-webpack-plugin": "^4.1.1",
     "cross-env": "^5.0.1",
     "css-loader": "^0.28.4",
-    "postcss-loader": "~2.0",
     "cssnano": "^3.10.0",
     "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^0.11.2",
+    "script-loader": "^0.7.2",
     "imagemin-webpack-plugin": "^1.5.2",
-    "node-sass": "^4.5.3",
-    "optimize-css-assets-webpack-plugin": "^2.0.0",
+    "node-sass": "^4.7.1",
+    "optimize-css-assets-webpack-plugin": "^3.2.0",
+    "postcss-loader": "^2.0.8",
     "sass-loader": "^6.0.6",
-    "style-loader": "^0.18.2",
-    "url-loader": "^0.5.9",
-    "webpack": "^3.0.0",
-    "webpack-assets-manifest": "^1.0.0",
+    "style-loader": "^0.19.0",
+    "url-loader": "^0.6.2",
+    "webpack": "^3.8.1",
+    "webpack-manifest-plugin": "^2.0.0-rc.1",
+    "webpack-concat-plugin": "^1.4.2",
     "webpack-uglifyes-plugin": "0.0.2"
   },
   "dependencies": {
-    "bootstrap": "^4.0.0-beta",
+    "bootstrap": "^4.0.0-beta.2",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
     "popper.js": "^1.12.5"

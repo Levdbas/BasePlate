@@ -1,5 +1,5 @@
 import 'bootstrap';
-import exampleImport from './exampleImport';
+
 /* ========================================================================
 * DOM-based Routing
 * Based on http://goo.gl/EUTi53 by Paul Irish
@@ -20,7 +20,7 @@ import exampleImport from './exampleImport';
     // All pages
     'common': {
       init: function() {
-        exampleImport();
+
       },
       finalize: function() {
         // JavaScript to be fired on all pages, after page specific JS is fired
@@ -29,7 +29,7 @@ import exampleImport from './exampleImport';
     // Home page
     'home': {
       init: function() {
-
+        // JavaScript to be fired on the home page
       },
       finalize: function() {
         // JavaScript to be fired on the home page, after the init JS

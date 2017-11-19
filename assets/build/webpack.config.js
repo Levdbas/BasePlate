@@ -1,16 +1,10 @@
 /**
 * Assets Config file
 */
-
 process.noDeprecation = true;
-
-const localServer = {
-  path: 'testenviroment.dev',
-  port: 3000
-};
-
 const env = process.env.NODE_ENV;
 const path = require('path');
+const ConcatPlugin = require('webpack-concat-plugin');
 const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -19,39 +13,54 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default
-const WebpackAssetsManifest = require('webpack-assets-manifest');
+const ManifestPlugin = require('webpack-manifest-plugin');
+
+const rootPath = process.cwd();
+const variables = {
+  browserSyncPath: 'yoururl.dev',
+  browserSyncport: 3000,
+  publicPath: path.join(rootPath, 'app'), // from root folder path/to/theme
+  distPath:   path.join(rootPath, 'app/dist'), // from root folder path/to/theme
+  assetsPath: path.join(rootPath, 'assets'), // from root folder path/to/assets
+};
+
+
 
 const ExtractNormalCSS  = new ExtractTextPlugin(process.env.NODE_ENV === 'production' ? 'styles/[name].[chunkhash].css' : 'styles/[name].css');
 const ExtractCriticalCSS  = new ExtractTextPlugin('styles/critical.php');
 
+if (process.env.NODE_ENV === undefined) {
+  process.env.NODE_ENV = isProduction ? 'production' : 'development';
+}
+
 const config = {
+  context: variables.assetsPath,
   entry: {
-    app: ['./assets/scripts/app.js', './assets/styles/critical.scss', './assets/styles/app.scss']
+    app: ['./scripts/app.js', './styles/critical.scss', './styles/app.scss']
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: /(scripts|node_modules)/,
         use: {
           loader: 'buble-loader', options: { objectAssign: 'Object.assign' }
         }
       },
       {
         test: /\.(css|scss|sass)$/,
-        include: path.join(__dirname, 'assets/styles'),
-        exclude: /critical.scss$/
+        include: variables.assetsPath,
+        exclude: /critical.scss$/,
         use: ExtractNormalCSS.extract({
           fallback: 'style-loader',
           use: [
             {loader: 'css-loader'},
             {
-              loader: 'postcss-loader'
-              options:{
+              loader: 'postcss-loader', options: {
                 config:{
-                  path: 'path/to/postcss.config.js'
-                }
-              }
+                  path: __dirname,
+                },
+              },
             },
             {loader: 'sass-loader'}
           ],
@@ -59,10 +68,22 @@ const config = {
       },
       {
         test: /critical.scss$/,
-        use: ExtractCriticalCSS.extract([ 'css-loader', 'sass-loader' ])
+        use: ExtractCriticalCSS.extract([ 'css-loader', 'sass-loader' ]),
+        include: variables.assetsPath
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|ico)$/,
+        include: variables.assetsPath,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {name: process.env.NODE_ENV === 'production' ? 'fonts/[name].[hash:6].[ext]' : 'fonts/[name].[ext]', publicPath: '../', limit: 8192}
+          }
+        ]
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
+        include: variables.assetsPath,
         use: [
           {
             loader: 'url-loader',
@@ -74,14 +95,7 @@ const config = {
   },
   output: {
     filename: process.env.NODE_ENV === 'production' ? 'scripts/[name].[chunkhash].js' : 'scripts/[name].js',
-    path: path.resolve(__dirname, 'app/dist')
-  },
-  resolve: {
-
-    alias: {
-      'styles': path.resolve(__dirname, 'assets/styles'),
-      'images': path.resolve(__dirname, 'assets/assets')
-    }
+    path: path.resolve(__dirname, variables.distPath)
   },
   plugins: [
     ExtractNormalCSS,
@@ -92,7 +106,7 @@ const config = {
       Popper: 'popper.js/dist/umd/popper.js'
     }),
     new CopyWebpackPlugin([{
-      from: 'assets/images/',
+      from: variables.assetsPath+'/images/',
       to: process.env.NODE_ENV === 'production' ? 'images/[name].[hash].[ext]' : 'images/[name].[ext]'
 
     }],{
@@ -101,7 +115,7 @@ const config = {
       ]
     }
   ),
-  new WebpackAssetsManifest()
+  new ManifestPlugin()
 ]
 };
 
@@ -115,18 +129,21 @@ if (process.env.NODE_ENV === 'production') {
       disable: process.env.NODE_ENV !== 'production',
       test: /\.(jpe?g|png|gif|svg)$/i
     }),
-    new CleanWebpackPlugin('app/dist/')
+    new CleanWebpackPlugin(variables.distPath,{
+      root: rootPath,
+      verbose: false,
+    })
   );
 }
 if (process.env.NODE_ENV === 'development') {
   config.plugins.push(
     new BrowserSyncPlugin({
-      proxy: localServer.path,
-      port: localServer.port,
+      proxy: variables.browserSyncPath,
+      port: variables.browserSyncPort,
       files: [
-        'app/**/*.php',
-        'app/dist/**/*.js',
-        'app/dist/**/*.css'
+        variables.publicPath+'/**/*.php',
+        variables.distPath+'/**/*.js',
+        variables.distPath+'/**/*.css'
       ],
       injectChanges: true,
       logFileChanges: true,
