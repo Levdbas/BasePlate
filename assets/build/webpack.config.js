@@ -18,7 +18,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const rootPath = process.cwd();
 const variables = {
   browserSyncPath: 'yoururl.dev',
-  browserSyncport: 3000,
+  browserSyncPort: 3000,
   publicPath: path.join(rootPath, 'app'), // from root folder path/to/theme
   distPath:   path.join(rootPath, 'app/dist'), // from root folder path/to/theme
   assetsPath: path.join(rootPath, 'assets'), // from root folder path/to/assets
@@ -77,12 +77,12 @@ const config = {
         use: [
           {
             loader: 'url-loader',
-            options: {name: process.env.NODE_ENV === 'production' ? 'fonts/[name].[hash:6].[ext]' : 'fonts/[name].[ext]', publicPath: '../', limit: 8192}
+            options: {name: process.env.NODE_ENV === 'production' ? 'images/[name].[hash:6].[ext]' : 'images/[name].[ext]', publicPath: '../', limit: 8192}
           }
         ]
       },
       {
-        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        test: /\.(eot|ttf|woff|woff2)$/,
         include: variables.assetsPath,
         use: [
           {
