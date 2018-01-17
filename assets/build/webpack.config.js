@@ -35,7 +35,7 @@ if (process.env.NODE_ENV === undefined) {
 const config = {
   context: variables.assetsPath,
   entry: {
-    app: ['./scripts/app.js', './styles/critical.scss', './styles/app.scss']
+    app: ['./entry.js', './styles/critical.scss', './styles/app.scss']
   },
   module: {
     rules: [
@@ -76,13 +76,13 @@ const config = {
         loader: 'url-loader',
         options: {
           limit: 4096,
-          name: process.env.NODE_ENV === 'production' ? '[path][name].[hash:6].[ext]' : '[path][name].[ext]',
+          name: process.env.NODE_ENV === 'production' ? '[path][name].[hash].[ext]' : '[path][name].[ext]',
         },
       },
     ]
   },
   output: {
-    filename: process.env.NODE_ENV === 'production' ? 'scripts/[name].[chunkhash].js' : 'scripts/[name].js',
+    filename: process.env.NODE_ENV === 'production' ? 'scripts/[name].[hash].js' : 'scripts/[name].js',
     path: path.resolve(__dirname, variables.distPath)
   },
   plugins: [
@@ -107,8 +107,13 @@ const config = {
       sourceMap: false,
       name: 'app',
       outputPath: 'scripts/',
-      fileName: process.env.NODE_ENV === 'production' ? '[name].[chunkhash].js' : '[name].js',
-      filesToConcat: ['jquery', 'bootstrap', 'popper.js/dist/umd/popper.js', './scripts/**']
+      fileName: process.env.NODE_ENV === 'production' ? '[name].[hash].js' : '[name].js',
+      filesToConcat: [
+        'jquery',
+         'bootstrap',
+         'popper.js/dist/umd/popper.js',
+         './scripts/**'
+       ]
     }),
     new CopyWebpackPlugin([
       {
