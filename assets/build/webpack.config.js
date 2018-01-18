@@ -35,7 +35,9 @@ if (process.env.NODE_ENV === undefined) {
 const config = {
   context: variables.assetsPath,
   entry: {
-    app: ['./entry.js', './styles/critical.scss', './styles/app.scss']
+    entry: './entry.js',
+    app: './styles/app.scss',
+    critical: './styles/critical.scss',
   },
   module: {
     rules: [
