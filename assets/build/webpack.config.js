@@ -65,6 +65,7 @@ const config = {
             },
             {loader: 'sass-loader'}
           ],
+          publicPath: '../',
         }),
       },
       {

@@ -1,6 +1,8 @@
 <?php
 
-define('DISALLOW_FILE_EDIT', true);
+if (!defined('DISALLOW_FILE_EDIT')) {
+    define('DISALLOW_FILE_EDIT', true);
+}
 remove_action( 'wp_head', 'feed_links', 2 );
 remove_action( 'wp_head', 'feed_links_extra', 3 );
 remove_action( 'wp_head', 'rsd_link' );
