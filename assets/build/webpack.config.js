@@ -23,8 +23,6 @@ const variables = {
   assetsPath: path.join(rootPath, 'assets'), // from root folder path/to/assets
 };
 
-
-
 const ExtractNormalCSS  = new ExtractTextPlugin(process.env.NODE_ENV === 'production' ? 'styles/[name].[chunkhash].css' : 'styles/[name].css');
 const ExtractCriticalCSS  = new ExtractTextPlugin('styles/critical.php');
 
@@ -89,22 +87,6 @@ const config = {
     path: path.resolve(__dirname, variables.distPath)
   },
   plugins: [
-    ExtractNormalCSS,
-    ExtractCriticalCSS,
-    new BrowserSyncPlugin({
-      proxy: variables.browserSyncURL,
-      port: variables.browserSyncPort,
-      delay: 500,
-      watch: true,
-      watchOptions: {
-        aggregateTimeout: 300,
-        poll: 1000,
-        ignored: /node_modules/,
-      },
-      files: [
-        variables.publicPath+'/**/*.php'
-      ],
-    }),
     new ConcatPlugin({
       uglify: process.env.NODE_ENV === 'production' ? true : false,
       sourceMap: false,
@@ -118,6 +100,23 @@ const config = {
          './scripts/**'
        ]
     }),
+    ExtractNormalCSS,
+    ExtractCriticalCSS,
+    new BrowserSyncPlugin({
+      host: 'localhost',
+      port: variables.browserSyncPort,
+      proxy: variables.browserSyncURL,
+      delay: 500,
+      watch: true,
+      watchOptions: {
+        aggregateTimeout: 300,
+        poll: 1000,
+        ignored: /node_modules/,
+      },
+      files: [
+        variables.publicPath+'/**/*.php'
+      ],
+    }),
     new CopyWebpackPlugin([
       {
         context: variables.assetsPath+'/images',
@@ -128,9 +127,8 @@ const config = {
       ignore: [
         '.gitkeep'
       ],
-      debug: 'debug',
       copyUnmodified: true,
-    },
+    }
   ),
   new ManifestPlugin()
 ]
