@@ -1,4 +1,0 @@
-/*
-This is the entry file. it can be used for advanced webpack functions.
-Regular JS files can be concanated via the ConcatPlugin in the webpack.config.js
-*/

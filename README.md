@@ -17,11 +17,11 @@ It comes with a custom WebPack build for compiling css, js, importing jQuery, Bo
 
 ## Installation
 
-To use BasePlate, you need to have PHP 7.0+ installed on your machine. You'll also need a recent version of [Node.js](https://nodejs.org/en) and [NPM](https://www.npmjs.com) installed if you want to use [Laravel Mix](https://laravel.com/docs/5.4/mix) to compile your CSS and Javascript and maintain your images.
+To use BasePlate, you need to have PHP 7.0+ installed on your machine. You'll also need a recent version of [Node.js](https://nodejs.org/en) installed if you want to use webpack to compile your CSS and Javascript and maintain your images.
 
 Install WordPress locally on your AMP stack with a virtual hostname, create a new folder in ```wp-content/themes``` with the desired name of your template. Clone the latest version of BasePlate inside your new folder.
 
-Next step is to set the proxy adress for BrowserSync in the webpack.mix.js file.
+Next step is to set the proxy adress for BrowserSync in the webpack.config.js file.
 
 To install required node modules:
 

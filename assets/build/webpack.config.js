@@ -4,7 +4,6 @@
 process.noDeprecation = true;
 const env = process.env.NODE_ENV;
 const path = require('path');
-const ConcatPlugin = require('webpack-concat-plugin');
 const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -33,15 +32,13 @@ if (process.env.NODE_ENV === undefined) {
 const config = {
   context: variables.assetsPath,
   entry: {
-    entry: './entry.js',
-    app: './styles/app.scss',
-    critical: './styles/critical.scss',
+    app: ['./scripts/app.js', './styles/critical.scss', './styles/app.scss']
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        exclude: /(scripts|node_modules)/,
+        exclude: /(node_modules)/,
         use: {
           loader: 'buble-loader', options: { objectAssign: 'Object.assign' }
         }
@@ -87,18 +84,10 @@ const config = {
     path: path.resolve(__dirname, variables.distPath)
   },
   plugins: [
-    new ConcatPlugin({
-      uglify: process.env.NODE_ENV === 'production' ? true : false,
-      sourceMap: false,
-      name: 'app',
-      outputPath: 'scripts/',
-      fileName: process.env.NODE_ENV === 'production' ? '[name].[hash].js' : '[name].js',
-      filesToConcat: [
-        'jquery',
-         'bootstrap',
-         'popper.js/dist/umd/popper.js',
-         './scripts/**'
-       ]
+    new webpack.ProvidePlugin({
+      $: 'jquery/dist/jquery.slim.js',
+      jQuery: 'jquery/dist/jquery.slim.js',
+      Popper: 'popper.js/dist/umd/popper.js'
     }),
     ExtractNormalCSS,
     ExtractCriticalCSS,
