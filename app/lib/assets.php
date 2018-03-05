@@ -8,6 +8,7 @@ function getAsset($asset) {
     $manifest = file_get_contents($manifest);
     $json = json_decode($manifest, true);
     $file = $json[$asset];
+    $file = get_template_directory_uri().'/dist/'.$file;
     return $file;
   }
   else{
@@ -28,10 +29,12 @@ add_action( 'wp_head', 'criticalstyles_in_header' );
 
 function scripts_in_footer(){
   wp_deregister_script('jquery');
-  wp_enqueue_style( 'BasePlate/css', get_template_directory_uri().'/dist/'.getAsset('app.css'));
-  wp_enqueue_script('BasePlate/js', get_template_directory_uri().'/dist/'.getAsset('app.js'), false, false);
+  wp_enqueue_style( 'BasePlate/css', getAsset('app.css'));
+  wp_enqueue_script('BasePlate/js',  getAsset('app.js'), false, false);
   if (is_single() && comments_open() && get_option('thread_comments')) {
     wp_enqueue_script('comment-reply');
   }
 }
 add_action('wp_enqueue_scripts', 'scripts_in_footer', 100);
+
+?>

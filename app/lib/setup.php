@@ -45,7 +45,7 @@ function add_featured_image_body_class( $classes ) {
 add_filter( 'body_class', 'add_featured_image_body_class' );
 
 
-if ( class_exists( 'TriggerBrowsersync' )  && strpos(get_site_url(), '.dev') !== false ) {
+if ( class_exists( 'TriggerBrowsersync' )  && strpos(get_site_url(), '.local') !== false ) {
   new TriggerBrowsersync();
 }
 
