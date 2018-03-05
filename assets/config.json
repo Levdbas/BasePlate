@@ -1,0 +1,6 @@
+{
+  "browserSyncURL": "yourdevurl.local",
+  "browserSyncPort": 3000,
+  "themePath": "app",
+  "assetsPath": "assets"
+}

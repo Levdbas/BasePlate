@@ -13,13 +13,14 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default
 const ManifestPlugin = require('webpack-manifest-plugin');
 const rootPath = process.cwd();
+var configFile = require(path.resolve(__dirname,rootPath)+'/assets/config.json');
 
 const variables = {
-  browserSyncURL: 'testenviroment.dev',
-  browserSyncPort: 3000,
-  publicPath: path.join(rootPath, 'app'), // from root folder path/to/theme
-  distPath:   path.join(rootPath, 'app/dist'), // from root folder path/to/theme
-  assetsPath: path.join(rootPath, 'assets'), // from root folder path/to/assets
+  browserSyncURL: configFile['browserSyncURL'],
+  browserSyncPort: configFile['browserSyncPort'],
+  themePath: path.join(rootPath, configFile['themePath']), // from root folder path/to/theme
+  distPath:   path.join(rootPath, configFile['themePath'], 'dist'), // from root folder path/to/theme
+  assetsPath: path.join(rootPath, configFile['assetsPath']), // from root folder path/to/assets
 };
 
 const ExtractNormalCSS  = new ExtractTextPlugin(process.env.NODE_ENV === 'production' ? 'styles/[name].[chunkhash].css' : 'styles/[name].css');
@@ -103,7 +104,7 @@ const config = {
         ignored: /node_modules/,
       },
       files: [
-        variables.publicPath+'/**/*.php'
+        variables.themePath+'/**/*.php'
       ],
     }),
     new CopyWebpackPlugin([
