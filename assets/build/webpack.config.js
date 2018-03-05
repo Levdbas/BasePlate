@@ -25,7 +25,7 @@ const variables = {
 // checks if build before this build was a production- or a development build.
 function checkBuild(){
   lastBuild = 'production';
-  if(path.resolve(__dirname, variables.distPath)+'/manifest.json' !== 'undefined'){
+  /*if(path.resolve(__dirname, variables.distPath)+'/manifest.json' !== null){
     var manifest = require(path.resolve(__dirname, variables.distPath)+'/manifest.json');
     var manifest = manifest['app.js']
     var array=manifest.split(".");
@@ -35,7 +35,7 @@ function checkBuild(){
     } else{
       lastBuild = "development";
     }
-  }
+  }*/
   return lastBuild;
 }
 
@@ -139,8 +139,17 @@ const config = {
       copyUnmodified: true,
     }
   ),
-  new ManifestPlugin()
+  new ManifestPlugin({
+    map: (file) => {
+        if (process.env.NODE_ENV === 'production') {
+            // Remove hash in manifest key
+            file.name = file.name.replace(/(\.[a-f0-9]{32})(\..*)$/, '$2');
+        }
+        return file;
+    },
+  })
 ]
+
 };
 
 // cleans dist folder after a production build.
