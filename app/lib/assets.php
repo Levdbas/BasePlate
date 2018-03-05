@@ -14,10 +14,10 @@ function getAsset($asset) {
     wp_die(__('Draai webpack voor de eerste keer om de manifest file te genereren', 'BasePlate'));
   }
 }
-function asset($asset){
+function the_asset($asset){
   echo getAsset($asset);
 }
-add_filter('asset', 'asset');
+add_filter('the_asset', 'the_asset');
 
 function criticalstyles_in_header() {
 	echo '<style>';
