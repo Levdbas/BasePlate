@@ -12,8 +12,8 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default
 const ManifestPlugin = require('webpack-manifest-plugin');
-
 const rootPath = process.cwd();
+
 const variables = {
   browserSyncURL: 'testenviroment.dev',
   browserSyncPort: 3000,
@@ -21,6 +21,23 @@ const variables = {
   distPath:   path.join(rootPath, 'app/dist'), // from root folder path/to/theme
   assetsPath: path.join(rootPath, 'assets'), // from root folder path/to/assets
 };
+
+// checks if build before this build was a production- or a development build.
+function checkBuild(){
+  lastBuild = 'production';
+  if(path.resolve(__dirname, variables.distPath)+'/manifest.json' !== 'undefined'){
+    var manifest = require(path.resolve(__dirname, variables.distPath)+'/manifest.json');
+    var manifest = manifest['app.js']
+    var array=manifest.split(".");
+    var length=array.length;
+    if(length==3){
+      lastBuild = "production";
+    } else{
+      lastBuild = "development";
+    }
+  }
+  return lastBuild;
+}
 
 const ExtractNormalCSS  = new ExtractTextPlugin(process.env.NODE_ENV === 'production' ? 'styles/[name].[chunkhash].css' : 'styles/[name].css');
 const ExtractCriticalCSS  = new ExtractTextPlugin('styles/critical.php');
@@ -84,6 +101,9 @@ const config = {
     path: path.resolve(__dirname, variables.distPath)
   },
   plugins: [
+    new webpack.DefinePlugin({
+      lastBuild: JSON.stringify(checkBuild()),
+    }),
     new webpack.ProvidePlugin({
       $: 'jquery/dist/jquery.slim.js',
       jQuery: 'jquery/dist/jquery.slim.js',
@@ -123,6 +143,15 @@ const config = {
 ]
 };
 
+// cleans dist folder after a production build.
+if (process.env.NODE_ENV === 'development' && lastBuild === 'production') {
+  config.plugins.push(
+    new CleanWebpackPlugin(variables.distPath,{
+      root: rootPath,
+      verbose: false,
+    })
+  );
+}
 if (process.env.NODE_ENV === 'production') {
   config.plugins.push(
     new OptimizeCssAssetsPlugin({
