@@ -12,6 +12,7 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default
 const ManifestPlugin = require('webpack-manifest-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const rootPath = process.cwd();
 var configFile = require(path.resolve(__dirname,rootPath)+'/assets/config.json');
 
@@ -134,6 +135,8 @@ const config = {
 
 if (process.env.NODE_ENV === 'production') {
   config.plugins.push(
+    new UglifyJsPlugin({
+    }),
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /(critical.php|\.css)$/i,
     }),
