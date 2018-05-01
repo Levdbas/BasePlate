@@ -95,7 +95,6 @@ const config = {
     ExtractCriticalCSS,
     new BrowserSyncPlugin({
       host: 'localhost',
-      port: variables.browserSyncPort,
       proxy: variables.browserSyncURL,
       delay: 500,
       watch: true,
