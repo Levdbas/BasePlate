@@ -1,5 +1,4 @@
 <?php
-
 function getAsset($asset) {
 
   // Look for the manifest file.
@@ -19,13 +18,6 @@ function the_asset($asset){
   echo getAsset($asset);
 }
 add_filter('the_asset', 'the_asset');
-
-function criticalstyles_in_header() {
-	echo '<style>';
-	include get_stylesheet_directory() . '/dist/styles/critical.php';
-	echo '</style>';
-}
-add_action( 'wp_head', 'criticalstyles_in_header' );
 
 function scripts_in_footer(){
   wp_deregister_script('jquery');

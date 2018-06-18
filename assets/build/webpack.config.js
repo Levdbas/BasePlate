@@ -5,7 +5,7 @@ process.noDeprecation = true;
 const env = process.env.NODE_ENV;
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
@@ -15,7 +15,6 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const rootPath = process.cwd();
 var configFile = require(path.resolve(__dirname,rootPath)+'/assets/config.json');
-
 const variables = {
   browserSyncURL: configFile['browserSyncURL'],
   browserSyncPort: configFile['browserSyncPort'],
@@ -23,10 +22,6 @@ const variables = {
   distPath:   path.join(rootPath, configFile['themePath'], 'dist'), // from root folder path/to/theme
   assetsPath: path.join(rootPath, configFile['assetsPath']), // from root folder path/to/assets
 };
-
-const ExtractNormalCSS  = new ExtractTextPlugin(process.env.NODE_ENV === 'production' ? 'styles/[name].[chunkhash].css' : 'styles/[name].css');
-const ExtractCriticalCSS  = new ExtractTextPlugin('styles/critical.php');
-
 if (process.env.NODE_ENV === undefined) {
   process.env.NODE_ENV = isProduction ? 'production' : 'development';
 }
@@ -34,41 +29,40 @@ if (process.env.NODE_ENV === undefined) {
 const config = {
   context: variables.assetsPath,
   entry: {
-    app: ['./scripts/app.js', './styles/critical.scss', './styles/app.scss']
+    app: ['./scripts/app.js', './styles/app.scss']
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        exclude: /(node_modules)/,
+        exclude: /node_modules/,
         use: {
-          loader: 'buble-loader', options: { objectAssign: 'Object.assign' }
+          loader: "babel-loader"
         }
       },
       {
-        test: /\.(css|scss|sass)$/,
-        include: variables.assetsPath,
-        exclude: /critical.scss$/,
-        use: ExtractNormalCSS.extract({
-          fallback: 'style-loader',
-          use: [
-            {loader: 'css-loader'},
-            {
-              loader: 'postcss-loader', options: {
-                config:{
-                  path: __dirname,
-                },
+        test: /\.scss$/,
+        use:  [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: MiniCssExtractPlugin.loader
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'postcss-loader', options: {
+              config:{
+                path: __dirname,
               },
             },
-            {loader: 'sass-loader'}
-          ],
-          publicPath: '../',
-        }),
-      },
-      {
-        test: /critical.scss$/,
-        use: ExtractCriticalCSS.extract([ 'css-loader', 'sass-loader' ]),
-        include: variables.assetsPath
+          },
+          {
+            loader: 'sass-loader'
+          }
+        ],
       },
       {
         test: /\.(ttf|eot|woff2?|png|jpe?g|gif|svg|ico)$/,
@@ -86,13 +80,14 @@ const config = {
     path: path.resolve(__dirname, variables.distPath)
   },
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: process.env.NODE_ENV === 'production' ? 'styles/[name].[chunkhash].css' : 'styles/[name].css',
+    }),
     new webpack.ProvidePlugin({
       $: 'jquery/dist/jquery.slim.js',
       jQuery: 'jquery/dist/jquery.slim.js',
       Popper: 'popper.js/dist/umd/popper.js'
     }),
-    ExtractNormalCSS,
-    ExtractCriticalCSS,
     new BrowserSyncPlugin({
       host: 'localhost',
       proxy: variables.browserSyncURL,

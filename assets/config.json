@@ -1,5 +1,5 @@
 {
-  "browserSyncURL": "yourdevurl.local",
+  "browserSyncURL": "testenviroment.local",
   "themePath": "app",
   "assetsPath": "assets"
 }
