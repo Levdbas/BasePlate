@@ -19,20 +19,18 @@ var configFile = require(path.resolve(__dirname,rootPath)+'/assets/config.json')
 const variables = {
   browserSyncURL: configFile['browserSyncURL'],
   browserSyncPort: configFile['browserSyncPort'],
+  sourceMaps: configFile['sourceMaps'],
   themePath: path.join(rootPath, configFile['themePath']), // from root folder path/to/theme
   distPath:   path.join(rootPath, configFile['themePath'], 'dist'), // from root folder path/to/theme
   assetsPath: path.join(rootPath, configFile['assetsPath']), // from root folder path/to/assets
 };
-if (process.env.NODE_ENV === undefined) {
-  process.env.NODE_ENV = isProduction ? 'production' : 'development';
-}
 
 const config = {
   context: variables.assetsPath,
   entry: {
     app: ['./scripts/app.js', './styles/app.scss']
   },
-  devtool: 'source-map',
+  devtool: variables.sourceMaps ? 'source-map': '',
   module: {
     rules: [
       {
@@ -51,23 +49,22 @@ const config = {
           {
             loader: 'css-loader',
             options: {
-              sourceMap: true,
+              sourceMap: variables.sourceMaps,
             },
           },
           {
-            loader: 'postcss-loader', options: {
+            loader: 'postcss-loader',
+            options: {
               config:{
                 path: __dirname,
               },
-              options: {
-                sourceMap: true,
-              },
+              sourceMap: variables.sourceMaps,
             },
           },
           {
             loader: 'sass-loader',
             options: {
-              sourceMap: true,
+              sourceMap: variables.sourceMaps,
             },
           }
         ],
@@ -134,19 +131,31 @@ const config = {
   })
 ],
 optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true // set to true if you want JS source maps
-      }),
-      new OptimizeCSSAssetsPlugin({}),
-      new ImageminPlugin({
-        disable: process.env.NODE_ENV !== 'production',
-        test: /\.(jpe?g|png|gif|svg)$/i
-      }),
-    ]
-  }
+  minimizer: [
+    new UglifyJsPlugin({
+      cache: true,
+      parallel: true,
+      sourceMap: variables.sourceMaps, // set to true if you want JS source maps
+      uglifyOptions: {
+        compress: true,
+        output: {
+          comments: false,
+        }
+      },
+    }),
+    new OptimizeCSSAssetsPlugin({
+      cssProcessorOptions: {
+        map: {
+          inline: false
+        }
+      }
+    }),
+    new ImageminPlugin({
+      disable: process.env.NODE_ENV !== 'production',
+      test: /\.(jpe?g|png|gif|svg)$/i
+    }),
+  ]
+}
 };
 if (process.env.NODE_ENV === 'production') {
   config.plugins.push(
