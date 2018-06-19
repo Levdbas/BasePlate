@@ -6,6 +6,9 @@ function getAsset($asset) {
   if (file_exists($manifest)){
     $manifest = file_get_contents($manifest);
     $json = json_decode($manifest, true);
+    if($asset == 'app.css' && !array_key_exists ('app.css', $json)):
+      return '';
+    endif;
     $file = $json[$asset];
     $file = get_template_directory_uri().'/dist/'.$file;
     return $file;
