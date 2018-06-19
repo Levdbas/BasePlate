@@ -3,11 +3,12 @@
 */
 process.noDeprecation = true;
 const env = process.env.NODE_ENV;
+const devMode = process.env.NODE_ENV !== 'production'
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default
@@ -31,6 +32,7 @@ const config = {
   entry: {
     app: ['./scripts/app.js', './styles/app.scss']
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -44,23 +46,29 @@ const config = {
         test: /\.scss$/,
         use:  [
           {
-            loader: 'style-loader'
+            loader: devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
           },
           {
-            loader: MiniCssExtractPlugin.loader
-          },
-          {
-            loader: 'css-loader'
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+            },
           },
           {
             loader: 'postcss-loader', options: {
               config:{
                 path: __dirname,
               },
+              options: {
+                sourceMap: true,
+              },
             },
           },
           {
-            loader: 'sass-loader'
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            },
           }
         ],
       },
@@ -70,18 +78,18 @@ const config = {
         loader: 'url-loader',
         options: {
           limit: 4096,
-          name: process.env.NODE_ENV === 'production' ? '[path][name].[hash].[ext]' : '[path][name].[ext]',
+          name: devMode  ? '[path][name].[ext]' : '[path][name].[hash].[ext]',
         },
       },
     ]
   },
   output: {
-    filename: process.env.NODE_ENV === 'production' ? 'scripts/[name].[hash].js' : 'scripts/[name].js',
+    filename: devMode ? 'scripts/[name].js' : 'scripts/[name].[hash].js',
     path: path.resolve(__dirname, variables.distPath)
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: process.env.NODE_ENV === 'production' ? 'styles/[name].[chunkhash].css' : 'styles/[name].css',
+      filename: devMode ? 'styles/[name].css' : 'styles/[name].[contenthash].css',
     }),
     new webpack.ProvidePlugin({
       $: 'jquery/dist/jquery.slim.js',
@@ -106,7 +114,7 @@ const config = {
       {
         context: variables.assetsPath+'/images',
         from: '**/*',
-        to: process.env.NODE_ENV === 'production' ? 'images/[name].[hash].[ext]' : 'images/[name].[ext]',
+        to: devMode ? 'images/[name].[ext]' : 'images/[name].[hash].[ext]',
       }
     ],{
       ignore: [
@@ -124,20 +132,24 @@ const config = {
       return file;
     },
   })
-]
+],
+optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true // set to true if you want JS source maps
+      }),
+      new OptimizeCSSAssetsPlugin({}),
+      new ImageminPlugin({
+        disable: process.env.NODE_ENV !== 'production',
+        test: /\.(jpe?g|png|gif|svg)$/i
+      }),
+    ]
+  }
 };
-
 if (process.env.NODE_ENV === 'production') {
   config.plugins.push(
-    new UglifyJsPlugin({
-    }),
-    new OptimizeCssAssetsPlugin({
-      assetNameRegExp: /(critical.php|\.css)$/i,
-    }),
-    new ImageminPlugin({
-      disable: process.env.NODE_ENV !== 'production',
-      test: /\.(jpe?g|png|gif|svg)$/i
-    }),
     new CleanWebpackPlugin(variables.distPath,{
       root: rootPath,
       verbose: false,
