@@ -6,27 +6,15 @@ body{
   background-attachment: fixed;
   background-position: center;
 }
-h1{
-
-}
-h2{
-
-}
 
 img{
-  max-width: 100%;
+  width: 100%;
+  height: auto;
 }
-p{
-  font-size: 22px;
-  line-height: 30px;
-}
-strong{
-  font-weight: bold;
-}
-
-a{
-  color: $color-secondary;
-  &:hover{
-    color: $color-secondary;
+.lazyload{
+  opacity: 0;
+  transition: opacity 0.4s ease 0.2s;
+  &[data-loaded="true"]{
+    opacity: 1;
   }
 }

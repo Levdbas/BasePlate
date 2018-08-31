@@ -1,10 +1,12 @@
 @import "~bootstrap/scss/bootstrap";
+//@import "bootstrap-custom";
 @import "~font-awesome/scss/font-awesome";
 
 @import "common/variables";
 @import "common/reset";
 @import "common/mixins";
 @import "common/base";
+@import "common/typography";
 
 @import "components/buttons";
 @import "components/comments";
@@ -17,4 +19,3 @@
 @import "layouts/footer";
 @import "layouts/pages";
 @import "layouts/posts";
-@import "layouts/tinymce";

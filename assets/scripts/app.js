@@ -5,7 +5,7 @@ Import individual plugins like so
 import 'bootstrap/js/dist/util';
 import 'bootstrap/js/dist/dropdown';
 * ======================================================================== */
-
+import lazyLoad from './lazyLoad';
 import exampleImport from './example-import';
 /* ========================================================================
 * DOM-based Routing
@@ -27,6 +27,7 @@ import exampleImport from './example-import';
     // All pages
     'common': {
       init: function() {
+        lazyLoad();
         exampleImport();
       },
       finalize: function() {
