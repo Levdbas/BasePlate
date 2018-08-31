@@ -1,3 +1,4 @@
+  <?php get_header(); ?>
   <main class="main">
     <div class="container">
       <?php _e('Sorry, but the page you were trying to view does not exist.', 'BasePlate'); ?>

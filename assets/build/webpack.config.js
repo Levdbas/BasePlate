@@ -11,11 +11,12 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ImageminPlugin = require('imagemin-webpack-plugin').default
+const ImageminPlugin = require('imagemin-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const rootPath = process.cwd();
 var configFile = require(path.resolve(__dirname,rootPath)+'/assets/config.json');
+
 const variables = {
   browserSyncURL: configFile['browserSyncURL'],
   browserSyncPort: configFile['browserSyncPort'],
@@ -30,7 +31,7 @@ const config = {
   entry: {
     app: ['./scripts/app.js', './styles/app.scss']
   },
-  devtool: variables.sourceMaps ? 'source-map': '',
+  devtool: variables.sourceMaps ? 'cheap-module-eval-source-map': false,
   module: {
     rules: [
       {
@@ -42,9 +43,10 @@ const config = {
       },
       {
         test: /\.scss$/,
+        exclude: /node_modules/,
         use:  [
           {
-            loader: devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+            loader: MiniCssExtractPlugin.loader,
           },
           {
             loader: 'css-loader',
@@ -56,9 +58,8 @@ const config = {
             loader: 'postcss-loader',
             options: {
               config:{
-                path: __dirname,
+                path: __dirname + '/postcss.config.js'
               },
-              sourceMap: variables.sourceMaps,
             },
           },
           {
@@ -82,9 +83,17 @@ const config = {
   },
   output: {
     filename: devMode ? 'scripts/[name].js' : 'scripts/[name].[hash].js',
-    path: path.resolve(__dirname, variables.distPath)
+    path: path.resolve(__dirname, variables.distPath),
+    pathinfo: false
   },
   plugins: [
+    new BrowserSyncPlugin({
+      host: 'localhost',
+      proxy: variables.browserSyncURL,
+      files: [
+        variables.themePath+'/**/*.php'
+      ],
+    }),
     new MiniCssExtractPlugin({
       filename: devMode ? 'styles/[name].css' : 'styles/[name].[contenthash].css',
     }),
@@ -92,13 +101,6 @@ const config = {
       $: 'jquery/dist/jquery.slim.js',
       jQuery: 'jquery/dist/jquery.slim.js',
       Popper: 'popper.js/dist/umd/popper.js'
-    }),
-    new BrowserSyncPlugin({
-      host: 'localhost',
-      proxy: variables.browserSyncURL,
-      files: [
-        variables.themePath+'/**/*.php'
-      ],
     }),
     new CopyWebpackPlugin([
       {
