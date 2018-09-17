@@ -44,7 +44,7 @@ add_action('wp_enqueue_scripts', 'scripts_in_footer', 100);
 function baseplate_lazyload_image($attachment_id, $size = 'thumbnail', $icon = false, $attr = '')
 {
     $html = '';
-    $html = wp_get_attachment_image($attachment_id, $size = 'thumbnail', $icon = false, $attr = '');
+    $html = wp_get_attachment_image($attachment_id, $size, $icon, $attr);
     $html = str_replace('src=', 'data-src=', $html);
     $html = str_replace('srcset=', 'data-srcset=', $html);
     $html = str_replace('class="', 'class="lazyload ', $html);
