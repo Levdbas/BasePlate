@@ -1,5 +1,12 @@
 <?php
 
+
+/**
+ * Returns the current path of the provided asset
+ *
+ * @param string $asset the name of the asset including the actual path
+ * @return string
+ */
 function get_asset($asset)
 {
     // Look for the manifest file.
@@ -14,21 +21,27 @@ function get_asset($asset)
         wp_die(__('Draai webpack voor de eerste keer om de manifest file te genereren', 'BasePlate'));
     }
 }
-
+/**
+ * Echoes get_asset
+ *
+ * @param string $asset the name of the asset including the actual path
+ * @return string
+ */
 function the_asset($asset)
 {
     echo get_asset($asset);
 }
 
 
-add_action('wp_head', 'criticalstyles_in_header');
-function criticalstyles_in_header()
+add_action('wp_head', 'critical_styles_in_header');
+function critical_styles_in_header()
 {
     echo '<style>';
     include get_stylesheet_directory() . '/dist/styles/critical.php';
     echo '</style>';
 }
 
+add_action('wp_enqueue_scripts', 'scripts_in_footer', 100);
 function scripts_in_footer()
 {
     wp_deregister_script('jquery');
@@ -37,27 +50,6 @@ function scripts_in_footer()
     if (is_single() && comments_open() && get_option('thread_comments')) {
         wp_enqueue_script('comment-reply');
     }
-}
-add_action('wp_enqueue_scripts', 'scripts_in_footer', 100);
-
-
-function baseplate_lazyload_image($attachment_id, $size = 'thumbnail', $icon = false, $attr = '')
-{
-    $html = '';
-    $html = wp_get_attachment_image($attachment_id, $size, $icon, $attr);
-    $html = str_replace('src=', 'data-src=', $html);
-    $html = str_replace('srcset=', 'data-srcset=', $html);
-    $html = str_replace('class="', 'class="lazyload ', $html);
-    return $html;
-}
-
-function baseplate_lazyload_bg_image($image_id, $size = 'large')
-{
-    $html       = '';
-    $term_image = wp_get_attachment_image_src($image_id, $size);
-    $term_image = $term_image[0];
-    $html       = 'data-background-image="' . $term_image . '"';
-    return $html;
 }
 
 add_filter('script_loader_tag', 'add_async_attribute', 10, 2);
@@ -77,6 +69,50 @@ function add_async_attribute($tag, $handle)
 }
 
 
+/**
+ * returns WP image from the library with lazyload attributes
+ *
+ * @param integer $attachment_id the ID of the media file you're calling
+ * @param string $size the size of the attachment to load. Standard sizes are: "thumbnail, medium, medium_large, large, full"
+ * @param boolean $icon Whether the image should be treated as an icon.
+ * @param string $attr  Attributes for the image markup.
+ * @return string HTML img element with lazyload class/data-scr or empty string on failure.
+ */
+function baseplate_lazyload_image($attachment_id, $size = 'thumbnail', $icon = false, $attr = '')
+{
+    $html = '';
+    $html = wp_get_attachment_image($attachment_id, $size, $icon, $attr);
+    $html = str_replace('src=', 'data-src=', $html);
+    $html = str_replace('srcset=', 'data-srcset=', $html);
+    $html = str_replace('class="', 'class="lazyload ', $html);
+    return $html;
+}
+
+/**
+ * returns image from media library in the form of a html
+ * class and data-background-image attibutes that you can include in html elements.
+ * Used for lazyloading background images.
+ *
+ * @param integer $attachment_id the ID of the media file you're calling
+ * @param string $size the size of the attachment to load. Standard sizes are: "thumbnail, medium, medium_large, large, full"
+ * @return string HTML with class="lazyload" data-background-image=""
+ */
+function baseplate_lazyload_bg_image($attachment_id, $size = 'large')
+{
+    $html       = '';
+    $term_image = wp_get_attachment_image_src($attachment_id, $size);
+    $term_image = $term_image[0];
+    $html       = 'data-background-image="' . $term_image . '"';
+    return $html;
+}
+
+
+/**
+ * adds lazyload attribute to all image loaded inside the_content()
+ *
+ * @param [type] $content
+ * @return void
+ */
 add_filter('the_content', 'baseplate_lazyload_content_images', 11);
 function baseplate_lazyload_content_images($content)
 {
@@ -88,4 +124,3 @@ function baseplate_lazyload_content_images($content)
     $content = preg_replace('/<img(.*?)(?!\bclass\b)(.*?)/i', '<img$1 class="lazyload"$2', $content);
     return $content;
 }
-?>

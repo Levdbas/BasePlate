@@ -2,48 +2,58 @@
 // http://codex.wordpress.org/CSS#WordPress_Generated_Classes
 
 // Media alignment
+
 .alignnone {
-  margin-left: 0;
-  margin-right: 0;
-  max-width: 100%;
-  height: auto;
+	height: auto;
+	margin-left: 0;
+	margin-right: 0;
+	max-width: 100%;
 }
+
 .aligncenter {
-  display: block;
-  margin: ($spacer / 2) auto;
-  height: auto;
+	display: block;
+	height: auto;
+	margin: ($spacer / 2) auto;
 }
+
 .alignleft,
 .alignright {
-  margin-bottom: ($spacer / 2);
-  height: auto;
+	height: auto;
+	margin-bottom: ($spacer / 2);
 }
+
 @include media-breakpoint-up(sm) {
-  // Only float if not on an extra small device
-  .alignleft {
-    float: left;
-    margin-right: ($spacer / 2);
-  }
-  .alignright {
-    float: right;
-    margin-left: ($spacer / 2);
-  }
+	// Only float if not on an extra small device
+
+	.alignleft {
+		float: left;
+		margin-right: ($spacer / 2);
+	}
+
+	.alignright {
+		float: right;
+		margin-left: ($spacer / 2);
+	}
 }
 
 // Captions
+
 .wp-caption {
-  @extend .figure;
+	@extend .figure;
 }
+
 .wp-caption img {
-  @extend .figure-img;
-  @extend .img-fluid;
+	@extend .figure-img;
+	@extend .img-fluid;
 }
+
 .wp-caption-text {
-  @extend .figure-caption;
+	@extend .figure-caption;
 }
 
 // Text meant only for screen readers
+
 .screen-reader-text {
-  @extend .sr-only;
-  @extend .sr-only-focusable;
+	@extend .sr-only;
+	@extend .sr-only-focusable;
 }

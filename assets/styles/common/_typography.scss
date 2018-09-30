@@ -1,21 +1,24 @@
-h1{
-
-}
-h2{
-
+h1 {
+	line-height: 1.2;
 }
 
-p{
-  font-size: 22px;
-  line-height: 30px;
-}
-strong{
-  font-weight: bold;
+h2 {
+	@extend h1;
 }
 
-a{
-  color: $color-secondary;
-  &:hover{
-    color: $color-secondary;
-  }
+p {
+	font-size: 22px;
+	line-height: 30px;
+}
+
+strong {
+	font-weight: bold;
+}
+
+a {
+	color: $color-secondary;
+
+	&:hover {
+		color: $color-secondary;
+	}
 }

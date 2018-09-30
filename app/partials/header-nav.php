@@ -4,7 +4,7 @@
   </button>
   <div class="collapse navbar-collapse justify-content-end" id="navigationbar">
     <?php
-    wp_nav_menu( array(
+    wp_nav_menu(array(
       'theme_location' => 'primary_navigation',
       'depth' => 3,
       'container' => false,
