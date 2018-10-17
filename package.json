@@ -4,75 +4,6 @@
 	"description": "Project short description.",
 	"license": "GPL-3.0",
 	"main": "app.js",
-	"stylelint": {
-		"extends": "stylelint-config-standard",
-		"plugins": [
-			"stylelint-order"
-		],
-		"rules": {
-			"no-empty-source": null,
-			"order/order": [
-				"custom-properties",
-				"declarations"
-			],
-			"order/properties-alphabetical-order": false,
-			"indentation": "tab",
-			"string-quotes": "double",
-			"no-duplicate-selectors": true,
-			"color-hex-case": "lower",
-			"color-hex-length": "long",
-			"selector-combinator-space-after": "always",
-			"selector-attribute-quotes": "always",
-			"selector-attribute-operator-space-before": "never",
-			"selector-attribute-operator-space-after": "never",
-			"selector-attribute-brackets-space-inside": "never",
-			"declaration-block-trailing-semicolon": "always",
-			"declaration-colon-space-before": "never",
-			"max-nesting-depth": 6,
-			"declaration-colon-space-after": "always",
-			"property-no-vendor-prefix": true,
-			"value-no-vendor-prefix": true,
-			"number-leading-zero": "always",
-			"function-url-quotes": "always",
-			"font-weight-notation": "named-where-possible",
-			"comment-empty-line-before": "always",
-			"at-rule-no-vendor-prefix": true,
-			"rule-empty-line-before": "always",
-			"selector-pseudo-class-parentheses-space-inside": "always",
-			"unit-whitelist": [
-				"em",
-				"rem",
-				"vw",
-				"vh",
-				"px",
-				"%",
-				"s",
-				"deg"
-			],
-			"at-rule-no-unknown": [
-				true,
-				{
-					"ignoreAtRules": [
-						"extend",
-						"at-root",
-						"debug",
-						"warn",
-						"error",
-						"if",
-						"else",
-						"for",
-						"each",
-						"while",
-						"mixin",
-						"include",
-						"content",
-						"return",
-						"function"
-					]
-				}
-			]
-		}
-	},
 	"scripts": {
 		"dev": "npm run development",
 		"development": "cross-env NODE_ENV=development webpack --progress --hide-modules --config assets/build/webpack.config.js",
@@ -80,6 +11,7 @@
 		"production": "cross-env NODE_ENV=production webpack --progress --hide-modules --config assets/build/webpack.config.js"
 	},
 	"devDependencies": {
+		"@prettier/plugin-php": "^0.9.0",
 		"autoprefixer": "^9.1",
 		"browser-sync": "^2.24",
 		"browser-sync-webpack-plugin": "^2.2",

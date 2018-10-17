@@ -1,0 +1,74 @@
+{
+    "extends": [
+      	"stylelint-config-standard",
+         "./node_modules/prettier-stylelint/config.js"
+    ],
+    "plugins": [
+        "stylelint-order"
+    ],
+    "rules": {
+        "no-empty-source": null,
+        "order/order": [
+            "custom-properties",
+            "declarations"
+        ],
+        "order/properties-alphabetical-order": false,
+        "indentation": "tab",
+        "string-quotes": "double",
+        "no-duplicate-selectors": null,
+        "color-hex-case": "lower",
+        "color-hex-length": "long",
+        "selector-combinator-space-after": "always",
+        "selector-attribute-quotes": "always",
+        "selector-attribute-operator-space-before": "never",
+        "selector-attribute-operator-space-after": "never",
+        "selector-attribute-brackets-space-inside": "never",
+        "declaration-block-trailing-semicolon": "always",
+        "declaration-colon-space-before": "never",
+        "max-nesting-depth": 6,
+        "declaration-colon-space-after": "always",
+        "property-no-vendor-prefix": true,
+        "value-no-vendor-prefix": true,
+        "number-leading-zero": "always",
+        "function-url-quotes": "always",
+        "font-weight-notation": "named-where-possible",
+        "comment-empty-line-before": "always",
+        "at-rule-no-vendor-prefix": true,
+        "rule-empty-line-before": "always",
+        "selector-pseudo-class-parentheses-space-inside": "always",
+        "declaration-block-no-duplicate-properties": true,
+        "no-descending-specificity": null,
+        "unit-whitelist": [
+            "em",
+            "rem",
+            "vw",
+            "vh",
+            "px",
+            "%",
+            "s",
+            "deg"
+        ],
+        "at-rule-no-unknown": [
+            true,
+            {
+                "ignoreAtRules": [
+                    "extend",
+                    "at-root",
+                    "debug",
+                    "warn",
+                    "error",
+                    "if",
+                    "else",
+                    "for",
+                    "each",
+                    "while",
+                    "mixin",
+                    "include",
+                    "content",
+                    "return",
+                    "function"
+                ]
+            }
+        ]
+    }
+}
