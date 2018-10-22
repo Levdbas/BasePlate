@@ -21,25 +21,6 @@ add_action('after_setup_theme', 'setup');
 
 
 
-function my_admin_menu()
-{
-    remove_menu_page('link-manager.php');
-    remove_menu_page('edit-comments.php');
-    remove_menu_page('edit.php');
-    remove_menu_page('post-new.php');
-}
-add_action('admin_menu', 'my_admin_menu');
-
-// new posts verwijderen uit admin bar
-function remove_wp_nodes()
-{
-    global $wp_admin_bar;
-    $wp_admin_bar->remove_node('new-post');
-}
-add_action('admin_bar_menu', 'remove_wp_nodes', 999);
-
-
-
 function add_featured_image_body_class($classes)
 {
     global $post;
