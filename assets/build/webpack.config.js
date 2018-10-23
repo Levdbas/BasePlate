@@ -30,6 +30,7 @@ const config = {
     context: variables.assetsPath,
     entry: {
         app: ['./scripts/app.js', './styles/app.scss'],
+        blocks: ['./scripts/blocks/blocks.js'],
     },
     devtool: variables.sourceMaps ? 'cheap-module-eval-source-map' : false,
     module: {
@@ -39,6 +40,15 @@ const config = {
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
+                    options: {
+                        // @remove-on-eject-begin
+                        babelrc: false,
+                        // @remove-on-eject-end
+                        // This is a feature of `babel-loader` for webpack (not Babel itself).
+                        // It enables caching results in ./node_modules/.cache/babel-loader/
+                        // directory for faster rebuilds.
+                        cacheDirectory: true,
+                    },
                 },
             },
             {
