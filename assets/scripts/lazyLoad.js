@@ -1,6 +1,6 @@
 import lozad from 'lozad'
 function lazyLoad() {
-    observer = lozad('.lazyload', {
+    var observer = lozad('.lazyload', {
         rootMargin: '15px 0px', // syntax similar to that of CSS Margin
         threshold: 0.1,
         loaded: function(el) {
