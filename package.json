@@ -35,10 +35,14 @@
         "node-sass": "^4.9.3",
         "optimize-css-assets-webpack-plugin": "^5.0.1",
         "postcss-loader": "^3.0.0",
+        "prettier": "^1.14.3",
+        "prettier-stylelint": "^0.4.2",
         "sass-loader": "^7.1.0",
         "style-loader": "^0.23.0",
         "stylelint-config-standard": "^18.2",
+        "stylelint-config-prettier": "^4.0",
         "stylelint-order": "^1.0",
+        "stylelint-prettier": "^1.0.3",
         "uglifyjs-webpack-plugin": "^2.0.1",
         "url-loader": "^1.1.1",
         "webpack": "^4.17.1",
@@ -50,7 +54,6 @@
         "font-awesome": "^4.7.0",
         "jquery": "^3.3.1",
         "lozad": "^1.6",
-        "popper.js": "^1.14.4",
-        "uglify-es": "^3.3.9"
+        "popper.js": "^1.14.4"
     }
 }

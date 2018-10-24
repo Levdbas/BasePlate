@@ -3,7 +3,9 @@
 $basePlate_includes = [
   'lib/cleanup.php',     // Theme setup
   'lib/setup.php',     // Theme setup
-  'lib/assets.php',     // Theme setup
+  'lib/assets.php',     // Theme asset functions
+  'lib/lazyload.php', // lazyload functionality
+  'lib/blocks.php', // Gutengerb blocks
   '/lib/wp_bootstrap_navwalker.php',    // navwalker
   'lib/extras.php',    // Custom functions
   'lib/sidebars.php' // Theme sidebars

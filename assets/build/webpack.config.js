@@ -30,7 +30,8 @@ const config = {
     context: variables.assetsPath,
     entry: {
         app: ['./scripts/app.js', './styles/app.scss'],
-        blocks: ['./scripts/blocks/blocks.js'],
+        editor: ['./styles/gutenberg/editor.scss'],
+        blocks: ['./styles/gutenberg/blocks.scss'],
     },
     devtool: variables.sourceMaps ? 'cheap-module-eval-source-map' : false,
     module: {
@@ -143,7 +144,7 @@ const config = {
             // include all types of chunks
             chunks: 'all',
             automaticNameDelimiter: '-',
-            name: 'bundle',
+            name: 'vendor',
         },
         minimizer: [
             new UglifyJsPlugin({
