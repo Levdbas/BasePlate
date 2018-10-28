@@ -1,0 +1,10 @@
+@import "common/variables";
+@import "common/mixins";
+
+.edit-post-visual-editor {
+	@import "bootstrap-custom";
+	@import "common/reset";
+	@import "gutenberg/gutenberg-styles";
+	@import "common/styleguide";
+	@import "gutenberg/blocks";
+}

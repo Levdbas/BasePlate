@@ -1,21 +1,19 @@
 //@import "~bootstrap/scss/bootstrap";
 //@import "~font-awesome/scss/font-awesome";
 @import "bootstrap-custom";
-
 @import "common/variables";
-@import "common/reset";
 @import "common/mixins";
 @import "common/base";
-@import "common/typography";
-
+@import "common/reset";
+@import "common/styleguide";
 @import "components/buttons";
 @import "components/comments";
 @import "components/forms";
 @import "components/wp-classes";
-
 @import "layouts/header";
 @import "layouts/navs";
 @import "layouts/sidebar";
 @import "layouts/footer";
 @import "layouts/pages";
 @import "layouts/posts";
+@import "gutenberg/blocks";

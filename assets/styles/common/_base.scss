@@ -1,20 +1,47 @@
-::selection{
-  background: $color-secondary;
-  color:white;
+%base-style {
+	color: $base-color;
+	font-family: sans-serif;
+	font-size: 16px;
+	font-weight: normal;
+	line-height: 1.4;
+	margin: 0;
 }
-body{
 
+%button {
+	background: $color-primary;
+	border-color: $color-primary;
+	border-radius: 35px;
+	border-style: solid;
+	border-width: 2px;
+	color: $base-color;
+	display: inline-block;
+	font-size: 24px;
+	font-weight: bold;
+	line-height: 26px;
+	margin-bottom: 15px;
+	margin-right: 30px;
+	padding: 15px 0;
+	text-align: center;
+	text-transform: uppercase;
+	transition: all ease 0.3s;
+	width: 100%;
+
+	&:last-of-type {
+		margin-right: 0;
+	}
+
+	&:hover {
+		background: $color-secondary;
+		color: $base-color;
+		text-decoration: none;
+	}
 }
 
-img{
-  display: block;
-  width: 100%;
-  height: auto;
-}
-.lazyload{
-  opacity: 0;
-  transition: opacity 0.4s ease 0.2s;
-  &[data-loaded="true"]{
-    opacity: 1;
-  }
+.lazyload {
+	opacity: 0;
+	transition: opacity 0.4s ease 0.2s;
+
+	&[data-loaded="true"] {
+		opacity: 1;
+	}
 }

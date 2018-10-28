@@ -30,8 +30,7 @@ const config = {
     context: variables.assetsPath,
     entry: {
         app: ['./scripts/app.js', './styles/app.scss'],
-        editor: ['./styles/gutenberg/editor.scss'],
-        blocks: ['./styles/gutenberg/blocks.scss'],
+        gutenberg: ['./styles/gutenberg.scss'],
     },
     devtool: variables.sourceMaps ? 'cheap-module-eval-source-map' : false,
     module: {

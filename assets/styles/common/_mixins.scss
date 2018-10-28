@@ -1,32 +1,34 @@
-@mixin clearfix() {
-  &::after {
-    display: block;
-    content: "";
-    clear: both;
-  }
-}
 @mixin vertical-align {
-    position: relative;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
 }
-
 
 @mixin aspect-ratio($width, $height) {
-  position: relative;
-  &:before {
-    display: block;
-    content: "";
-    width: 100%;
-    padding-top: ($height / $width) * 100%;
-  }
-  > .content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
+	position: relative;
+
+	&::before {
+		content: "";
+		display: block;
+		padding-top: ($height / $width) * 100%;
+		width: 100%;
+	}
+
+	> .content {
+		bottom: 0;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+}
+
+@mixin transition($property) {
+	transition: $property 0.4s ease-in;
+}
+
+@mixin pxtorem($size) {
+	$remSize: $size / 16px;
+
+	font-size: $remSize;
 }
