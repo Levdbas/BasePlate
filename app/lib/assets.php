@@ -27,15 +27,15 @@ function scripts_in_footer()
 
 function baseplate_editor_assets()
 {
-    // Scripts.
-    wp_enqueue_script(
-        'baseplate-block-js', // Handle.
-        plugins_url('/dist/blocks.build.js', dirname(__FILE__)), // Block.build.js: We register the block here. Built with Webpack.
-        array('wp-blocks', 'wp-i18n', 'wp-element'), // Dependencies, defined above.
-        wp_get_theme()->Version,
-        true // Enqueue the script in the footer.
-    );
-
+    /* Scripts.
+  wp_enqueue_script(
+      'baseplate-block-js', // Handle.
+      plugins_url('/dist/blocks.build.js', dirname(__FILE__)), // Block.build.js: We register the block here. Built with Webpack.
+      array('wp-blocks', 'wp-i18n', 'wp-element'), // Dependencies, defined above.
+      wp_get_theme()->Version,
+      true // Enqueue the script in the footer.
+  );
+  */
     // Styles.
     wp_enqueue_style(
         'baseplate-block-editor-css', // Handle.
