@@ -14,6 +14,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ImageminPlugin = require('imagemin-webpack-plugin').default
 const ManifestPlugin = require('webpack-manifest-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const ReplaceInFileWebpackPlugin = require('replace-in-file-webpack-plugin')
+const WebpackAutoInject = require('webpack-auto-inject-version')
 const rootPath = process.cwd()
 var configFile = require(path.resolve(__dirname, rootPath) + '/assets/config.json')
 
@@ -42,12 +44,7 @@ const config = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        // @remove-on-eject-begin
                         babelrc: false,
-                        // @remove-on-eject-end
-                        // This is a feature of `babel-loader` for webpack (not Babel itself).
-                        // It enables caching results in ./node_modules/.cache/babel-loader/
-                        // directory for faster rebuilds.
                         cacheDirectory: true,
                     },
                 },
@@ -87,13 +84,13 @@ const config = {
                 loader: 'url-loader',
                 options: {
                     limit: 4096,
-                    name: devMode ? '[path][name].[ext]' : '[path][name].[hash].[ext]',
+                    name: '[path][name].[ext]',
                 },
             },
         ],
     },
     output: {
-        filename: devMode ? 'scripts/[name].js' : 'scripts/[name].[hash].js',
+        filename: 'scripts/[name].js',
         path: path.resolve(__dirname, variables.distPath),
         pathinfo: false,
     },
@@ -108,20 +105,46 @@ const config = {
                 injectCss: true,
             }
         ),
+        new WebpackAutoInject({
+            // options
+            // example:
+            components: {
+                InjectAsComment: false,
+                AutoIncreaseVersion: true,
+                InjectByTag: false,
+            },
+        }),
+        new ReplaceInFileWebpackPlugin([
+            {
+                dir: variables.themePath,
+                files: ['style.css'],
+                rules: [
+                    {
+                        search: /(\d+\.)(\d+(.*))/,
+                        replace: function(match) {
+                            var version = JSON.stringify(require(rootPath + '/package.json').version)
+                            var version = version.replace(/['"]+/g, '')
+                            return version
+                        },
+                    },
+                ],
+            },
+        ]),
         new MiniCssExtractPlugin({
-            filename: devMode ? 'styles/[name].css' : 'styles/[name].[contenthash].css',
+            filename: 'styles/[name].css',
         }),
         new webpack.ProvidePlugin({
             $: 'jquery/dist/jquery.slim.js',
             jQuery: 'jquery/dist/jquery.slim.js',
             Popper: 'popper.js/dist/umd/popper.js',
         }),
+
         new CopyWebpackPlugin(
             [
                 {
                     context: variables.assetsPath + '/images',
                     from: '**/*',
-                    to: devMode ? 'images/[name].[ext]' : 'images/[name].[hash].[ext]',
+                    to: 'images/[name].[ext]',
                 },
             ],
             {
@@ -129,19 +152,11 @@ const config = {
                 copyUnmodified: true,
             }
         ),
-        new ManifestPlugin({
-            map: file => {
-                if (process.env.NODE_ENV === 'production') {
-                    // Remove hash in manifest key
-                    file.name = file.name.replace(/(\.[a-f0-9]{32})(\..*)$/, '$2')
-                }
-                return file
-            },
-        }),
+        new ManifestPlugin({}),
     ],
     optimization: {
+        removeEmptyChunks: false,
         splitChunks: {
-            // include all types of chunks
             chunks: 'all',
             automaticNameDelimiter: '-',
             name: 'vendor',
@@ -149,7 +164,7 @@ const config = {
         minimizer: [
             new UglifyJsPlugin({
                 cache: true,
-                sourceMap: variables.sourceMaps, // set to true if you want JS source maps
+                sourceMap: variables.sourceMaps,
                 uglifyOptions: {
                     compress: true,
                     output: {
