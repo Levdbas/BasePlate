@@ -24,11 +24,9 @@
         "babel-loader": "^8.0.0",
         "browser-sync": "~2.26",
         "browser-sync-webpack-plugin": "^2.2.2",
-        "clean-webpack-plugin": "^0.1.19",
         "copy-webpack-plugin": "^4.5.2",
         "cross-env": "^5.2.0",
         "css-loader": "^1.0.0",
-        "fast-sass-loader": "^1.4.6",
         "file-loader": "^2.0.0",
         "imagemin-webpack-plugin": "^2.2.0",
         "mini-css-extract-plugin": "^0.4.2",
@@ -49,8 +47,7 @@
         "url-loader": "^1.1.1",
         "webpack": "^4.17.1",
         "webpack-auto-inject-version": "^1.2.2",
-        "webpack-cli": "^3.1.0",
-        "webpack-manifest-plugin": "^2.0.3"
+        "webpack-cli": "^3.1.0"
     },
     "dependencies": {
         "bootstrap": "^4.1",

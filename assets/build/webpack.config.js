@@ -12,7 +12,6 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ImageminPlugin = require('imagemin-webpack-plugin').default
-const ManifestPlugin = require('webpack-manifest-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const ReplaceInFileWebpackPlugin = require('replace-in-file-webpack-plugin')
 const WebpackAutoInject = require('webpack-auto-inject-version')
@@ -152,7 +151,6 @@ const config = {
                 copyUnmodified: true,
             }
         ),
-        new ManifestPlugin({}),
     ],
     optimization: {
         removeEmptyChunks: false,
@@ -185,13 +183,5 @@ const config = {
             }),
         ],
     },
-}
-if (process.env.NODE_ENV === 'production') {
-    config.plugins.push(
-        new CleanWebpackPlugin(variables.distPath, {
-            root: rootPath,
-            verbose: false,
-        })
-    )
 }
 module.exports = config
