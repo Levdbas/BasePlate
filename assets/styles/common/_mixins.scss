@@ -30,5 +30,18 @@
 @mixin pxtorem($size) {
 	$remSize: $size / 16px;
 
-	font-size: $remSize;
+	font-size: #{$remSize}rem;
+}
+
+@mixin columns($number) {
+	flex: 0 0 (100% / $number);
+	max-width: (100% / $number);
+}
+
+@mixin align-element-full-left($max-widths: $container-max-widths, $breakpoints: $grid-breakpoints) {
+	@each $breakpoint, $container-max-width in $max-widths {
+		@include media-breakpoint-up($breakpoint, $breakpoints) {
+			left: calc(((100vw - #{$container-max-width}) / 2) * -1 - 15px);
+		}
+	}
 }

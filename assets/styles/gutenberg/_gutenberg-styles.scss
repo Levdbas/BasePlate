@@ -1,21 +1,28 @@
 &,
 & p {
-	//@extend %base-style;
+	@extend %base-style;
 }
 
-.edit-post-visual-editor .editor-block-list__block[data-align="wide"] {
+.editor-block-list__block[data-align="wide"] {
 	max-width: 1300px !important;
 }
 
-.edit-post-visual-editor .editor-block-list__block[data-align="full"] {
+.editor-block-list__block[data-align="full"] {
 	margin: 0 auto;
 	max-width: 100% !important;
 }
 
 @media screen and (min-width: 768px) {
 
-	.edit-post-visual-editor .editor-post-title,
-	.edit-post-visual-editor .editor-block-list__block {
+	.editor-post-title,
+	.editor-block-list__block {
 		max-width: 1100px !important;
 	}
+}
+
+// fix where our custom align full width classes would overflow the editor.
+
+.alignfull {
+	left: 0 !important;
+	width: 100% !important;
 }

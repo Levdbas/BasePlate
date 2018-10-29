@@ -2,7 +2,7 @@
 ---------------------------------------------------------------------------------------------------- */
 
 ::selection {
-	background: $color-secondary;
+	background: $highlight2;
 	color: white;
 }
 
@@ -10,13 +10,15 @@
 --------------------------------------------- */
 
 body {
+	overflow-x: hidden;
+
 	@extend %base-style;
 }
 
 a {
 	@include transition(all);
 
-	color: $color-primary;
+	color: $highlight1;
 	text-decoration: none;
 
 	&:hover {
@@ -40,7 +42,7 @@ ul {
 
 code,
 pre {
-	font-size: 12px;
+	@include pxtorem(14px);
 }
 
 code {
@@ -78,13 +80,20 @@ cite {
 --------------------------------------------- */
 
 p {
+	@include pxtorem(16px);
+
+	line-height: 1.4;
 	margin: 0 0 $base-margin;
 	padding: 0;
 
 	&.large,
 	&.wp-block-subhead,
 	&.has-large-font-size {
-		@include font-sizes(18px, null, 20px);
+		@include pxtorem(18px);
+
+		@include media-breakpoint-up(lg) {
+			@include pxtorem(20px);
+		}
 
 		font-style: normal;
 		opacity: 1;
@@ -187,37 +196,37 @@ h6 {
 	padding: 0;
 
 	a {
-		color: $color-primary;
+		color: $highlight1;
 
 		&:hover {
-			color: $color-secondary;
+			color: $highlight2;
 			text-decoration: none;
 		}
 	}
 }
 
 h1 {
-	@include font-sizes(30px, 36px, 40px);
+	//@include font-sizes(30px, 36px, 40px);
 }
 
 h2 {
-	@include font-sizes(24px, 30px, 36px);
+	//@include font-sizes(24px, 30px, 36px);
 }
 
 h3 {
-	@include font-sizes(20px, 24px, 30px);
+	//	@include font-sizes(20px, 24px, 30px);
 }
 
 h4 {
-	@include font-sizes(18px, 20px, 24px);
+	//	@include font-sizes(18px, 20px, 24px);
 }
 
 h5 {
-	@include font-sizes(16px, 18px, 20px);
+	//	@include font-sizes(16px, 18px, 20px);
 }
 
 h6 {
-	@include font-sizes(16px, 18px);
+	//	@include font-sizes(16px, 18px);
 }
 
 /* Objects
