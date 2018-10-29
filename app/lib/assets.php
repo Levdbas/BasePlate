@@ -1,14 +1,16 @@
 <?php
 function get_asset($asset)
 {
-    if (file_exists(get_template_directory() . '/dist/')) {
-        $file = get_template_directory_uri() . '/dist/' . $asset;
-        if (!strpos($asset, 'styles') || !strpos($asset, 'scripts')):
-            $file .= '?ver=' . wp_get_theme()->Version;
-        endif;
+    // Look for the manifest file.
+    $manifest = __DIR__ . '/../dist/manifest.json';
+    if (file_exists($manifest)) {
+        $manifest = file_get_contents($manifest);
+        $json = json_decode($manifest, true);
+        $file = $json[$asset];
+        $file = get_template_directory_uri() . '/dist/' . $file;
         return $file;
     } else {
-        wp_die(__('Draai webpack voor de eerste keer om de dist folder te genereren', 'BasePlate'));
+        wp_die(__('Draai webpack voor de eerste keer om de manifest file te genereren', 'BasePlate'));
     }
 }
 
@@ -20,9 +22,9 @@ function the_asset($asset)
 function scripts_in_footer()
 {
     wp_deregister_script('jquery');
-    wp_enqueue_style('BasePlate/css', get_asset('styles/app.css'), false, wp_get_theme()->Version);
-    wp_enqueue_script('BasePlate/vendor', get_asset('scripts/vendor.js'), false, wp_get_theme()->Version);
-    wp_enqueue_script('BasePlate/js', get_asset('scripts/app.js'), false, wp_get_theme()->Version);
+    wp_enqueue_style('BasePlate/css', get_asset('app.css'), false);
+    wp_enqueue_script('BasePlate/vendor', get_asset('vendor.js'), false);
+    wp_enqueue_script('BasePlate/js', get_asset('app.js'), 'BasePlate/vendor');
 }
 
 function baseplate_editor_assets()
@@ -37,21 +39,7 @@ function baseplate_editor_assets()
   );
   */
     // Styles.
-    wp_enqueue_style(
-        'baseplate-block-editor-css', // Handle.
-        get_asset('styles/editor.css'), // Block editor CSS.
-        array('wp-edit-blocks'), // Dependency to include the CSS after it.
-        wp_get_theme()->Version
-    );
-}
-function baseplate_block_assets()
-{
-    // Styles.
-    wp_enqueue_style(
-        'baseplate-style-css', // Handle.
-        get_asset('blocks.css'), // Block style CSS.
-        array('wp-blocks') // Dependency to include the CSS after it.
-    );
+    wp_enqueue_style('baseplate-block-editor-css', get_asset('gutenberg.css'), array('wp-edit-blocks'));
 }
 
 function add_async_attribute($tag, $handle)
@@ -68,6 +56,5 @@ function add_async_attribute($tag, $handle)
 }
 add_filter('script_loader_tag', 'add_async_attribute', 10, 2);
 add_action('wp_enqueue_scripts', 'scripts_in_footer', 100);
-add_action('enqueue_block_assets', 'baseplate_block_assets');
 add_action('enqueue_block_editor_assets', 'baseplate_editor_assets');
 ?>

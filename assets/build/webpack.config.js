@@ -7,13 +7,13 @@ const devMode = process.env.NODE_ENV !== 'production'
 const path = require('path')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ImageminPlugin = require('imagemin-webpack-plugin').default
+const ManifestPlugin = require('webpack-manifest-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const ReplaceInFileWebpackPlugin = require('replace-in-file-webpack-plugin')
-const WebpackAutoInject = require('webpack-auto-inject-version')
 const rootPath = process.cwd()
 var configFile = require(path.resolve(__dirname, rootPath) + '/assets/config.json')
 
@@ -81,13 +81,13 @@ const config = {
                 loader: 'url-loader',
                 options: {
                     limit: 4096,
-                    name: '[path][name].[ext]',
+                    name: devMode ? '[path][name].[ext]' : '[path][name].[hash].[ext]',
                 },
             },
         ],
     },
     output: {
-        filename: 'scripts/[name].js',
+        filename: devMode ? 'scripts/[name].js' : 'scripts/[name].[hash].js',
         path: path.resolve(__dirname, variables.distPath),
         pathinfo: false,
     },
@@ -102,46 +102,31 @@ const config = {
                 injectCss: true,
             }
         ),
-        new WebpackAutoInject({
-            // options
-            // example:
-            components: {
-                InjectAsComment: false,
-                AutoIncreaseVersion: true,
-                InjectByTag: false,
-            },
-        }),
-        new ReplaceInFileWebpackPlugin([
-            {
-                dir: variables.themePath,
-                files: ['style.css'],
-                rules: [
-                    {
-                        search: /(\d+\.)(\d+(.*))/,
-                        replace: function(match) {
-                            var version = JSON.stringify(require(rootPath + '/package.json').version)
-                            var version = version.replace(/['"]+/g, '')
-                            return version
-                        },
-                    },
-                ],
-            },
-        ]),
         new MiniCssExtractPlugin({
-            filename: 'styles/[name].css',
+            filename: devMode ? 'styles/[name].css' : 'styles/[name].[contenthash].css',
         }),
         new webpack.ProvidePlugin({
             $: 'jquery/dist/jquery.slim.js',
             jQuery: 'jquery/dist/jquery.slim.js',
             Popper: 'popper.js/dist/umd/popper.js',
+            Alert: 'exports-loader?Alert!bootstrap/js/dist/alert',
+            Button: 'exports-loader?Button!bootstrap/js/dist/button.js',
+            Carousel: 'exports-loader?Carousel!bootstrap/js/dist/carousel.js',
+            Collapse: 'exports-loader?Collapse!bootstrap/js/dist/collapse.js',
+            Dropdown: 'exports-loader?Dropdown!bootstrap/js/dist/dropdown.js',
+            Modal: 'exports-loader?Modal!bootstrap/js/dist/modal.js',
+            Popover: 'exports-loader?Popover!bootstrap/js/dist/popover.js',
+            Scrollspy: 'exports-loader?Scrollspy!bootstrap/js/dist/scrollspy.js',
+            Tab: 'exports-loader?Tab!bootstrap/js/dist/tab.js',
+            Tooltip: 'exports-loader?Tooltip!bootstrap/js/dist/tooltip.js',
+            Util: 'exports-loader?Util!bootstrap/js/dist/util.js',
         }),
-
         new CopyWebpackPlugin(
             [
                 {
                     context: variables.assetsPath + '/images',
                     from: '**/*',
-                    to: 'images/[name].[ext]',
+                    to: devMode ? 'images/[name].[ext]' : 'images/[name].[hash].[ext]',
                 },
             ],
             {
@@ -149,10 +134,19 @@ const config = {
                 copyUnmodified: true,
             }
         ),
+        new ManifestPlugin({
+            map: file => {
+                if (process.env.NODE_ENV === 'production') {
+                    // Remove hash in manifest key
+                    file.name = file.name.replace(/(\.[a-f0-9]{32})(\..*)$/, '$2')
+                }
+                return file
+            },
+        }),
     ],
     optimization: {
-        removeEmptyChunks: false,
         splitChunks: {
+            // include all types of chunks
             chunks: 'all',
             automaticNameDelimiter: '-',
             name: 'vendor',
@@ -169,11 +163,7 @@ const config = {
                 },
             }),
             new OptimizeCSSAssetsPlugin({
-                cssProcessorOptions: {
-                    map: {
-                        inline: false,
-                    },
-                },
+                cssProcessorOptions: {},
             }),
             new ImageminPlugin({
                 disable: process.env.NODE_ENV !== 'production',
@@ -181,5 +171,13 @@ const config = {
             }),
         ],
     },
+}
+if (process.env.NODE_ENV === 'production') {
+    config.plugins.push(
+        new CleanWebpackPlugin(variables.distPath, {
+            root: rootPath,
+            verbose: false,
+        })
+    )
 }
 module.exports = config

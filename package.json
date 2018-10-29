@@ -12,7 +12,7 @@
         "dev": "npm run development",
         "development": "cross-env NODE_ENV=development webpack --mode development --config assets/build/webpack.config.js",
         "watch": "cross-env NODE_ENV=development webpack --mode development --watch --config assets/build/webpack.config.js",
-        "production": "cross-env NODE_ENV=production webpack --mode production --env.minor --config assets/build/webpack.config.js"
+        "production": "cross-env NODE_ENV=production webpack --mode production --config assets/build/webpack.config.js"
     },
     "license": "GPL-3.0",
     "devDependencies": {
@@ -24,6 +24,7 @@
         "babel-loader": "^8.0.0",
         "browser-sync": "~2.26",
         "browser-sync-webpack-plugin": "^2.2.2",
+        "clean-webpack-plugin": "^0.1.19",
         "copy-webpack-plugin": "^4.5.2",
         "cross-env": "^5.2.0",
         "css-loader": "^1.0.0",
@@ -35,7 +36,6 @@
         "postcss-loader": "^3.0.0",
         "prettier": "^1.14.3",
         "prettier-stylelint": "^0.4.2",
-        "replace-in-file-webpack-plugin": "^1.0.6",
         "sass-loader": "^7.1.0",
         "style-loader": "^0.23.0",
         "stylelint": "^9.7.0",
@@ -46,7 +46,7 @@
         "uglifyjs-webpack-plugin": "^2.0.1",
         "url-loader": "^1.1.1",
         "webpack": "^4.17.1",
-        "webpack-auto-inject-version": "^1.2.2",
+        "webpack-manifest-plugin": "^2.0.3",
         "webpack-cli": "^3.1.0"
     },
     "dependencies": {
