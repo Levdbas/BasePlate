@@ -2332,6 +2332,14 @@ css-loader@^1.0.0:
     postcss-value-parser "^3.3.0"
     source-list-map "^2.0.0"
 
+css-mqpacker@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/css-mqpacker/-/css-mqpacker-7.0.0.tgz#48f4a0ff45b81ec661c4a33ed80b9db8a026333b"
+  integrity sha512-temVrWS+sB4uocE2quhW8ru/KguDmGhCU7zN213KxtDvWOH3WS/ZUStfpF4fdCT7W8fPpFrQdWRFqtFtPPfBLA==
+  dependencies:
+    minimist "^1.2.0"
+    postcss "^7.0.0"
+
 css-select-base-adapter@~0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/css-select-base-adapter/-/css-select-base-adapter-0.1.1.tgz#3b2ff4972cc362ab88561507a95408a1432135d7"
@@ -6620,7 +6628,7 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
-"php-parser@github:glayzzle/php-parser#ca007c812e9920bcf1ae9fd24f1a92f5d5906a5e":
+php-parser@glayzzle/php-parser#ca007c812e9920bcf1ae9fd24f1a92f5d5906a5e:
   version "3.0.0-prerelease.5"
   resolved "https://codeload.github.com/glayzzle/php-parser/tar.gz/ca007c812e9920bcf1ae9fd24f1a92f5d5906a5e"
 
@@ -7740,11 +7748,6 @@ replace-ext@1.0.0, replace-ext@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/replace-ext/-/replace-ext-1.0.0.tgz#de63128373fcbf7c3ccfa4de5a480c45a67958eb"
   integrity sha1-3mMSg3P8v3w8z6TeWkgMRaZ5WOs=
-
-replace-in-file-webpack-plugin@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/replace-in-file-webpack-plugin/-/replace-in-file-webpack-plugin-1.0.6.tgz#eee7e139be967e8e48a0552f73037ed567b54dbd"
-  integrity sha512-+KRgNYL2nbc6nza6SeF+wTBNkovuHFTfJF8QIEqZg5MbwkYpU9no0kH2YU354wvY/BK8mAC2UKoJ7q+sJTvciw==
 
 request@^2.87.0, request@^2.88.0:
   version "2.88.0"
@@ -9588,11 +9591,6 @@ watchpack@^1.5.0:
     chokidar "^2.0.2"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
-
-webpack-auto-inject-version@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/webpack-auto-inject-version/-/webpack-auto-inject-version-1.2.2.tgz#8fa15f6ea7c4a2a4adcdc5d8b1dc47693dddc971"
-  integrity sha512-duFSWzZe/OY8zyr2DpymzZeY8yI1RSZ9hu9wDwZy/fhxwntgpEzTwyIB/U7ig+FB26mif8xx5zS1E3Co9c5cYA==
 
 webpack-cli@^3.1.0:
   version "3.1.2"

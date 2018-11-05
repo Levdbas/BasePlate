@@ -6,5 +6,6 @@ module.exports = {
     plugins: {
         cssnano: process.env.NODE_ENV === 'production' ? cssnanoConfig : false,
         autoprefixer: process.env.NODE_ENV === 'production' ? true : false,
+        'css-mqpacker': {},
     },
 }
