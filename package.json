@@ -28,7 +28,6 @@
         "copy-webpack-plugin": "^4.5.2",
         "cross-env": "^5.2.0",
         "css-loader": "^1.0.0",
-        "fast-sass-loader": "^1.4.6",
         "file-loader": "^2.0.0",
         "imagemin-webpack-plugin": "^2.2.0",
         "mini-css-extract-plugin": "^0.4.2",
@@ -39,15 +38,16 @@
         "prettier-stylelint": "^0.4.2",
         "sass-loader": "^7.1.0",
         "style-loader": "^0.23.0",
-        "stylelint-config-standard": "^18.2",
+        "stylelint": "^9.7.0",
         "stylelint-config-prettier": "^4.0",
+        "stylelint-config-standard": "^18.2",
         "stylelint-order": "^1.0",
         "stylelint-prettier": "^1.0.3",
         "uglifyjs-webpack-plugin": "^2.0.1",
         "url-loader": "^1.1.1",
         "webpack": "^4.17.1",
-        "webpack-cli": "^3.1.0",
-        "webpack-manifest-plugin": "^2.0.3"
+        "webpack-manifest-plugin": "^2.0.3",
+        "webpack-cli": "^3.1.0"
     },
     "dependencies": {
         "bootstrap": "^4.1",

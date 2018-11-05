@@ -30,8 +30,7 @@ const config = {
     context: variables.assetsPath,
     entry: {
         app: ['./scripts/app.js', './styles/app.scss'],
-        editor: ['./styles/gutenberg/editor.scss'],
-        blocks: ['./styles/gutenberg/blocks.scss'],
+        gutenberg: ['./styles/gutenberg.scss'],
     },
     devtool: variables.sourceMaps ? 'cheap-module-eval-source-map' : false,
     module: {
@@ -42,12 +41,7 @@ const config = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        // @remove-on-eject-begin
                         babelrc: false,
-                        // @remove-on-eject-end
-                        // This is a feature of `babel-loader` for webpack (not Babel itself).
-                        // It enables caching results in ./node_modules/.cache/babel-loader/
-                        // directory for faster rebuilds.
                         cacheDirectory: true,
                     },
                 },
@@ -115,6 +109,17 @@ const config = {
             $: 'jquery/dist/jquery.slim.js',
             jQuery: 'jquery/dist/jquery.slim.js',
             Popper: 'popper.js/dist/umd/popper.js',
+            Alert: 'exports-loader?Alert!bootstrap/js/dist/alert',
+            Button: 'exports-loader?Button!bootstrap/js/dist/button.js',
+            Carousel: 'exports-loader?Carousel!bootstrap/js/dist/carousel.js',
+            Collapse: 'exports-loader?Collapse!bootstrap/js/dist/collapse.js',
+            Dropdown: 'exports-loader?Dropdown!bootstrap/js/dist/dropdown.js',
+            Modal: 'exports-loader?Modal!bootstrap/js/dist/modal.js',
+            Popover: 'exports-loader?Popover!bootstrap/js/dist/popover.js',
+            Scrollspy: 'exports-loader?Scrollspy!bootstrap/js/dist/scrollspy.js',
+            Tab: 'exports-loader?Tab!bootstrap/js/dist/tab.js',
+            Tooltip: 'exports-loader?Tooltip!bootstrap/js/dist/tooltip.js',
+            Util: 'exports-loader?Util!bootstrap/js/dist/util.js',
         }),
         new CopyWebpackPlugin(
             [
@@ -149,7 +154,7 @@ const config = {
         minimizer: [
             new UglifyJsPlugin({
                 cache: true,
-                sourceMap: variables.sourceMaps, // set to true if you want JS source maps
+                sourceMap: variables.sourceMaps,
                 uglifyOptions: {
                     compress: true,
                     output: {
@@ -158,11 +163,7 @@ const config = {
                 },
             }),
             new OptimizeCSSAssetsPlugin({
-                cssProcessorOptions: {
-                    map: {
-                        inline: false,
-                    },
-                },
+                cssProcessorOptions: {},
             }),
             new ImageminPlugin({
                 disable: process.env.NODE_ENV !== 'production',
