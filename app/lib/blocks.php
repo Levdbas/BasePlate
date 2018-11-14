@@ -35,4 +35,17 @@ function baseplate_acf_bock_render_callback($block)
         include get_stylesheet_directory() . "/partials/blocks/block-{$slug}.php";
     }
 }
+function get_baseplate_acf_block_att($att, $block)
+{
+    $slug = '';
+    switch ($att) {
+        case 'id':
+            return $slug . '-' . $block['id'];
+            break;
+
+        default:
+            return $slug . '-' . $block['id'];
+            break;
+    }
+}
 ?>

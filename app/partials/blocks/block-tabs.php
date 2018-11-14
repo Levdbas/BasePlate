@@ -8,14 +8,11 @@
 // get image field (array)
 
 // create id attribute for specific styling
-$id = 'tabbed-content-' . $block['id'];
 
 // create align class ("alignwide") from block setting ("wide")
-$align_class = $block['align'] ? 'align' . $block['align'] : '';
-
-?>
-<section id="<?php echo $id; ?>" class='tabbed-content'>
-  dit is een test
+$align_class = $block['align'] ? 'align' . $block['align'] : ''; ?>
+<section id="<?php echo get_baseplate_acf_block_att('id', $block); ?>" class='tabbed-content <?php echo $align_class; ?>'>
+  <?php the_field('block_title'); ?>
 </section>
 
 
@@ -23,8 +20,8 @@ $align_class = $block['align'] ? 'align' . $block['align'] : '';
 
 
 <style type="text/css">
-	#<?php echo $id; ?> {
-		background: <?php the_field('background_color'); ?>;
+	#<?php echo get_baseplate_acf_block_att('id', $block); ?> {
+		background: <?php the_field('block_bg_color'); ?>;
 		color: <?php the_field('text_color'); ?>;
 	}
 </style>
