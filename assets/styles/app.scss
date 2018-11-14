@@ -9,7 +9,6 @@
 @import "components/buttons";
 @import "components/comments";
 @import "components/forms";
-@import "components/wp-classes";
 @import "layouts/header";
 @import "layouts/navs";
 @import "layouts/sidebar";
@@ -17,3 +16,5 @@
 @import "layouts/pages";
 @import "layouts/posts";
 @import "gutenberg/blocks";
+@import "gutenberg/gutenberg-frontend";
+@import "gutenberg/gutenberg-both";

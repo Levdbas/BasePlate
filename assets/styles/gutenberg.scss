@@ -1,5 +1,7 @@
 @import "common/variables";
 
+// wrap all styles in the wrapper of the gutenberg editor
+
 .edit-post-visual-editor {
 	@import "bootstrap-custom";
 	@import "common/mixins";
@@ -7,7 +9,7 @@
 	@import "common/reset";
 	@import "common/styleguide";
 	@import "components/buttons";
-	@import "components/wp-classes";
-	@import "gutenberg/gutenberg-styles";
+	@import "gutenberg/gutenberg-both";
+	@import "gutenberg/gutenberg-backend";
 	@import "gutenberg/blocks";
 }

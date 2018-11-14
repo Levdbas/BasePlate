@@ -1,7 +1,20 @@
 // WordPress Generated Classes
 // http://codex.wordpress.org/CSS#WordPress_Generated_Classes
 
-// Media alignment
+// Media & block alignment
+
+.alignfull,
+.alignwide {
+	padding: 0 15px;
+
+	&.wp-block-image {
+		padding: 0;
+	}
+
+	@include media-breakpoint-up(xl) {
+		margin-bottom: 4rem;
+	}
+}
 
 .alignnone {
 	height: auto;
@@ -14,6 +27,7 @@
 	clear: both;
 	height: auto;
 	margin: ($spacer) auto;
+	text-align: center;
 }
 
 .alignleft,
@@ -81,43 +95,6 @@
 	@extend .sr-only-focusable;
 }
 
-.wp-block-columns {
-	@extend .row;
-
-	&.has-3-columns .wp-block-column {
-		@extend .col-12;
-
-		@include media-breakpoint-up(md) {
-			@include columns(3);
-		}
-	}
-
-	&.has-4-columns .wp-block-column {
-		@extend .col-12;
-
-		@include media-breakpoint-up(md) {
-			@include columns(2);
-		}
-
-		@include media-breakpoint-up(lg) {
-			@include columns(4);
-		}
-	}
-}
-
-.wp-block-column {
-	@extend .col;
-
-	&:nth-child( 2n + 1 ),
-	&:not( :last-child ) {
-		padding-left: 15px;
-	}
-
-	@include media-breakpoint-down(md) {
-		flex: 1 auto;
-	}
-}
-
 .wp-block-image {
 	margin-bottom: 1rem;
 
@@ -136,26 +113,6 @@ div.wp-block-button a.wp-block-button__link {
 
 .section--gutenberg {
 	overflow: hidden;
-}
-
-.alignfull,
-.alignwide {
-	background-color: white;
-	color: rgba(0, 0, 0, 0.6);
-	margin-left: calc(-100vw / 2 + 100% / 2);
-	margin-right: calc(-100vw / 2 + 100% / 2);
-	max-width: 100vw;
-	padding: 0 15px;
-
-	&.wp-block-image {
-		padding: 0;
-	}
-
-	//@include align-element-full-left();
-
-	@include media-breakpoint-up(xl) {
-		margin-bottom: 4rem;
-	}
 }
 
 .wp-block-quote {
