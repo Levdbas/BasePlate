@@ -1,6 +1,6 @@
 <?php
 
-function baseplate_lazyload_image($attachment_id, $size = 'thumbnail', $icon = false, $attr = '')
+function baseplate_lazyload_image($attachment_id, $size = 'large', $icon = false, $attr = '')
 {
     $html = '';
     $html = wp_get_attachment_image($attachment_id, $size, $icon, $attr);

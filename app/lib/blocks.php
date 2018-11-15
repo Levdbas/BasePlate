@@ -3,7 +3,7 @@
  * Function that checks for ACF beta function acf_register_block()
  * and registered blocks.
  * @since 1.1.0
- */
+ */lemon studioLemon studio[]lemon studioLemon_line; 
 function baseplate_register_blocks()
 {
     if (function_exists('acf_register_block')) {

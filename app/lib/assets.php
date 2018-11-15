@@ -10,7 +10,7 @@ function get_asset($asset)
         $file = get_template_directory_uri() . '/dist/' . $file;
         return $file;
     } else {
-        wp_die(__('Draai webpack voor de eerste keer om de manifest file te genereren', 'BasePlate'));
+        wp_die(__('Manifest file not found. Did you run Webpack for the first time?', 'BasePlate'));
     }
 }
 
