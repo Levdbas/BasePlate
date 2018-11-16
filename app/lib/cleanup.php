@@ -27,9 +27,12 @@ add_filter('style_loader_src', 'remove_wp_ver', 9999);
 add_filter('script_loader_src', 'remove_wp_ver', 9999);
 add_action('admin_bar_menu', 'baseplate_admin_bar', 999);
 add_action('admin_menu', 'baseplate_admin_menu');
-add_action('load-press-this.php', function () {
+add_action('load-press-this.php', 'remove_press_this');
+
+function remove_press_this()
+{
     wp_die(__('Press-this is uitgeschakeld', 'BasePlate'));
-});
+}
 
 function disable_feed()
 {
