@@ -3,8 +3,8 @@
 @import "bootstrap-custom";
 @import "common/variables";
 @import "common/mixins";
-@import "common/base";
 @import "common/reset";
+@import "common/base";
 @import "common/styleguide";
 @import "components/buttons";
 @import "components/comments";
@@ -17,4 +17,4 @@
 @import "layouts/posts";
 @import "gutenberg/blocks";
 @import "gutenberg/gutenberg-frontend";
-@import "gutenberg/gutenberg-both";
+@import "gutenberg/gutenberg-general";
