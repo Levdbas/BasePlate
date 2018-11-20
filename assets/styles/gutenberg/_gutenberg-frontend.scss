@@ -1,19 +1,22 @@
 .alignfull {
-	margin-left: calc(-100vw / 2 + 100% / 2);
-	margin-right: calc(-100vw / 2 + 100% / 2);
+	margin-left: calc(-100vw / 2 + 100% / 2) !important;
+	margin-right: calc(-100vw / 2 + 100% / 2) !important;
 	max-width: 100vw;
 }
 
 .alignwide {
 	@include media-breakpoint-up(md) {
-		margin-left: calc(-#{$block_wide_width} / 2 + 100% / 2);
-		margin-right: calc(-#{$block_wide_width} / 2 + 100% / 2);
+		margin-left: calc(-#{$block_wide_width} / 2 + 100% / 2) !important;
+		margin-right: calc(-#{$block_wide_width} / 2 + 100% / 2) !important;
 		max-width: $block_wide_width;
 	}
 }
 
 .wp-block-columns {
 	@extend .row;
+
+	margin-left: 0;
+	margin-right: 0;
 
 	&.has-3-columns .wp-block-column {
 		@extend .col-12;

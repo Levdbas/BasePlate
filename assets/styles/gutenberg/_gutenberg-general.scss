@@ -1,8 +1,11 @@
 // Media & block alignment
 
+.alignfull {
+	padding: 0 15px;
+}
+
 .alignfull,
 .alignwide {
-	padding: 0 15px;
 
 	&.wp-block-image {
 		padding: 0;
@@ -92,6 +95,10 @@
 	@extend .sr-only-focusable;
 }
 
+.wp-block-gallery {
+	margin-left: 0;
+}
+
 .wp-block-image {
 	margin-bottom: 1rem;
 
@@ -110,6 +117,13 @@ div.wp-block-button a.wp-block-button__link {
 
 .section--gutenberg {
 	overflow: hidden;
+}
+
+.wp-block-column {
+
+	.wp-block-image {
+		margin-bottom: 1rem;
+	}
 }
 
 .wp-block-quote {
