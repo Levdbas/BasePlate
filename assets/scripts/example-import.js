@@ -1,6 +1,4 @@
-function exampleImport(  ) {
-  $( document ).ready(function() {
-    console.log( "ready!" );
-  });
+function exampleImport() {
+    console.log('ready!')
 }
-export default exampleImport;
+export default exampleImport

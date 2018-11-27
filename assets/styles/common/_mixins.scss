@@ -1,12 +1,3 @@
-@mixin clearfix() {
-
-	&::after {
-		clear: both;
-		content: "";
-		display: block;
-	}
-}
-
 @mixin vertical-align {
 	position: relative;
 	top: 50%;
@@ -30,4 +21,19 @@
 		right: 0;
 		top: 0;
 	}
+}
+
+@mixin transition($property) {
+	transition: $property 0.4s ease-in;
+}
+
+@mixin pxtorem($size) {
+	$remSize: $size / 16px;
+
+	font-size: #{$remSize}rem;
+}
+
+@mixin columns($number) {
+	flex: 0 0 (100% / $number);
+	max-width: (100% / $number);
 }

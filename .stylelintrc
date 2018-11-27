@@ -46,6 +46,7 @@
             "px",
             "%",
             "s",
+            "ms",
             "deg"
         ],
         "at-rule-no-unknown": [

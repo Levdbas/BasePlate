@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * Returns the current path of the provided asset
  *
@@ -10,15 +8,15 @@
 function get_asset($asset)
 {
     // Look for the manifest file.
-    $manifest = (__DIR__ . '/../dist/manifest.json');
+    $manifest = __DIR__ . '/../dist/manifest.json';
     if (file_exists($manifest)) {
         $manifest = file_get_contents($manifest);
-        $json     = json_decode($manifest, true);
-        $file     = $json[$asset];
-        $file     = get_template_directory_uri() . '/dist/' . $file;
+        $json = json_decode($manifest, true);
+        $file = $json[$asset];
+        $file = get_template_directory_uri() . '/dist/' . $file;
         return $file;
     } else {
-        wp_die(__('Draai webpack voor de eerste keer om de manifest file te genereren', 'BasePlate'));
+        wp_die(__('Manifest file not found. Did you run Webpack for the first time?', 'BasePlate'));
     }
 }
 /**
@@ -32,33 +30,33 @@ function the_asset($asset)
     echo get_asset($asset);
 }
 
-
-add_action('wp_head', 'critical_styles_in_header');
-function critical_styles_in_header()
-{
-    echo '<style>';
-    include get_stylesheet_directory() . '/dist/styles/critical.php';
-    echo '</style>';
-}
-
-add_action('wp_enqueue_scripts', 'scripts_in_footer', 100);
-function scripts_in_footer()
+function bp_enqueue()
 {
     wp_deregister_script('jquery');
-    wp_enqueue_style('BasePlate/css', get_asset('app.css'));
-    wp_enqueue_script('BasePlate/js', get_asset('app.js'), false, false);
-    if (is_single() && comments_open() && get_option('thread_comments')) {
-        wp_enqueue_script('comment-reply');
-    }
+    wp_enqueue_style('BasePlate/css', get_asset('app.css'), false);
+    wp_enqueue_script('BasePlate/vendor', get_asset('vendor.js'), false);
+    wp_enqueue_script('BasePlate/js', get_asset('app.js'), 'BasePlate/vendor');
 }
 
-add_filter('script_loader_tag', 'add_async_attribute', 10, 2);
-function add_async_attribute($tag, $handle)
+function bp_editor_assets()
+{
+    /* Scripts.
+  wp_enqueue_script(
+      'baseplate-block-js', // Handle.
+      plugins_url('/dist/blocks.build.js', dirname(__FILE__)), // Block.build.js: We register the block here. Built with Webpack.
+      array('wp-blocks', 'wp-i18n', 'wp-element'), // Dependencies, defined above.
+      wp_get_theme()->Version,
+      true // Enqueue the script in the footer.
+  );
+  */
+    // Styles.
+    wp_enqueue_style('baseplate-block-editor-css', get_asset('gutenberg.css'), array('wp-edit-blocks'));
+}
+
+function bp_async_attr($tag, $handle)
 {
     // add script handles to the array below
-    $scripts_to_async = array(
-        'BasePlate/js'
-    );
+    $scripts_to_async = array('BasePlate/js', 'BasePlate/vendor');
 
     foreach ($scripts_to_async as $async_script) {
         if ($async_script === $handle) {
@@ -67,60 +65,7 @@ function add_async_attribute($tag, $handle)
     }
     return $tag;
 }
-
-
-/**
- * returns WP image from the library with lazyload attributes
- *
- * @param integer $attachment_id the ID of the media file you're calling
- * @param string $size the size of the attachment to load. Standard sizes are: "thumbnail, medium, medium_large, large, full"
- * @param boolean $icon Whether the image should be treated as an icon.
- * @param string $attr  Attributes for the image markup.
- * @return string HTML img element with lazyload class/data-scr or empty string on failure.
- */
-function baseplate_lazyload_image($attachment_id, $size = 'thumbnail', $icon = false, $attr = '')
-{
-    $html = '';
-    $html = wp_get_attachment_image($attachment_id, $size, $icon, $attr);
-    $html = str_replace('src=', 'data-src=', $html);
-    $html = str_replace('srcset=', 'data-srcset=', $html);
-    $html = str_replace('class="', 'class="lazyload ', $html);
-    return $html;
-}
-
-/**
- * returns image from media library in the form of a html
- * class and data-background-image attibutes that you can include in html elements.
- * Used for lazyloading background images.
- *
- * @param integer $attachment_id the ID of the media file you're calling
- * @param string $size the size of the attachment to load. Standard sizes are: "thumbnail, medium, medium_large, large, full"
- * @return string HTML with class="lazyload" data-background-image=""
- */
-function baseplate_lazyload_bg_image($attachment_id, $size = 'large')
-{
-    $html       = '';
-    $term_image = wp_get_attachment_image_src($attachment_id, $size);
-    $term_image = $term_image[0];
-    $html       = 'data-background-image="' . $term_image . '"';
-    return $html;
-}
-
-
-/**
- * adds lazyload attribute to all image loaded inside the_content()
- *
- * @param [type] $content
- * @return void
- */
-add_filter('the_content', 'baseplate_lazyload_content_images', 11);
-function baseplate_lazyload_content_images($content)
-{
-    //-- Change src/srcset to data attributes.
-    $content = preg_replace("/<img(.*?)(src=|srcset=)(.*?)>/i", '<img$1data-$2$3>', $content);
-    //-- Add .lazyload class to each image that already has a class.
-    $content = preg_replace('/<img(.*?)class=\"(.*?)\"(.*?)>/i', '<img$1class="$2 lazyload"$3>', $content);
-    //-- Add .lazyload class to each image that doesn't have a class.
-    $content = preg_replace('/<img(.*?)(?!\bclass\b)(.*?)/i', '<img$1 class="lazyload"$2', $content);
-    return $content;
-}
+add_filter('script_loader_tag', 'bp_async_attr', 10, 2);
+add_action('wp_enqueue_scripts', 'bp_enqueue');
+add_action('enqueue_block_editor_assets', 'bp_editor_assets');
+?>

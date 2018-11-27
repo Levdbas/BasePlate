@@ -1,49 +1,54 @@
 # BasePlate
 
-BasePlate is a bare theme for WordPress that includes an up-to-date assets manager via WebPack. BasePlate lends some code from Sage. By combining these two templates a lightweight (only two files, compressed ~ 330kb, featuring full bootstrap 4 css and js and [jQuery slim](https://stackoverflow.com/questions/35424053/what-are-the-differences-between-normal-and-slim-package-of-jquery)), easy to use template was created.
-It comes with a custom WebPack build for compiling css, js, importing jQuery, Bootstrap and manages assets such as fonts and images. Last but not least, it bust caches by randomizing filenames.
+BasePlate is a starter theme for WordPress that includes an up-to-date asset manager via WebPack. It comes with a custom WebPack4 build for compiling css, js, importing jQuery, Bootstrap and manages assets such as fonts and images. Last but not least, it utilizes cache busting by randomizing filenames in production builds.
 
 [![Latest Version](https://img.shields.io/github/release/Levdbas/BasePlate.svg?style=flat)](https://github.com/Levdbas/BasePlate/releases)
 
 ## Features
 
-* Sass for stylesheets
-* Stylesheet in footer, critical css from ```critical.scss``` gets loaded into the header.
-* Modular JavaScript via import
-* WebPack for compiling assets, moving & optimizing images, concatenating & minifying files and last but not least, cache busting.
-* [Browsersync](http://www.browsersync.io/) for synchronized browser testing
-* [Bootstrap 4 beta](http://getbootstrap.com/)
-* [Font Awesome](http://fontawesome.io/)
+-   Scss for stylesheets
+-   Modular JavaScript via import
+-   WebPack4 for compiling assets, moving & optimizing images, concatenating & minifying JS/CSS and cache busting.
+-   Ready for lazyloading WordPress attachment images, theme images, theme background images & iframes
+-   Currently in the process of getting ready for Gutenberg!
+-   [Browsersync](http://www.browsersync.io/) for synchronized browser testing
+-   [Bootstrap 4](http://getbootstrap.com/)
+-   [Font Awesome](http://fontawesome.io/)
 
 ## Installation
 
-To use BasePlate, you need to have PHP 7.0+ installed on your machine. You'll also need a recent version of [Node.js](https://nodejs.org/en) installed if you want to use webpack to compile your CSS and Javascript and maintain your images.
+To use BasePlate, you need to have PHP 7.0+ installed on your machine. You'll also need a recent version of [Node.js](https://nodejs.org/en) installed.
 
-Install WordPress locally on your AMP stack with a virtual hostname, create a new folder in ```wp-content/themes``` with the desired name of your template. Clone the latest version of BasePlate inside your new folder.
+Install WordPress locally on your AMP stack with a virtual hostname, create a new folder in `wp-content/themes` with the desired name of your template. Clone the latest version of BasePlate inside your new folder.
 
-Next step is to set the proxy adress for BrowserSync in the webpack.config.js file.
+Next step is to set the proxy adress for BrowserSync in the `assets/config.json` file.
 
 To install required node modules:
 
 ```bash
-npm install
+yarn install
 ```
-set correct proxy url in webpack.config.js on line 8
+
+set correct proxy url in `assets/config.json`
 
 #### How do I use webpack?
 
 Run BrowserSync and check for changes and auto-compile on the go:
+
 ```bash
-npm run watch
+yarn run watch
 ```
+
 During development:
+
 ```bash
-npm run development
+yarn run development
 ```
 
 Enable cache busting, optimizing images & minifying for production use:
+
 ```bash
-npm run production
+yarn run production
 ```
 
 ## Plugins
@@ -59,6 +64,7 @@ Require the desired plugin or theme using `wpackagist-plugin` or `wpackagist-the
 ```bash
 composer require wpackagist-plugin/polylang
 ```
+
 run
 
 ```bash
@@ -81,7 +87,9 @@ This is an example of how your `composer.json` file might look like.
 Please visit [WordPress Packagist](https://wpackagist.org) website for more information and examples.
 
 ## Helpers
-You can import JS files into the app.js to modulize your code.
+
+You can import JS files into the app.js to have a more modular approach to your javascript.
+
 ```js
 //app.js
 import exampleImport from './exampleImport';
@@ -98,10 +106,11 @@ export default exampleImport;
 Asset helper:
 
 ```php
-getAssetBase'folder','file.ext'); // returns URL to asset
-assetBase'folder','file.ext'); // echoes url to asset
+get_asset('folder/file.ext'); // returns URL to asset
+the_asset('folder/file.ext'); // echoes url to asset
+bp_lazyload_img($img_id, $size); // returns lazyloaded WordPress attachment
+bp_lazyload_bg_img($img_id, $size);// returns HTML to be injected into an HTML element to lazyload a background image.
 ```
-
 
 ## Post Types
 
@@ -115,8 +124,7 @@ register_extended_post_type('event');
 
 For [custom fields](https://codex.wordpress.org/Custom_Fields) we recommend looking at the following plugins:
 
-- [Advanced Custom Fields](http://www.advancedcustomfields.com) - Powerful fields for WordPress developers.
-
+-   [Advanced Custom Fields](http://www.advancedcustomfields.com) - Powerful fields for WordPress developers.
 
 ## License
 

@@ -1,0 +1,15 @@
+@import "common/variables";
+
+// wrap all styles in the wrapper class of the gutenberg editor
+
+.edit-post-visual-editor {
+	@import "bootstrap-custom";
+	@import "common/reset";
+	@import "common/mixins";
+	@import "common/base";
+	@import "common/styleguide";
+	@import "components/buttons";
+	@import "gutenberg/gutenberg-general";
+	@import "gutenberg/gutenberg-backend";
+	@import "gutenberg/blocks";
+}
