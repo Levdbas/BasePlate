@@ -8,7 +8,6 @@ const path = require('path')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ImageminPlugin = require('imagemin-webpack')
@@ -153,7 +152,6 @@ const config = {
     ],
     optimization: {
         splitChunks: {
-            // include all types of chunks
             chunks: 'all',
             automaticNameDelimiter: '-',
             name: 'vendor',
@@ -168,9 +166,6 @@ const config = {
                         comments: false,
                     },
                 },
-            }),
-            new OptimizeCSSAssetsPlugin({
-                cssProcessorOptions: {},
             }),
             new ImageminPlugin({
                 bail: false, // Ignore errors on corrupted images
