@@ -3,7 +3,7 @@
 /**
  * Add <body> classes
  */
-function baseplate_add_bodyclasses($classes)
+function bp_add_bodyclasses($classes)
 {
     // add featured image class
     global $post;
@@ -20,7 +20,7 @@ function baseplate_add_bodyclasses($classes)
 
     return $classes;
 }
-add_filter('body_class', 'baseplate_add_bodyclasses');
+add_filter('body_class', 'bp_add_bodyclasses');
 /**
  * Clean up the_excerpt()
  */

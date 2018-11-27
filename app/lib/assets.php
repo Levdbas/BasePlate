@@ -19,7 +19,7 @@ function the_asset($asset)
     echo get_asset($asset);
 }
 
-function scripts_in_footer()
+function bp_enqueue()
 {
     wp_deregister_script('jquery');
     wp_enqueue_style('BasePlate/css', get_asset('app.css'), false);
@@ -27,7 +27,7 @@ function scripts_in_footer()
     wp_enqueue_script('BasePlate/js', get_asset('app.js'), 'BasePlate/vendor');
 }
 
-function baseplate_editor_assets()
+function bp_editor_assets()
 {
     /* Scripts.
   wp_enqueue_script(
@@ -42,7 +42,7 @@ function baseplate_editor_assets()
     wp_enqueue_style('baseplate-block-editor-css', get_asset('gutenberg.css'), array('wp-edit-blocks'));
 }
 
-function add_async_attribute($tag, $handle)
+function bp_async_attr($tag, $handle)
 {
     // add script handles to the array below
     $scripts_to_async = array('BasePlate/js', 'BasePlate/vendor');
@@ -54,7 +54,7 @@ function add_async_attribute($tag, $handle)
     }
     return $tag;
 }
-add_filter('script_loader_tag', 'add_async_attribute', 10, 2);
-add_action('wp_enqueue_scripts', 'scripts_in_footer', 100);
-add_action('enqueue_block_editor_assets', 'baseplate_editor_assets');
+add_filter('script_loader_tag', 'bp_async_attr', 10, 2);
+add_action('wp_enqueue_scripts', 'bp_enqueue');
+add_action('enqueue_block_editor_assets', 'bp_editor_assets');
 ?>

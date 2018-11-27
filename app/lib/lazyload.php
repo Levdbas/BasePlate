@@ -1,6 +1,15 @@
 <?php
 
-function baseplate_lazyload_image($attachment_id, $size = 'large', $icon = false, $attr = '')
+/**
+ * Based on wp_get_attachment_image() but now lazyload ready.
+ * @since 1.1
+ * @param  int     $attachment_id Image attachment ID.
+ * @param  string  $size          Image size.
+ * @param  boolean $icon          Whether the image should be treated as an icon.
+ * @param  string  $attr          Attributes for the image markup
+ * @return string                 HTML img element or empty string on failure.
+ */
+function bp_lazyload_img($attachment_id, $size = 'large', $icon = false, $attr = '')
 {
     $html = '';
     $html = wp_get_attachment_image($attachment_id, $size, $icon, $attr);
@@ -9,8 +18,15 @@ function baseplate_lazyload_image($attachment_id, $size = 'large', $icon = false
     $html = str_replace('class="', 'class="lazyload ', $html);
     return $html;
 }
-
-function baseplate_lazyload_bg_image($image_id, $size = 'large')
+/**
+ * Based on wp_get_attachment_image_src() but now with lazyload background functionallity.
+ * Used as follows, <div class="lazyload" <?php echo bp_lazyload_bg_img($image_id, $size); ?>></div>
+ * @since
+ * @param  int    $image_id Image attachment ID.
+ * @param  string $size     Image size.
+ * @return string           HTML attr for lazyloading a background image. Do not forget to set the class .lazyload as well.
+ */
+function bp_lazyload_bg_img($image_id, $size = 'large')
 {
     $html = '';
     $term_image = wp_get_attachment_image_src($image_id, $size);
@@ -19,8 +35,14 @@ function baseplate_lazyload_bg_image($image_id, $size = 'large')
     return $html;
 }
 
-add_filter('the_content', 'baseplate_lazyload_content_images', 11);
 
+
+/**
+ * replace src with data-src and add lazyload class
+ * @since
+ * @param  string $content content passed by the_content()
+ * @return [type]          returns the_content with images now containing ready for lazyloading
+ */
 function baseplate_lazyload_content_images($content)
 {
     //-- Change src/srcset to data attributes.
@@ -31,3 +53,4 @@ function baseplate_lazyload_content_images($content)
     $content = preg_replace('/<img(.*?)(?!\bclass\b)(.*?)/i', '<img$1 class="lazyload"$2', $content);
     return $content;
 }
+add_filter('the_content', 'baseplate_lazyload_content_images', 11);
