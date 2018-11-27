@@ -11,7 +11,11 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const ImageminPlugin = require('imagemin-webpack-plugin').default
+const ImageminPlugin = require('imagemin-webpack')
+const imageminGifsicle = require('imagemin-gifsicle')
+const imageminJpegtran = require('imagemin-jpegtran')
+const imageminOptipng = require('imagemin-optipng')
+const imageminSvgo = require('imagemin-svgo')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const rootPath = process.cwd()
@@ -169,8 +173,27 @@ const config = {
                 cssProcessorOptions: {},
             }),
             new ImageminPlugin({
-                disable: process.env.NODE_ENV !== 'production',
-                test: /\.(jpe?g|png|gif|svg)$/i,
+                bail: false, // Ignore errors on corrupted images
+                cache: true,
+                name: 'images/[hash].[ext]',
+                imageminOptions: {
+                    // Lossless optimization with custom option
+                    // Feel free to experement with options for better result for you
+                    plugins: [
+                        imageminGifsicle({
+                            interlaced: true,
+                        }),
+                        imageminJpegtran({
+                            progressive: true,
+                        }),
+                        imageminOptipng({
+                            optimizationLevel: 5,
+                        }),
+                        imageminSvgo({
+                            removeViewBox: true,
+                        }),
+                    ],
+                },
             }),
         ],
     },
