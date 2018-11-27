@@ -1,7 +1,10 @@
+/* ========================================================================
+* Custom import of Bootstrap modules
+* comment/uncomment the things you do/don't need.
+* ======================================================================== */
 //import 'bootstrap';
 import 'bootstrap/js/dist/util'
 import 'bootstrap/js/dist/dropdown'
-import 'bootstrap/js/dist/util'
 //import 'bootstrap/js/dist/alert'
 import 'bootstrap/js/dist/button'
 import 'bootstrap/js/dist/carousel'
@@ -13,10 +16,6 @@ import 'bootstrap/js/dist/dropdown'
 //import 'bootstrap/js/dist/tab'
 //import 'bootstrap/js/dist/tooltip'
 
-/* ========================================================================
-Import individual plugins like so
-
-* ======================================================================== */
 import lazyLoad from './lazyLoad'
 import exampleImport from './example-import'
 /* ========================================================================
