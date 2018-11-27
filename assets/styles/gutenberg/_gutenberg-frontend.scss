@@ -6,9 +6,9 @@
 
 .alignwide {
 	@include media-breakpoint-up(md) {
-		margin-left: calc(-#{$block_wide_width} / 2 + 100% / 2) !important;
-		margin-right: calc(-#{$block_wide_width} / 2 + 100% / 2) !important;
-		max-width: $block_wide_width;
+		margin-left: calc(-#{$block-wide-width} / 2 + 100% / 2) !important;
+		margin-right: calc(-#{$block-wide-width} / 2 + 100% / 2) !important;
+		max-width: $block-wide-width;
 	}
 }
 

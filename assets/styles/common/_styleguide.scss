@@ -34,12 +34,6 @@ em {
 	font-style: italic;
 }
 
-ol,
-ul {
-	margin: 0;
-	padding: 0;
-}
-
 code,
 pre {
 	@include pxtorem(14px);
@@ -144,7 +138,7 @@ blockquote.wp-block-quote {
 	@include pxtorem(20px);
 
 	background: transparent;
-	color: $base-color;
+	color: $highlight1;
 	font-style: italic;
 	margin: $margin_2x 0;
 	padding: 0;
@@ -157,6 +151,16 @@ blockquote.wp-block-quote {
 		margin-top: 16px;
 
 		@include pxtorem(16px);
+	}
+
+	p {
+		font-size: 1.5rem;
+		font-weight: lighter;
+		line-height: 1.4;
+
+		@include media-breakpoint-up(md) {
+			font-size: 2rem;
+		}
 	}
 
 	p:last-of-type {

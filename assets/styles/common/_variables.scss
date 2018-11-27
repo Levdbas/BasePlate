@@ -1,7 +1,4 @@
-// Glyphicons font path
 $icon-font-path: "../fonts/";
-
-// Grid settings
 $main-sm-columns: 12;
 $sidebar-sm-columns: 4;
 $base-margin: 1rem;
@@ -9,4 +6,5 @@ $margin_2x: $base-margin * 2;
 $highlight1: #5f604a;
 $highlight2: #51889a;
 $base-color: #000000;
-$block_wide_width: 90vw;
+$base-font: sans-serif;
+$block-wide-width: 90vw;

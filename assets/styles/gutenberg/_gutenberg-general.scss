@@ -107,7 +107,7 @@
 	}
 }
 
-div.wp-block-button a.wp-block-button__link {
+div.wp-block-button .wp-block-button__link {
 	@extend .button;
 
 	&:hover {
@@ -115,28 +115,18 @@ div.wp-block-button a.wp-block-button__link {
 	}
 }
 
-.section--gutenberg {
-	overflow: hidden;
-}
-
 .wp-block-column {
+
+	.wp-block-quote {
+		display: flex;
+		flex-wrap: wrap;
+		height: 100%;
+		justify-content: center;
+		margin: 0;
+	}
 
 	.wp-block-image {
 		margin-bottom: 1rem;
-	}
-}
-
-.wp-block-quote {
-	color: $highlight1;
-
-	p {
-		font-size: 2rem;
-		font-weight: lighter;
-		line-height: 1.4;
-
-		@include media-breakpoint-up(md) {
-			font-size: 2.5rem;
-		}
 	}
 }
 
