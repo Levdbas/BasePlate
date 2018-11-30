@@ -66,16 +66,11 @@ cite {
 	font-style: normal;
 }
 
-.clearfix {
-	@include clearfix;
-}
-
 /* Paragraph
 --------------------------------------------- */
 
 p {
-	@include pxtorem(16px);
-
+	font-size: $base-font-size;
 	line-height: 1.4;
 	margin: 0 0 $base-margin;
 	padding: 0;
@@ -110,6 +105,7 @@ ol {
 	margin: 0 0 $margin_2x 32px;
 
 	li {
+		font-size: $base-font-size;
 		list-style-type: decimal;
 	}
 
@@ -122,6 +118,7 @@ ul {
 	margin: 0 0 $margin_2x 32px;
 
 	li {
+		font-size: $base-font-size;
 		list-style-type: disc;
 	}
 
@@ -176,7 +173,7 @@ hr.wp-block-separator,
 .clear-line,
 img.wp-more-tag {
 	border: none;
-	border-top: 1px solid black;
+	border-top: 1px solid $base-color;
 	height: 1px;
 	margin: $margin_2x 0;
 	max-width: 100%;

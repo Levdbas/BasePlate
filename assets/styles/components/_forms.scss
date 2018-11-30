@@ -32,18 +32,8 @@
 			border: 1px solid $green;
 		}
 	}
+}
 
-	.wpcf7-submit {
-		background: transparent;
-		border: 0 none;
-		color: $highlight1;
-		display: inline;
-		font-weight: bold;
-		padding: 0;
-		width: auto;
-
-		&:hover {
-			color: $green;
-		}
-	}
+.wpcf7-submit {
+	@extend %button;
 }

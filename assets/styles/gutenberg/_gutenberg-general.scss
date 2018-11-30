@@ -103,16 +103,12 @@
 	margin-bottom: 1rem;
 
 	@include media-breakpoint-up(lg) {
-		margin-bottom: 4rem;
+		margin-bottom: 2rem;
 	}
 }
 
-div.wp-block-button .wp-block-button__link {
-	@extend .button;
-
-	&:hover {
-		background-color: transparent;
-	}
+.wp-block-button__link {
+	@extend %button;
 }
 
 .wp-block-column {
