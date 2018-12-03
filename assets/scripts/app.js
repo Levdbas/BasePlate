@@ -1,7 +1,7 @@
 /* ========================================================================
-* Custom import of Bootstrap modules
-* comment/uncomment the things you do/don't need.
-* ======================================================================== */
+ * Custom import of Bootstrap modules
+ * comment/uncomment the things you do/don't need.
+ * ======================================================================== */
 //import 'bootstrap';
 import 'bootstrap/js/dist/util'
 import 'bootstrap/js/dist/dropdown'
@@ -9,7 +9,6 @@ import 'bootstrap/js/dist/dropdown'
 import 'bootstrap/js/dist/button'
 import 'bootstrap/js/dist/carousel'
 import 'bootstrap/js/dist/collapse'
-import 'bootstrap/js/dist/dropdown'
 //import 'bootstrap/js/dist/modal'
 //import 'bootstrap/js/dist/popover'
 //import 'bootstrap/js/dist/scrollspy'
@@ -19,16 +18,16 @@ import 'bootstrap/js/dist/dropdown'
 import lazyLoad from './lazyLoad'
 import exampleImport from './example-import'
 /* ========================================================================
-* DOM-based Routing
-* Based on http://goo.gl/EUTi53 by Paul Irish
-*
-* Only fires on body classes that match. If a body class contains a dash,
-* replace the dash with an underscore when adding it to the object below.
-*
-* .noConflict()
-* The routing is enclosed within an anonymous function so that you can
-* always reference jQuery with $, even when in .noConflict() mode.
-* ======================================================================== */
+ * DOM-based Routing
+ * Based on http://goo.gl/EUTi53 by Paul Irish
+ *
+ * Only fires on body classes that match. If a body class contains a dash,
+ * replace the dash with an underscore when adding it to the object below.
+ *
+ * .noConflict()
+ * The routing is enclosed within an anonymous function so that you can
+ * always reference jQuery with $, even when in .noConflict() mode.
+ * ======================================================================== */
 ;(function($) {
     // Use this variable to set up the common and page specific functions. If you
     // rename this variable, you will also need to rename the namespace below.
