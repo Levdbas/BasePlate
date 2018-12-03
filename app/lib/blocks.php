@@ -1,7 +1,5 @@
 <?php
 
-
-
 /**
  * Function that checks for ACF beta function acf_register_block()
  * and registered blocks.
@@ -16,7 +14,7 @@ function baseplate_register_blocks()
             'name' => 'tabs',
             'title' => __('Tabbed content'),
             'description' => __('Tabbed content'),
-            'render_callback' => 'baseplate_acf_bock_render_callback',
+            'render_callback' => 'baseplate_acf_block_render_callback',
             'category' => 'formatting',
             'icon' => 'admin-comments',
             'keywords' => array('tabs', 'tab')
@@ -24,48 +22,42 @@ function baseplate_register_blocks()
     }
 }
 
-
-
 /**
  * Function that matches the block file to the above defined acf_blocks
  * @param  object filled by acf_register_block() function
  * @since 	1.1.0
  */
 
- function baseplate_acf_block_render_callback($block)
- {
-     $slug = str_replace('acf/', '', $block['name']);
-     if (file_exists(get_stylesheet_directory() . "/partials/blocks/block-{$slug}.php")) {
-         include get_stylesheet_directory() . "/partials/blocks/block-{$slug}.php";
-     }
- }
+function baseplate_acf_block_render_callback($block)
+{
+    $slug = str_replace('acf/', '', $block['name']);
+    if (file_exists(get_stylesheet_directory() . "/partials/blocks/block-{$slug}.php")) {
+        include get_stylesheet_directory() . "/partials/blocks/block-{$slug}.php";
+    }
+}
 
+/**
+ * returns one of the the elements of the $block element.
+ * Currently only handles the ID of $block.
+ * @since 1.1
+ * @param  string $attr  the attribute you want to retrun
+ * @param  object $block the block object passed by ACF
+ * @return string        the attribute you need
+ */
 
+function bp_acf_block_attr($attr, $block)
+{
+    $slug = str_replace('acf/', '', $block['name']);
+    switch ($attr) {
+        case 'id':
+            return $slug . '-' . $block['id'];
+            break;
 
- /**
-  * returns one of the the elements of the $block element.
-  * Currently only handles the ID of $block.
-  * @since 1.1
-  * @param  string $attr  the attribute you want to retrun
-  * @param  object $block the block object passed by ACF
-  * @return string        the attribute you need
-  */
-
- function bp_acf_block_attr($attr, $block)
- {
-     $slug = str_replace('acf/', '', $block['name']);
-     switch ($attr) {
-         case 'id':
-             return $slug . '-' . $block['id'];
-             break;
-
-         default:
-             return $slug . '-' . $block['id'];
-             break;
-     }
- }
-
-
+        default:
+            return $slug . '-' . $block['id'];
+            break;
+    }
+}
 
 /**
  * All classes for blocks combined in one function.
@@ -76,29 +68,27 @@ function baseplate_register_blocks()
  * @return string                string with all combined classnames.
  */
 
- function bp_block_classes($block, $extra_classes = '')
- {
-     $slug = str_replace('acf/', '', $block['name']);
-     $align_class = $block['align'] ? 'align' . $block['align'] : '';
-     $classes = '';
-     $classes .= 'block block-' . $slug . ' ';
-     $classes .= $align_class . ' ';
-     $classes .= $extra_classes . ' ';
-     $classes = trim($classes, " ");
-     return $classes;
- }
+function bp_block_classes($block, $extra_classes = '')
+{
+    $slug = str_replace('acf/', '', $block['name']);
+    $align_class = $block['align'] ? 'align' . $block['align'] : '';
+    $classes = '';
+    $classes .= 'block block-' . $slug . ' ';
+    $classes .= $align_class . ' ';
+    $classes .= $extra_classes . ' ';
+    $classes = trim($classes, " ");
+    return $classes;
+}
 
+/**
+ * Echoes bp_block_classes()
+ * @since 1.1
+ * @param  [type] $block         the block object passed by ACF
+ * @param  string $extra_classes string of extra classes passed to the block class attr
+ */
 
-
- /**
-  * Echoes bp_block_classes()
-  * @since 1.1
-  * @param  [type] $block         the block object passed by ACF
-  * @param  string $extra_classes string of extra classes passed to the block class attr
-  */
-
- function the_bp_block_classes($block, $extra_classes = '')
- {
-     echo bp_block_classes($block, $extra_classes);
- }
+function the_bp_block_classes($block, $extra_classes = '')
+{
+    echo bp_block_classes($block, $extra_classes);
+}
 ?>
