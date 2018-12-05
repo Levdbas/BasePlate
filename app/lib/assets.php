@@ -19,6 +19,7 @@ function get_asset($asset)
         wp_die(__('Manifest file not found. Did you run Webpack for the first time?', 'BasePlate'));
     }
 }
+
 /**
  * Echoes get_asset
  *
@@ -30,6 +31,11 @@ function the_asset($asset)
     echo get_asset($asset);
 }
 
+/**
+ * The front-end enqueue hook for BasePlate.
+ * Removes jQuery, app.css, vendor.js and app.js by default.
+ * @return [type] [description]
+ */
 function bp_enqueue()
 {
     wp_deregister_script('jquery');
@@ -38,21 +44,25 @@ function bp_enqueue()
     wp_enqueue_script('BasePlate/js', get_asset('app.js'), 'BasePlate/vendor');
 }
 
+/**
+ * the back-end enqueue hook for BasePlate
+ * loads the special gutenberg.css file that wraps most, but not all scss partials from our assets/style folder
+ * and wraps them in the gutenberg editor class.
+ * This hook can later be expanded to include custom javascript as well.
+ */
 function bp_editor_assets()
 {
-    /* Scripts.
-  wp_enqueue_script(
-      'baseplate-block-js', // Handle.
-      plugins_url('/dist/blocks.build.js', dirname(__FILE__)), // Block.build.js: We register the block here. Built with Webpack.
-      array('wp-blocks', 'wp-i18n', 'wp-element'), // Dependencies, defined above.
-      wp_get_theme()->Version,
-      true // Enqueue the script in the footer.
-  );
-  */
-    // Styles.
+    //wp_enqueue_style('baseplate-block-js', get_asset('gutenberg.js'), array('wp-blocks', 'wp-i18n', 'wp-element'));
     wp_enqueue_style('baseplate-block-editor-css', get_asset('gutenberg.css'), array('wp-edit-blocks'));
 }
 
+/**
+ * Takes the javascript enqueues and adds the async attribute.
+ * to speed up the load times.
+ * @param  [type] $tag    the given tags from a handle.
+ * @param  [type] $handle the enqueues
+ * @return [type]         returns updates handles including the async tag.
+ */
 function bp_async_attr($tag, $handle)
 {
     // add script handles to the array below

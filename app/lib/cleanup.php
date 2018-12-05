@@ -61,9 +61,9 @@ function bp_admin_menu()
     remove_menu_page('post-new.php');
 }
 
-// new posts verwijderen uit admin bar
 function bp_admin_bar()
 {
     global $wp_admin_bar;
     $wp_admin_bar->remove_node('new-post');
+    $wp_admin_bar->remove_node('comments');
 }
