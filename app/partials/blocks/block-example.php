@@ -5,7 +5,7 @@
  * This is the template that displays the testimonial block.
  */
 ?>
-<div id="<?php echo bp_acf_block_attr('id', $block); ?>" class='<?php bp_block_classes($block); ?>'>
+<div id="<?php echo bp_acf_block_attr('id', $block); ?>" class='<?php the_bp_acf_block_classes($block); ?>'>
   <?php the_field('block_title'); ?>
 </div>
 
