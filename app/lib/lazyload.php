@@ -11,12 +11,16 @@
  */
 function bp_lazyload_img($attachment_id, $size = 'large', $icon = false, $attr = '')
 {
-    $html = '';
-    $html = wp_get_attachment_image($attachment_id, $size, $icon, $attr);
-    $html = str_replace('src=', 'data-src=', $html);
-    $html = str_replace('srcset=', 'data-srcset=', $html);
-    $html = str_replace('class="', 'class="lazyload ', $html);
-    return $html;
+    $image = '';
+    $image = wp_get_attachment_image($attachment_id, $size, $icon, $attr);
+
+    if (!is_admin()):
+        $image = str_replace('src=', 'data-src=', $image);
+        $image = str_replace('srcset=', 'data-srcset=', $image);
+        $image = str_replace('class="', 'class="lazyload ', $image);
+    endif;
+
+    return $image;
 }
 /**
  * Based on wp_get_attachment_image_src() but now with lazyload background functionallity.
@@ -28,11 +32,13 @@ function bp_lazyload_img($attachment_id, $size = 'large', $icon = false, $attr =
  */
 function bp_lazyload_bg_img($image_id, $size = 'large')
 {
-    $html = '';
-    $term_image = wp_get_attachment_image_src($image_id, $size);
-    $term_image = $term_image[0];
-    $html = 'data-background-image="' . $term_image . '"';
-    return $html;
+    $image = '';
+    $image = wp_get_attachment_image_src($image_id, $size);
+    if (!is_admin()):
+        $image = $image[0];
+        $image = 'data-background-image="' . $image . '"';
+    endif;
+    return $image;
 }
 
 /**
