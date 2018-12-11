@@ -68,7 +68,7 @@ function bp_acf_block_attr($attr, $block)
  * @return string                string with all combined classnames.
  */
 
-function bp_block_classes($block, $extra_classes = '')
+function bp_acf_block_classes($block, $extra_classes = '')
 {
     $slug = str_replace('acf/', '', $block['name']);
     $align_class = $block['align'] ? 'align' . $block['align'] : '';
@@ -87,8 +87,8 @@ function bp_block_classes($block, $extra_classes = '')
  * @param  string $extra_classes string of extra classes passed to the block class attr
  */
 
-function the_bp_block_classes($block, $extra_classes = '')
+function the_bp_acf_block_classes($block, $extra_classes = '')
 {
-    echo bp_block_classes($block, $extra_classes);
+    echo bp_acf_block_classes($block, $extra_classes);
 }
 ?>
