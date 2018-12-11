@@ -52,7 +52,7 @@ function bp_enqueue()
  */
 function bp_editor_assets()
 {
-    //wp_enqueue_style('baseplate-block-js', get_asset('gutenberg.js'), array('wp-blocks', 'wp-i18n', 'wp-element'));
+    wp_enqueue_script('baseplate-block-js', get_asset('gutenberg.js'), array('wp-blocks', 'wp-i18n', 'wp-element'));
     wp_enqueue_style('baseplate-block-editor-css', get_asset('gutenberg.css'), array('wp-edit-blocks'));
 }
 

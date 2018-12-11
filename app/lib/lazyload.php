@@ -49,6 +49,17 @@ function bp_lazyload_content_images($content)
     $content = preg_replace('/<img(.*?)class=\"(.*?)\"(.*?)>/i', '<img$1class="$2 lazyload"$3>', $content);
     //-- Add .lazyload class to each image that doesn't have a class.
     $content = preg_replace('/<img(.*?)(?!\bclass\b)(.*?)/i', '<img$1 class="lazyload"$2', $content);
+
+    //-- Add .lazyload class to block covers
+    $content = preg_replace('/<div(.*?)class=\"(wp-block-cover.*?)\"(.*?)>/i', '<div$1class="$2 lazyload"$3>', $content);
+
+    // find divs with a background-image and sets them as data-bg
+    $content = preg_replace('/<div(.*?)style=\"background-image:(.*?)\"(.*?)>/i', '<div$1data-bg="$2"$3>', $content);
+
+    $content = preg_replace('/<video(.*?)class=\"(wp-block-cover__video-background.*?)\"(.*?)>/i', '<video$1class="$2 lazyload"$3>', $content);
+    //$content = preg_replace('/<video((?!class).)*$/i', '<video$1 class="lazyload"$2', $content);
+    $content = preg_replace('/<video(.*?)src=\"(.*?)\"(.*?)>/i', '<video$1data-src="$2"$3>', $content);
+
     return $content;
 }
 add_filter('the_content', 'bp_lazyload_content_images', 11);

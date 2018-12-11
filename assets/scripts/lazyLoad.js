@@ -1,13 +1,11 @@
-import lozad from 'lozad'
+import LazyLoad from 'vanilla-lazyload'
 function lazyLoad() {
-    var observer = lozad('.lazyload', {
-        rootMargin: '15px 0px', // syntax similar to that of CSS Margin
-        threshold: 0.1,
-        loaded: function(el) {
-            // do something after the images are loaded
+    var myLazyLoad = new LazyLoad({
+        elements_selector: '.lazyload',
+        callback_load: function(el) {
+            $(el).css('min-height', 'auto')
         },
     })
-    observer.observe()
 
     // reserves space for the images that are going to be lazyloaded.
     $('img.lazyload').each(function() {
