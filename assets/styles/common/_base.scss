@@ -11,8 +11,6 @@
 	@include pxtorem(16px);
 
 	background: $highlight1;
-	border-color: $highlight1;
-	border-radius: 10px;
 	border-style: solid;
 	border-width: 2px;
 	color: $base-color;
@@ -25,6 +23,10 @@
 	text-align: center;
 	transition: all ease 0.3s;
 	width: 100%;
+
+	.is-style-outline & {
+		background: transparent;
+	}
 
 	&:last-of-type {
 		margin-right: 0;

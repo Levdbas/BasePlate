@@ -1,3 +1,10 @@
+/*
+################
+We use this file to load Gutengerg specific styles for the backend.
+Mainly contains special alignment css and some fixes regarding our custom css.
+################
+*/
+
 &,
 & p {
 	@extend %base-style;
@@ -28,6 +35,12 @@
 	}
 }
 
+.wp-block-columns {
+
+	.editor-inner-blocks {
+		width: 100%;
+	}
+}
 // fix where our custom align full width classes would overflow the editor.
 
 .alignfull {
