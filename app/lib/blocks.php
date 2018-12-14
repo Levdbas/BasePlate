@@ -14,7 +14,7 @@ function baseplate_register_blocks()
             'name' => 'tabs',
             'title' => __('Tabbed content'),
             'description' => __('Tabbed content'),
-            'render_callback' => 'baseplate_acf_block_render_callback',
+            'render_callback' => 'bp_acf_block_render_callback',
             'category' => 'formatting',
             'icon' => 'admin-comments',
             'keywords' => array('tabs', 'tab')
@@ -24,11 +24,11 @@ function baseplate_register_blocks()
 
 /**
  * Function that matches the block file to the above defined acf_blocks
- * @param  object filled by acf_register_block() function
+ * @param  object $block filled by acf_register_block() function
  * @since 	1.1.0
  */
 
-function baseplate_acf_block_render_callback($block)
+function bp_acf_block_render_callback($block)
 {
     $slug = str_replace('acf/', '', $block['name']);
     if (file_exists(get_stylesheet_directory() . "/partials/blocks/block-{$slug}.php")) {
