@@ -31,7 +31,7 @@
         "value-no-vendor-prefix": true,
         "number-leading-zero": "always",
         "function-url-quotes": "always",
-        "font-weight-notation": "named-where-possible",
+        "font-weight-notation": "numeric",
         "comment-empty-line-before": "always",
         "at-rule-no-vendor-prefix": true,
         "rule-empty-line-before": "always",
