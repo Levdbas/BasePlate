@@ -1,24 +1,24 @@
 /**
  * Assets Config file
  */
-process.noDeprecation = true
-const env = process.env.NODE_ENV
-const devMode = process.env.NODE_ENV !== 'production'
-const path = require('path')
-const webpack = require('webpack')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const ImageminPlugin = require('imagemin-webpack')
-const imageminGifsicle = require('imagemin-gifsicle')
-const imageminJpegtran = require('imagemin-jpegtran')
-const imageminOptipng = require('imagemin-optipng')
-const imageminSvgo = require('imagemin-svgo')
-const ManifestPlugin = require('webpack-manifest-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const rootPath = process.cwd()
-var configFile = require(path.resolve(__dirname, rootPath) + '/assets/config.json')
+process.noDeprecation = true;
+const env = process.env.NODE_ENV;
+const devMode = process.env.NODE_ENV !== 'production';
+const path = require('path');
+const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ImageminPlugin = require('imagemin-webpack');
+const imageminGifsicle = require('imagemin-gifsicle');
+const imageminJpegtran = require('imagemin-jpegtran');
+const imageminOptipng = require('imagemin-optipng');
+const imageminSvgo = require('imagemin-svgo');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const rootPath = process.cwd();
+var configFile = require(path.resolve(__dirname, rootPath) + '/assets/config.json');
 
 const variables = {
     browserSyncURL: configFile['browserSyncURL'],
@@ -27,7 +27,7 @@ const variables = {
     themePath: path.join(rootPath, configFile['themePath']), // from root folder path/to/theme
     distPath: path.join(rootPath, configFile['themePath'], 'dist'), // from root folder path/to/theme
     assetsPath: path.join(rootPath, configFile['assetsPath']), // from root folder path/to/assets
-}
+};
 
 const config = {
     context: variables.assetsPath,
@@ -144,9 +144,9 @@ const config = {
             map: file => {
                 if (process.env.NODE_ENV === 'production') {
                     // Remove hash in manifest key
-                    file.name = file.name.replace(/(\.[a-f0-9]{32})(\..*)$/, '$2')
+                    file.name = file.name.replace(/(\.[a-f0-9]{32})(\..*)$/, '$2');
                 }
-                return file
+                return file;
             },
         }),
     ],
@@ -157,15 +157,10 @@ const config = {
             name: 'vendor',
         },
         minimizer: [
-            new UglifyJsPlugin({
+            new TerserPlugin({
                 cache: true,
+                parallel: true,
                 sourceMap: variables.sourceMaps,
-                uglifyOptions: {
-                    compress: true,
-                    output: {
-                        comments: false,
-                    },
-                },
             }),
             new ImageminPlugin({
                 bail: false, // Ignore errors on corrupted images
@@ -192,13 +187,13 @@ const config = {
             }),
         ],
     },
-}
+};
 if (process.env.NODE_ENV === 'production') {
     config.plugins.push(
         new CleanWebpackPlugin(variables.distPath, {
             root: rootPath,
             verbose: false,
         })
-    )
+    );
 }
-module.exports = config
+module.exports = config;
