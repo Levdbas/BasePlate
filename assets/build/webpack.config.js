@@ -132,7 +132,7 @@ const config = {
                 {
                     context: variables.assetsPath + '/images',
                     from: '**/*',
-                    to: devMode ? 'images/[name].[ext]' : 'images/[name].[hash].[ext]',
+                    to: devMode ? 'images/[path][name].[ext]' : 'images/[path][name].[hash].[ext]',
                 },
             ],
             {
@@ -165,7 +165,7 @@ const config = {
             new ImageminPlugin({
                 bail: false, // Ignore errors on corrupted images
                 cache: true,
-                name: 'images/[hash].[ext]',
+                name: '[path][name].[ext]',
                 imageminOptions: {
                     // Lossless optimization with custom option
                     // Feel free to experement with options for better result for you
