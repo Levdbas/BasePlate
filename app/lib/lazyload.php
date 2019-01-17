@@ -36,7 +36,7 @@ function bp_lazyload_bg_img($image_id, $size = 'large')
     $image = wp_get_attachment_image_src($image_id, $size);
     if (!is_admin()):
         $image = $image[0];
-        $image = 'data-background-image="' . $image . '"';
+        $image = 'data-bg="url(' . $image . ')"';
     endif;
     return $image;
 }
@@ -47,25 +47,103 @@ function bp_lazyload_bg_img($image_id, $size = 'large')
  * @param  string $content content passed by the_content()
  * @return [type]          returns the_content with images now containing ready for lazyloading
  */
-function bp_lazyload_content_images($content)
+function bp_lazyload_content($content)
 {
-    //-- Change src/srcset to data attributes.
-    $content = preg_replace("/<img(.*?)(src=|srcset=)(.*?)>/i", '<img$1data-$2$3>', $content);
-    //-- Add .lazyload class to each image that already has a class.
-    $content = preg_replace('/<img(.*?)class=\"(.*?)\"(.*?)>/i', '<img$1class="$2 lazyload"$3>', $content);
-    //-- Add .lazyload class to each image that doesn't have a class.
-    $content = preg_replace('/<img(.*?)(?!\bclass\b)(.*?)/i', '<img$1 class="lazyload"$2', $content);
+    if (empty($content)) {
+        return $content;
+    }
+    //$content = mb_convert_encoding($content, 'HTML-ENTITIES', "UTF-8");
+    $dom = new DOMDocument();
+    libxml_use_internal_errors(true);
+    $dom->loadHTML($content);
+    libxml_clear_errors();
 
-    //-- Add .lazyload class to block covers
-    $content = preg_replace('/<div(.*?)class=\"(wp-block-cover.*?)\"(.*?)>/i', '<div$1class="$2 lazyload"$3>', $content);
+    $content = $dom->saveHTML();
 
-    // find divs with a background-image and sets them as data-bg
-    $content = preg_replace('/<div(.*?)style=\"background-image:(.*?)\"(.*?)>/i', '<div$1data-bg="$2"$3>', $content);
+    $images = [];
+    $background_images = [];
+    $iframes = [];
+    $videos = [];
 
-    $content = preg_replace('/<video(.*?)class=\"(wp-block-cover__video-background.*?)\"(.*?)>/i', '<video$1class="$2 lazyload"$3>', $content);
-    //$content = preg_replace('/<video((?!class).)*$/i', '<video$1 class="lazyload"$2', $content);
-    $content = preg_replace('/<video(.*?)src=\"(.*?)\"(.*?)>/i', '<video$1data-src="$2"$3>', $content);
+    foreach ($dom->getElementsByTagName('img') as $node) {
+        $images[] = $node;
+    }
 
-    return $content;
+    foreach ($dom->getElementsByTagName('div') as $node) {
+        if ($node->hasAttribute('style')) {
+            $background_images[] = $node;
+        }
+    }
+
+    foreach ($dom->getElementsByTagName('iframe') as $node) {
+        $iframes[] = $node;
+    }
+
+    foreach ($dom->getElementsByTagName('video') as $node) {
+        $videos[] = $node;
+    }
+
+    foreach ($images as $node) {
+        $fallback = $node->cloneNode(true);
+
+        if ($node->hasAttribute('sizes') && $node->hasAttribute('srcset')) {
+            $sizes_attr = $node->getAttribute('sizes');
+            $srcset = $node->getAttribute('srcset');
+            $node->setAttribute('data-sizes', $sizes_attr);
+            $node->setAttribute('data-srcset', $srcset);
+            $node->removeAttribute('sizes');
+            $node->removeAttribute('srcset');
+            $node->removeAttribute('src');
+            $src = $node->getAttribute('src');
+        } else {
+            $src = $node->getAttribute('src');
+            $node->setAttribute('data-src', $src);
+            $node->removeAttribute('src');
+        }
+
+        bp_lazyload_content_attr($dom, $node, $fallback);
+    }
+    // Convert iframs
+
+    foreach ($iframes as $node) {
+        $fallback = $node->cloneNode(true);
+        $oldsrc = $node->getAttribute('src');
+        $node->setAttribute('data-src', $oldsrc);
+        $newsrc = '';
+        $node->setAttribute('src', $newsrc);
+        bp_lazyload_content_attr($dom, $node, $fallback);
+    }
+
+    foreach ($videos as $node) {
+        $fallback = $node->cloneNode(true);
+        $oldsrc = $node->getAttribute('src');
+        $node->setAttribute('data-src', $oldsrc);
+        $newsrc = '';
+        $node->setAttribute('src', $newsrc);
+        bp_lazyload_content_attr($dom, $node, $fallback);
+    }
+
+    foreach ($background_images as $node) {
+        $fallback = $node->cloneNode(true);
+
+        $element_style = $node->getAttribute('style');
+        preg_match('/background-image:url\((.*?)\)(.*?)/i', $element_style, $matches);
+        $node->setAttribute('data-bg', 'url(' . $matches[1] . ')');
+
+        bp_lazyload_content_attr($dom, $node, $fallback);
+    }
+
+    $newHtml = $dom->saveHTML();
+    return $newHtml;
 }
-add_filter('the_content', 'bp_lazyload_content_images', 11);
+add_filter('the_content', 'bp_lazyload_content', 11);
+
+function bp_lazyload_content_attr($dom, $node, $fallback)
+{
+    $classes = $node->getAttribute('class');
+    $newclasses = $classes . ' lazyload';
+    $node->setAttribute('class', $newclasses);
+    $noscript = $dom->createElement('noscript', '');
+    $node->parentNode->insertBefore($noscript, $node);
+    $noscript->appendChild($fallback);
+}
