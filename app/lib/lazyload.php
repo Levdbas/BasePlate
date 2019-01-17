@@ -128,6 +128,8 @@ function bp_lazyload_content($content)
 
         $element_style = $node->getAttribute('style');
         preg_match('/background-image:url\((.*?)\)(.*?)/i', $element_style, $matches);
+        $element_style = preg_replace('/background-image:url\((.*?)\)(.*?)/i', '', $element_style);
+        $node->setAttribute('style', $element_style);
         $node->setAttribute('data-bg', 'url(' . $matches[1] . ')');
 
         bp_lazyload_content_attr($dom, $node, $fallback);
