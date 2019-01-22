@@ -55,7 +55,7 @@ function bp_lazyload_content($content)
     //$content = mb_convert_encoding($content, 'HTML-ENTITIES', "UTF-8");
     $dom = new DOMDocument();
     libxml_use_internal_errors(true);
-    $dom->loadHTML($content);
+    $dom->loadHTML('<meta http-equiv="Content-Type" content="text/html; charset=utf-8">' . $content);
     libxml_clear_errors();
 
     $content = $dom->saveHTML();
@@ -128,15 +128,17 @@ function bp_lazyload_content($content)
 
         $element_style = $node->getAttribute('style');
         preg_match('/background-image:url\((.*?)\)(.*?)/i', $element_style, $matches);
-        $element_style = preg_replace('/background-image:url\((.*?)\)(.*?)/i', '', $element_style);
-        $node->setAttribute('style', $element_style);
-        $node->setAttribute('data-bg', 'url(' . $matches[1] . ')');
+
+        if ($matches):
+            $element_style = preg_replace('/background-image:url\((.*?)\)(.*?)/i', '', $element_style);
+            $node->setAttribute('style', $element_style);
+            $node->setAttribute('data-bg', 'url(' . $matches[1] . ')');
+        endif;
 
         bp_lazyload_content_attr($dom, $node, $fallback);
     }
 
-    $newHtml = $dom->saveHTML();
-    return $newHtml;
+    return $dom->saveHTML($dom->documentElement);
 }
 add_filter('the_content', 'bp_lazyload_content', 11);
 
