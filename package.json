@@ -57,7 +57,7 @@
         "bootstrap": "^4.1.3",
         "font-awesome": "^4.7.0",
         "jquery": "^3.3",
-        "vanilla-lazyload@": "8.17.0",
+        "vanilla-lazyload": "^8.17.0",
         "popper.js": "^1.14"
     }
 }
