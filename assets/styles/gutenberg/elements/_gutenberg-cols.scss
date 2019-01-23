@@ -1,9 +1,6 @@
 .wp-block-columns {
 	@extend .row;
 
-	margin-left: 0;
-	margin-right: 0;
-
 	&.has-3-columns .wp-block-column {
 		@extend .col-12;
 
