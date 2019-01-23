@@ -55,7 +55,6 @@ function bp_remove_thumbnail_dimensions($html, $post_id, $post_image_id)
 
 function bp_admin_menu()
 {
-    remove_menu_page('link-manager.php');
     remove_menu_page('edit-comments.php');
     remove_menu_page('edit.php');
     remove_menu_page('post-new.php');
