@@ -180,7 +180,7 @@ const config = {
                             optimizationLevel: 5,
                         }),
                         imageminSvgo({
-                            removeViewBox: true,
+                            removeViewBox: false,
                         }),
                     ],
                 },
