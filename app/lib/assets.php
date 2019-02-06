@@ -7,14 +7,15 @@
  */
 function get_asset($asset)
 {
-    // Look for the manifest file.
     $manifest = __DIR__ . '/../dist/manifest.json';
     if (file_exists($manifest)) {
         $manifest = file_get_contents($manifest);
         $json = json_decode($manifest, true);
-        $file = $json[$asset];
-        $file = get_template_directory_uri() . '/dist/' . $file;
-        return $file;
+
+        if (isset($json[$asset])):
+            $file = $json[$asset];
+            return get_template_directory_uri() . '/dist/' . $file;
+        endif;
     } else {
         wp_die(__('Manifest file not found. Did you run Webpack for the first time?', 'BasePlate'));
     }
