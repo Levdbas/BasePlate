@@ -5,7 +5,7 @@
 }
 
 .search-form label {
-	font-weight: normal;
+	font-weight: 400;
 
 	@extend .form-group;
 }
@@ -19,21 +19,29 @@
 	@extend .btn-secondary;
 }
 
-.wpcf7-form {
-
-	input,
-	textarea {
-		background: transparant;
-		border: 1px solid $highlight1;
-		padding: 5px;
-		width: 100%;
-
-		&:focus {
-			border: 1px solid $green;
-		}
-	}
+input,
+select,
+textarea {
+	background-color: #ffffff;
+	border: 1px solid $highlight1;
+	color: $base-color;
+	padding: 10px;
+	width: 100%;
 }
 
-.wpcf7-submit {
-	@extend %button;
+input[type="checkbox"],
+input[type="radio"] {
+	margin-right: 10px;
+	width: auto;
+}
+
+input:focus,
+textarea:focus {
+	outline: none;
+}
+
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+	@extend .button;
 }
