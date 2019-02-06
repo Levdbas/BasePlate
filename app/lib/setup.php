@@ -12,13 +12,16 @@ function bp_setup()
 {
     load_theme_textdomain('BasePlate', get_template_directory() . '/lang');
     register_nav_menus([
-        'primary_navigation' => __('Main menu', 'BasePlate')
+        'primary_navigation' => __('Main menu', 'BasePlate'),
+        'footer_navigation' => __('Footer navigation', 'BasePlate')
     ]);
     add_theme_support('post-thumbnails');
     add_theme_support('post-formats', ['aside', 'gallery', 'link', 'image', 'quote', 'video', 'audio']);
     add_theme_support('html5', ['caption', 'comment-form', 'comment-list', 'gallery', 'search-form']);
-    add_theme_support('align-wide');
+
     add_theme_support('title-tag');
+    add_theme_support('align-wide');
+    add_theme_support('responsive-embeds');
 }
 add_action('after_setup_theme', 'bp_setup');
 
@@ -31,7 +34,7 @@ add_action('after_setup_theme', 'bp_setup');
  */
 function baseplate_acf_init()
 {
-    baseplate_register_blocks();
+    //baseplate_register_blocks();
 }
 
 add_action('acf/init', 'baseplate_acf_init');

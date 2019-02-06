@@ -1,0 +1,26 @@
+.footer {
+	color: $white;
+
+	ul {
+		margin-left: 0;
+	}
+}
+
+.footer-widgets {
+	background: $footer-bg-color;
+}
+
+.site-info {
+	background: $footer-bg-color;
+}
+
+.footer-menu {
+
+	li {
+		@extend .nav-item;
+	}
+
+	a {
+		@extend .nav-link;
+	}
+}
