@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Add <body> classes
+ * Adding extra body classs to the body.
+ * @since 1.1
+ * @param array $classes origina array of body classes that we are expanding.
  */
 function bp_add_bodyclasses($classes)
 {
@@ -21,8 +23,11 @@ function bp_add_bodyclasses($classes)
     return $classes;
 }
 add_filter('body_class', 'bp_add_bodyclasses');
+
 /**
- * Clean up the_excerpt()
+ * Change the default read-more symbols.
+ * @since
+ * @return string returns ...
  */
 function excerpt_more()
 {
@@ -30,6 +35,12 @@ function excerpt_more()
 }
 add_filter('excerpt_more', 'excerpt_more');
 
+/**
+ * Change default excerpt lengt.
+ * @since
+ * @param  [type] $length [description]
+ * @return [type]         [description]
+ */
 function custom_excerpt_length($length)
 {
     return 20;

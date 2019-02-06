@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Register sidebars
+ * Initize the sidebars.
+ * @since
+ * @return [type] [description]
  */
 function widgets_init()
 {

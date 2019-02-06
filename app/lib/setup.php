@@ -1,9 +1,14 @@
 <?php
 
 /**
- * Theme setup
+ * Lets set up our theme!
+ * - default text Domain
+ * - navigation menus
+ * - theme support
+ * @since
+ * @return [type] [description]
  */
-function setup()
+function bp_setup()
 {
     load_theme_textdomain('BasePlate', get_template_directory() . '/lang');
     register_nav_menus([
@@ -15,8 +20,15 @@ function setup()
     add_theme_support('align-wide');
     add_theme_support('title-tag');
 }
-add_action('after_setup_theme', 'setup');
+add_action('after_setup_theme', 'bp_setup');
 
+/**
+ * Initialize Advanced custom fields here.
+ * We run our block function over here.
+ * We can also use this to run any other acf hooks.
+ * @since 1.1
+ * @return [type] [description]
+ */
 function baseplate_acf_init()
 {
     baseplate_register_blocks();
@@ -24,7 +36,13 @@ function baseplate_acf_init()
 
 add_action('acf/init', 'baseplate_acf_init');
 
-/* security */
+/**
+ * Let's enhance our security.
+ * We use this function to append extra htacces rules that block access to the xmlrpc endpoint.
+ * @since
+ * @param  [type] $rules [description]
+ * @return [type]        [description]
+ */
 function my_htaccess_contents($rules)
 {
     return $rules .

@@ -22,6 +22,7 @@ function bp_lazyload_img($attachment_id, $size = 'large', $icon = false, $attr =
 
     return $image;
 }
+
 /**
  * Based on wp_get_attachment_image_src() but now with lazyload background functionallity.
  * Used as follows, <div class="lazyload" <?php echo bp_lazyload_bg_img($image_id, $size); ?>></div>
@@ -47,6 +48,7 @@ function bp_lazyload_bg_img($image_id, $size = 'large')
  * @param  string $content content passed by the_content()
  * @return [type]          returns the_content with images now containing ready for lazyloading
  */
+
 function bp_lazyload_content($content)
 {
     if (empty($content)) {

@@ -25,11 +25,6 @@ add_filter('script_loader_src', 'bp_remove_wp_ver', 9999);
 add_action('admin_bar_menu', 'bp_admin_bar', 999);
 add_action('admin_menu', 'bp_admin_menu');
 
-function bp_remove_press_this()
-{
-    wp_die(__('Press-this is disabled', 'BasePlate'));
-}
-
 function bp_disable_feed()
 {
     die();
