@@ -1,4 +1,3 @@
-console.log('test');
 function addListBlockClassName(settings, block) {
     if (name !== 'core/cover') {
         return settings;

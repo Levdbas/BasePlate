@@ -3,20 +3,20 @@
  * comment/uncomment the things you do/don't need.
  * ======================================================================== */
 //import 'bootstrap';
-import 'bootstrap/js/dist/util'
-import 'bootstrap/js/dist/dropdown'
+import 'bootstrap/js/dist/util';
+import 'bootstrap/js/dist/dropdown';
 //import 'bootstrap/js/dist/alert'
-import 'bootstrap/js/dist/button'
-import 'bootstrap/js/dist/carousel'
-import 'bootstrap/js/dist/collapse'
+import 'bootstrap/js/dist/button';
+import 'bootstrap/js/dist/carousel';
+import 'bootstrap/js/dist/collapse';
 //import 'bootstrap/js/dist/modal'
 //import 'bootstrap/js/dist/popover'
 //import 'bootstrap/js/dist/scrollspy'
 //import 'bootstrap/js/dist/tab'
 //import 'bootstrap/js/dist/tooltip'
 
-import lazyLoad from './lazyLoad'
-import exampleImport from './example-import'
+import lazyLoad from './lazyLoad';
+import exampleImport from './example-import';
 /* ========================================================================
  * DOM-based Routing
  * Based on http://goo.gl/EUTi53 by Paul Irish
@@ -28,15 +28,15 @@ import exampleImport from './example-import'
  * The routing is enclosed within an anonymous function so that you can
  * always reference jQuery with $, even when in .noConflict() mode.
  * ======================================================================== */
-;(function($) {
+(function($) {
     // Use this variable to set up the common and page specific functions. If you
     // rename this variable, you will also need to rename the namespace below.
     var Sage = {
         // All pages
         common: {
             init: function() {
-                lazyLoad()
-                exampleImport()
+                lazyLoad();
+                exampleImport();
             },
             finalize: function() {
                 // JavaScript to be fired on all pages, after page specific JS is fired
@@ -57,36 +57,36 @@ import exampleImport from './example-import'
                 // JavaScript to be fired on the about us page
             },
         },
-    }
+    };
 
     // The routing fires all common scripts, followed by the page specific scripts.
     // Add additional events for more control over timing e.g. a finalize event
     var UTIL = {
         fire: function(func, funcname, args) {
-            var fire
-            var namespace = Sage
-            funcname = funcname === undefined ? 'init' : funcname
-            fire = func !== ''
-            fire = fire && namespace[func]
-            fire = fire && typeof namespace[func][funcname] === 'function'
+            var fire;
+            var namespace = Sage;
+            funcname = funcname === undefined ? 'init' : funcname;
+            fire = func !== '';
+            fire = fire && namespace[func];
+            fire = fire && typeof namespace[func][funcname] === 'function';
 
             if (fire) {
-                namespace[func][funcname](args)
+                namespace[func][funcname](args);
             }
         },
         loadEvents: function() {
             // Fire common init JS
-            UTIL.fire('common')
+            UTIL.fire('common');
             // Fire page-specific init JS, and then finalize JS
             $.each(document.body.className.replace(/-/g, '_').split(/\s+/), function(i, classnm) {
-                UTIL.fire(classnm)
-                UTIL.fire(classnm, 'finalize')
-            })
+                UTIL.fire(classnm);
+                UTIL.fire(classnm, 'finalize');
+            });
             // Fire common finalize JS
-            UTIL.fire('common', 'finalize')
+            UTIL.fire('common', 'finalize');
         },
-    }
+    };
 
     // Load Events
-    $(document).ready(UTIL.loadEvents)
-})(jQuery) // Fully reference jQuery after this point.
+    $(document).ready(UTIL.loadEvents);
+})(jQuery); // Fully reference jQuery after this point.
