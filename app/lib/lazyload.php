@@ -57,10 +57,8 @@ function bp_lazyload_content($content)
     //$content = mb_convert_encoding($content, 'HTML-ENTITIES', "UTF-8");
     $dom = new DOMDocument();
     libxml_use_internal_errors(true);
-    $dom->loadHTML($content);
+    $dom->loadHTML(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'));
     libxml_clear_errors();
-
-    $content = $dom->saveHTML();
 
     $images = [];
     $background_images = [];
