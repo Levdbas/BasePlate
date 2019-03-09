@@ -1,9 +1,8 @@
-/*
-################
-We use this file to load Gutengerg specific styles for the backend.
-Mainly contains special alignment css and some fixes regarding our custom css.
-################
-*/
+// ==========================================================================
+// Gutenberg / Frontend
+// We use this file to load Gutengerg specific styles for the backend.
+// Mainly contains special alignment css and some fixes regarding our custom css.
+// =========================================================================
 
 &,
 & p {
@@ -20,6 +19,18 @@ Mainly contains special alignment css and some fixes regarding our custom css.
 		margin: 0 auto;
 		max-width: 100% !important;
 	}
+}
+
+// lets use the whole width of the editor
+
+.editor-block-list__layout {
+	padding: 0 1px !important;
+}
+
+// fix for some flex issue where cols would collapse
+
+.editor-inner-blocks {
+	width: 100%;
 }
 
 .editor-post-title__input,

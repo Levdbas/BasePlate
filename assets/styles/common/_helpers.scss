@@ -1,0 +1,8 @@
+.lazyload {
+	opacity: 0;
+	transition: opacity 0.4s ease 0.2s;
+
+	&[data-was-processed="true"] {
+		opacity: 1;
+	}
+}

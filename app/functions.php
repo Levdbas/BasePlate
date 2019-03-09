@@ -6,7 +6,7 @@ $baseplate_includes = [
     'lib/assets.php', // Theme asset functions
     'lib/lazyload.php', // lazyload functionality
     'lib/blocks.php', // Gutengerb blocks
-    '/lib/bootstrap_navwalker.php', // navwalker
+    'lib/bootstrap_navwalker.php', // navwalker
     'lib/extras.php', // Custom functions
     'lib/sidebars.php' // Theme sidebars
 ];

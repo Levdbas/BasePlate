@@ -2,7 +2,7 @@
 	color: $base-color;
 	font-family: $base-font;
 	font-size: 16px;
-	font-weight: normal;
+	font-weight: 400;
 	line-height: 1.4;
 	margin: 0;
 }
@@ -10,12 +10,11 @@
 %button {
 	@include pxtorem(16px);
 
-	background: $highlight1;
 	border-style: solid;
 	border-width: 2px;
 	color: $base-color;
 	display: inline-block;
-	font-weight: bold;
+	font-weight: 700;
 	line-height: 26px;
 	margin-bottom: 15px;
 	margin-right: 30px;
@@ -36,14 +35,5 @@
 		background: $highlight2;
 		color: $base-color;
 		text-decoration: none;
-	}
-}
-
-.lazyload {
-	opacity: 0;
-	transition: opacity 0.4s ease 0.2s;
-
-	&[data-was-processed="true"] {
-		opacity: 1;
 	}
 }

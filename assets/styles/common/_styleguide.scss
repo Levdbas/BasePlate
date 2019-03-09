@@ -1,5 +1,6 @@
-/* Style Guide
----------------------------------------------------------------------------------------------------- */
+// ==========================================================================
+// 1. COMMON / styleguide
+// =========================================================================
 
 ::selection {
 	background: $highlight2;
@@ -144,7 +145,7 @@ blockquote.wp-block-quote {
 	cite {
 		color: $base-color;
 		display: block;
-		font-weight: bold;
+		font-weight: 700;
 		margin-top: 16px;
 
 		@include pxtorem(16px);
@@ -152,7 +153,7 @@ blockquote.wp-block-quote {
 
 	p {
 		font-size: 1.5rem;
-		font-weight: lighter;
+		font-weight: 300;
 		line-height: 1.4;
 
 		@include media-breakpoint-up(md) {

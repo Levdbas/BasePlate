@@ -2,22 +2,25 @@
 	@include list-unstyled;
 }
 
-.comment-list ol {
-	list-style: none;
-}
+.comment-form {
 
-.comment-form p {
-	@extend .form-group;
-}
+	p {
+		@extend .form-group;
+	}
 
-.comment-form input[type="text"],
-.comment-form input[type="email"],
-.comment-form input[type="url"],
-.comment-form textarea {
-	@extend .form-control;
-}
+	ol {
+		list-style: none;
+	}
 
-.comment-form input[type="submit"] {
-	@extend .btn;
-	@extend .btn-primary;
+	input[type="submit"] {
+		@extend .btn;
+		@extend .btn-primary;
+	}
+
+	input[type="text"],
+	input[type="email"],
+	input[type="url"],
+	textarea {
+		@extend .form-control;
+	}
 }

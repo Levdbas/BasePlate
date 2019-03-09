@@ -162,38 +162,37 @@ const config = {
                 parallel: true,
                 sourceMap: variables.sourceMaps,
             }),
-            new ImageminPlugin({
-                bail: false, // Ignore errors on corrupted images
-                cache: true,
-                name: '[path][name].[ext]',
-                imageminOptions: {
-                    // Lossless optimization with custom option
-                    // Feel free to experement with options for better result for you
-                    plugins: [
-                        imageminGifsicle({
-                            interlaced: true,
-                        }),
-                        imageminJpegtran({
-                            progressive: true,
-                        }),
-                        imageminOptipng({
-                            optimizationLevel: 5,
-                        }),
-                        imageminSvgo({
-                            removeViewBox: true,
-                        }),
-                    ],
-                },
-            }),
         ],
     },
 };
 if (process.env.NODE_ENV === 'production') {
     config.plugins.push(
-        new CleanWebpackPlugin(variables.distPath, {
-            root: rootPath,
+        new CleanWebpackPlugin( {
             verbose: false,
-        })
+        }),
+        new ImageminPlugin({
+            bail: false, // Ignore errors on corrupted images
+            cache: true,
+            name: '[path][name].[ext]',
+            imageminOptions: {
+                // Lossless optimization with custom option
+                // Feel free to experement with options for better result for you
+                plugins: [
+                    imageminGifsicle({
+                        interlaced: true,
+                    }),
+                    imageminJpegtran({
+                        progressive: true,
+                    }),
+                    imageminOptipng({
+                        optimizationLevel: 5,
+                    }),
+                    imageminSvgo({
+                        removeViewBox: false,
+                    }),
+                ],
+            },
+        }),
     );
 }
 module.exports = config;

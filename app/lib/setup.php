@@ -1,29 +1,51 @@
 <?php
 
 /**
- * Theme setup
+ * Lets set up our theme!
+ * - default text Domain
+ * - navigation menus
+ * - theme support
+ * @since
+ * @return [type] [description]
  */
-function setup()
+function bp_setup()
 {
     load_theme_textdomain('BasePlate', get_template_directory() . '/lang');
     register_nav_menus([
-        'primary_navigation' => __('Main menu', 'BasePlate')
+        'primary_navigation' => __('Main menu', 'BasePlate'),
+        'footer_navigation' => __('Footer navigation', 'BasePlate')
     ]);
     add_theme_support('post-thumbnails');
     add_theme_support('post-formats', ['aside', 'gallery', 'link', 'image', 'quote', 'video', 'audio']);
     add_theme_support('html5', ['caption', 'comment-form', 'comment-list', 'gallery', 'search-form']);
-    add_theme_support('align-wide');
-}
-add_action('after_setup_theme', 'setup');
 
+    add_theme_support('title-tag');
+    add_theme_support('align-wide');
+    add_theme_support('responsive-embeds');
+}
+add_action('after_setup_theme', 'bp_setup');
+
+/**
+ * Initialize Advanced custom fields here.
+ * We run our block function over here.
+ * We can also use this to run any other acf hooks.
+ * @since 1.1
+ * @return [type] [description]
+ */
 function baseplate_acf_init()
 {
-    baseplate_register_blocks();
+    //baseplate_register_blocks();
 }
 
 add_action('acf/init', 'baseplate_acf_init');
 
-/* security */
+/**
+ * Let's enhance our security.
+ * We use this function to append extra htacces rules that block access to the xmlrpc endpoint.
+ * @since
+ * @param  [type] $rules [description]
+ * @return [type]        [description]
+ */
 function my_htaccess_contents($rules)
 {
     return $rules .

@@ -7,9 +7,6 @@ remove_action('wp_head', 'feed_links', 2);
 remove_action('wp_head', 'feed_links_extra', 3);
 remove_action('wp_head', 'rsd_link');
 remove_action('wp_head', 'wlwmanifest_link');
-remove_action('wp_head', 'index_rel_link');
-remove_action('wp_head', 'parent_post_rel_link', 10, 0);
-remove_action('wp_head', 'start_post_rel_link', 10, 0);
 remove_action('wp_head', 'adjacent_posts_rel_link', 10, 0);
 remove_action('wp_head', 'wp_generator');
 remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0);
@@ -27,12 +24,6 @@ add_filter('style_loader_src', 'bp_remove_wp_ver', 9999);
 add_filter('script_loader_src', 'bp_remove_wp_ver', 9999);
 add_action('admin_bar_menu', 'bp_admin_bar', 999);
 add_action('admin_menu', 'bp_admin_menu');
-add_action('load-press-this.php', 'bp_remove_press_this');
-
-function bp_remove_press_this()
-{
-    wp_die(__('Press-this is disabled', 'BasePlate'));
-}
 
 function bp_disable_feed()
 {
@@ -55,7 +46,6 @@ function bp_remove_thumbnail_dimensions($html, $post_id, $post_image_id)
 
 function bp_admin_menu()
 {
-    remove_menu_page('link-manager.php');
     remove_menu_page('edit-comments.php');
     remove_menu_page('edit.php');
     remove_menu_page('post-new.php');
