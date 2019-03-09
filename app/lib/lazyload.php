@@ -57,7 +57,7 @@ function bp_lazyload_content($content)
     //$content = mb_convert_encoding($content, 'HTML-ENTITIES', "UTF-8");
     $dom = new DOMDocument();
     libxml_use_internal_errors(true);
-    $dom->loadHTML('<meta http-equiv="Content-Type" content="text/html; charset=utf-8">' . $content);
+    $dom->loadHTML($content);
     libxml_clear_errors();
 
     $content = $dom->saveHTML();
