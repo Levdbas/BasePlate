@@ -18,23 +18,23 @@ const imageminSvgo = require('imagemin-svgo');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const rootPath = process.cwd();
-var configFile = require(path.resolve(__dirname, rootPath) + '/assets/config.json');
+var userConfig = require(path.resolve(__dirname, rootPath) + '/assets/config.json');
 
-const variables = {
-    browserSyncURL: configFile['browserSyncURL'],
-    browserSyncPort: configFile['browserSyncPort'],
-    sourceMaps: configFile['sourceMaps'],
-    themePath: path.join(rootPath, configFile['themePath']), // from root folder path/to/theme
-    distPath: path.join(rootPath, configFile['themePath'], 'dist'), // from root folder path/to/theme
-    assetsPath: path.join(rootPath, configFile['assetsPath']), // from root folder path/to/assets
-};
-
-const config = {
-    context: variables.assetsPath,
-    entry: {
-        app: ['./scripts/app.js', './styles/app.scss'],
-        gutenberg: ['./scripts/gutenberg.js', './styles/gutenberg.scss'],
+const config = merge(
+    {
+        browserSyncURL: configFile['browserSyncURL'],
+        browserSyncPort: configFile['browserSyncPort'],
+        sourceMaps: configFile['sourceMaps'],
+        themePath: path.join(rootPath, configFile['themePath']), // from root folder path/to/theme
+        distPath: path.join(rootPath, configFile['themePath'], 'dist'), // from root folder path/to/theme
+        assetsPath: path.join(rootPath, configFile['assetsPath']), // from root folder path/to/assets
     },
+    userConfig
+);
+
+const webpackConfig = {
+    context: variables.assetsPath,
+    entry: config.entry,
     devtool: variables.sourceMaps ? 'cheap-module-eval-source-map' : false,
     module: {
         rules: [
@@ -162,37 +162,33 @@ const config = {
                 parallel: true,
                 sourceMap: variables.sourceMaps,
             }),
+            new ImageminPlugin({
+                bail: false, // Ignore errors on corrupted images
+                cache: true,
+                name: '[path][name].[ext]',
+                imageminOptions: {
+                    // Lossless optimization with custom option
+                    // Feel free to experement with options for better result for you
+                    plugins: [
+                        imageminGifsicle({
+                            interlaced: true,
+                        }),
+                        imageminJpegtran({
+                            progressive: true,
+                        }),
+                        imageminOptipng({
+                            optimizationLevel: 1,
+                        }),
+                        imageminSvgo({
+                            removeViewBox: false,
+                        }),
+                    ],
+                },
+            }),
         ],
     },
 };
 if (process.env.NODE_ENV === 'production') {
-    config.plugins.push(
-        new CleanWebpackPlugin( {
-            verbose: false,
-        }),
-        new ImageminPlugin({
-            bail: false, // Ignore errors on corrupted images
-            cache: true,
-            name: '[path][name].[ext]',
-            imageminOptions: {
-                // Lossless optimization with custom option
-                // Feel free to experement with options for better result for you
-                plugins: [
-                    imageminGifsicle({
-                        interlaced: true,
-                    }),
-                    imageminJpegtran({
-                        progressive: true,
-                    }),
-                    imageminOptipng({
-                        optimizationLevel: 5,
-                    }),
-                    imageminSvgo({
-                        removeViewBox: false,
-                    }),
-                ],
-            },
-        }),
-    );
+    webpackConfig.plugins.push(new CleanWebpackPlugin());
 }
-module.exports = config;
+module.exports = webpackConfig;

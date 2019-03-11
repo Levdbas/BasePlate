@@ -1,4 +1,8 @@
 {
+    "entry": {
+        "main": ["./scripts/app.js", "./styles/app.scss"],
+        "gutenberg": ["./scripts/gutenberg.js", "./styles/styles.scss"]
+    },
     "browserSyncURL": "testenvironment.local",
     "themePath": "app",
     "assetsPath": "assets",
