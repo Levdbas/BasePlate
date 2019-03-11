@@ -107,8 +107,8 @@ const webpackConfig = {
             filename: devMode ? 'styles/[name].css' : 'styles/[name].[contenthash].css',
         }),
         new webpack.ProvidePlugin({
-            $: 'jquery/dist/jquery.slim.js',
-            jQuery: 'jquery/dist/jquery.slim.js',
+            $: 'jquery/dist/jquery.js',
+            jQuery: 'jquery/dist/jquery.js',
             Popper: 'popper.js/dist/umd/popper.js',
             Alert: 'exports-loader?Alert!bootstrap/js/dist/alert',
             Button: 'exports-loader?Button!bootstrap/js/dist/button.js',
