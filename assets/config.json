@@ -1,6 +1,6 @@
 {
     "entry": {
-        "main": ["./scripts/app.js", "./styles/app.scss"],
+        "app": ["./scripts/app.js", "./styles/app.scss"],
         "gutenberg": ["./scripts/gutenberg.js", "./styles/gutenberg.scss"]
     },
     "sourceMaps": false,
