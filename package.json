@@ -10,9 +10,9 @@
     },
     "scripts": {
         "dev": "npm run development",
-        "development": "cross-env NODE_ENV=development webpack --mode development --config assets/build/webpack.config.js",
-        "watch": "cross-env NODE_ENV=development webpack --mode development --watch --config assets/build/webpack.config.js",
-        "production": "cross-env NODE_ENV=production webpack --mode production --config assets/build/webpack.config.js"
+        "development": "NODE_ENV=development webpack --mode development --config assets/build/webpack.config.js",
+        "watch": "NODE_ENV=development webpack --mode development --watch --config assets/build/webpack.config.js",
+        "production": "NODE_ENV=production webpack --mode production --config assets/build/webpack.config.js"
     },
     "license": "GPL-3.0",
     "devDependencies": {
@@ -24,7 +24,6 @@
         "browser-sync-webpack-plugin": "^2.2",
         "clean-webpack-plugin": "^2.0",
         "copy-webpack-plugin": "^5.0",
-        "cross-env": "^5.2",
         "css-loader": "^2.1",
         "file-loader": "^3.0",
         "imagemin-gifsicle": "^6.0.1",
