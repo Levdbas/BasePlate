@@ -15,8 +15,8 @@ import 'bootstrap/js/dist/collapse';
 //import 'bootstrap/js/dist/tab'
 //import 'bootstrap/js/dist/tooltip'
 
-import lazyLoad from './lazyLoad';
-import exampleImport from './example-import';
+import lazyLoad from './components/lazyLoad';
+import exampleImport from './components/example-import';
 /* ========================================================================
  * DOM-based Routing
  * Based on http://goo.gl/EUTi53 by Paul Irish
