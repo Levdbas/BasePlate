@@ -1,10 +1,10 @@
 {
     "entry": {
         "main": ["./scripts/app.js", "./styles/app.scss"],
-        "gutenberg": ["./scripts/gutenberg.js", "./styles/styles.scss"]
+        "gutenberg": ["./scripts/gutenberg.js", "./styles/gutenberg.scss"]
     },
-    "browserSyncURL": "testenvironment.local",
+    "sourceMaps": false,
     "themePath": "app",
     "assetsPath": "assets",
-    "sourceMaps": false
+    "browserSyncURL": "testenvironment.local"
 }

@@ -17,25 +17,25 @@ const imageminOptipng = require('imagemin-optipng');
 const imageminSvgo = require('imagemin-svgo');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const merge = require('webpack-merge');
 const rootPath = process.cwd();
 var userConfig = require(path.resolve(__dirname, rootPath) + '/assets/config.json');
 
 const config = merge(
     {
-        browserSyncURL: configFile['browserSyncURL'],
-        browserSyncPort: configFile['browserSyncPort'],
-        sourceMaps: configFile['sourceMaps'],
-        themePath: path.join(rootPath, configFile['themePath']), // from root folder path/to/theme
-        distPath: path.join(rootPath, configFile['themePath'], 'dist'), // from root folder path/to/theme
-        assetsPath: path.join(rootPath, configFile['assetsPath']), // from root folder path/to/assets
+        path: {
+            theme: path.join(rootPath, userConfig['themePath']), // from root folder path/to/theme
+            dist: path.join(rootPath, userConfig['themePath'], 'dist'), // from root folder path/to/theme
+            assets: path.join(rootPath, userConfig['assetsPath']), // from root folder path/to/assets
+        },
     },
     userConfig
 );
 
 const webpackConfig = {
-    context: variables.assetsPath,
+    context: config.path.assets,
     entry: config.entry,
-    devtool: variables.sourceMaps ? 'cheap-module-eval-source-map' : false,
+    devtool: config.sourceMaps ? 'source-map' : false,
     module: {
         rules: [
             {
@@ -62,7 +62,7 @@ const webpackConfig = {
                     {
                         loader: 'css-loader',
                         options: {
-                            sourceMap: variables.sourceMaps,
+                            sourceMap: config.sourceMaps,
                         },
                     },
                     {
@@ -76,14 +76,14 @@ const webpackConfig = {
                     {
                         loader: 'sass-loader',
                         options: {
-                            sourceMap: variables.sourceMaps,
+                            sourceMap: config.sourceMaps,
                         },
                     },
                 ],
             },
             {
                 test: /\.(ttf|eot|woff2?|png|jpe?g|gif|svg|ico)$/,
-                include: variables.assetsPath,
+                include: config.path.assets,
                 loader: 'url-loader',
                 options: {
                     limit: 4096,
@@ -94,20 +94,15 @@ const webpackConfig = {
     },
     output: {
         filename: devMode ? 'scripts/[name].js' : 'scripts/[name].[hash].js',
-        path: path.resolve(__dirname, variables.distPath),
+        path: path.resolve(__dirname, config.path.dist),
         pathinfo: false,
     },
     plugins: [
-        new BrowserSyncPlugin(
-            {
-                host: 'localhost',
-                proxy: variables.browserSyncURL,
-                files: [variables.themePath + '/**/*.php'],
-            },
-            {
-                injectCss: true,
-            }
-        ),
+        new BrowserSyncPlugin({
+            host: 'localhost',
+            proxy: config.browserSyncURL,
+            files: [config.path.theme + '/**/*.php', config.path.theme + '/**/*.twig'],
+        }),
         new MiniCssExtractPlugin({
             filename: devMode ? 'styles/[name].css' : 'styles/[name].[contenthash].css',
         }),
@@ -130,7 +125,7 @@ const webpackConfig = {
         new CopyWebpackPlugin(
             [
                 {
-                    context: variables.assetsPath + '/images',
+                    context: config.path.assets + '/images',
                     from: '**/*',
                     to: devMode ? 'images/[path][name].[ext]' : 'images/[path][name].[hash].[ext]',
                 },
@@ -160,7 +155,7 @@ const webpackConfig = {
             new TerserPlugin({
                 cache: true,
                 parallel: true,
-                sourceMap: variables.sourceMaps,
+                sourceMap: config.sourceMaps,
             }),
             new ImageminPlugin({
                 bail: false, // Ignore errors on corrupted images

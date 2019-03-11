@@ -10,9 +10,9 @@
     },
     "scripts": {
         "dev": "npm run development",
-        "development": "basebuilder-config development",
-        "watch": "basebuilder-config watch",
-        "production": "basebuilder-config production"
+        "development": "cross-env NODE_ENV=development webpack --mode development --config assets/build/webpack.config.js",
+        "watch": "cross-env NODE_ENV=development webpack --mode development --watch --config assets/build/webpack.config.js",
+        "production": "cross-env NODE_ENV=production webpack --mode production --config assets/build/webpack.config.js"
     },
     "license": "GPL-3.0",
     "devDependencies": {
@@ -20,6 +20,7 @@
         "@babel/preset-env": "^7.3",
         "@prettier/plugin-php": "^0.10",
         "babel-loader": "^8.0",
+        "browser-sync": "^2.26.3",
         "browser-sync-webpack-plugin": "^2.2",
         "clean-webpack-plugin": "^2.0",
         "copy-webpack-plugin": "^5.0",
