@@ -8,7 +8,7 @@ BasePlate is a starter theme for WordPress that includes an up-to-date asset man
 
 -   Scss for stylesheets
 -   Modular JavaScript via import
--   WebPack4 for compiling assets, moving & optimizing images, concatenating & minifying JS/CSS and cache busting.
+-   WebPack4 for compiling assets, moving & optimizing images, transpiling & minifying JS/CSS and cache busting.
 -   Ready for lazyloading WordPress attachment images, theme images, theme background images & iframes
 -   Currently in the process of getting ready for Gutenberg!
 -   [Browsersync](http://www.browsersync.io/) for synchronized browser testing
@@ -109,7 +109,7 @@ Asset helper:
 get_asset('folder/file.ext'); // returns URL to asset
 the_asset('folder/file.ext'); // echoes url to asset
 bp_lazyload_img($img_id, $size); // returns lazyloaded WordPress attachment
-bp_lazyload_bg_img($img_id, $size);// returns HTML to be injected into an HTML element to lazyload a background image.
+bp_lazyload_bg_img($img_id, $size); // returns HTML to be injected into an HTML element to lazyload a background image.
 ```
 
 ## Post Types
