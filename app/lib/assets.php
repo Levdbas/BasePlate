@@ -15,6 +15,8 @@ function get_asset($asset)
         if (isset($json[$asset])):
             $file = $json[$asset];
             return get_template_directory_uri() . '/dist/' . $file;
+        else:
+          return __( "File not found", "BasePlate" );
         endif;
     } else {
         wp_die(__('Manifest file not found. Did you run Webpack for the first time?', 'BasePlate'));
