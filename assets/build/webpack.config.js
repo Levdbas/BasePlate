@@ -19,6 +19,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
 const rootPath = process.cwd();
+
 var userConfig = require(path.resolve(__dirname, rootPath) + '/assets/config.json');
 
 const config = merge(
@@ -36,6 +37,7 @@ const webpackConfig = {
     context: config.path.assets,
     entry: config.entry,
     devtool: config.sourceMaps ? 'source-map' : false,
+    mode: env,
     module: {
         rules: [
             {
@@ -57,6 +59,7 @@ const webpackConfig = {
                         loader: MiniCssExtractPlugin.loader,
                         options: {
                             publicPath: '../',
+                            sourceMap: config.sourceMaps,
                         },
                     },
                     {
@@ -68,6 +71,7 @@ const webpackConfig = {
                     {
                         loader: 'postcss-loader',
                         options: {
+                            sourceMap: config.sourceMaps,
                             config: {
                                 path: __dirname + '/postcss.config.js',
                             },
@@ -97,6 +101,7 @@ const webpackConfig = {
         path: path.resolve(__dirname, config.path.dist),
         pathinfo: false,
     },
+    performance: { hints: false },
     plugins: [
         new BrowserSyncPlugin({
             host: 'localhost',
