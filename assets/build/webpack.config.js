@@ -30,7 +30,7 @@ const config = merge(
             assets: path.join(rootPath, userConfig['assetsPath']), // from root folder path/to/assets
         },
     },
-    userConfig
+    userConfig,
 );
 
 const webpackConfig = {
@@ -112,8 +112,9 @@ const webpackConfig = {
             filename: devMode ? 'styles/[name].css' : 'styles/[name].[contenthash].css',
         }),
         new webpack.ProvidePlugin({
-            $: 'jquery/dist/jquery.js',
-            jQuery: 'jquery/dist/jquery.js',
+            $: 'jquery',
+            jQuery: 'jquery',
+            'window.jQuery': 'jquery',
             Popper: 'popper.js/dist/umd/popper.js',
             Alert: 'exports-loader?Alert!bootstrap/js/dist/alert',
             Button: 'exports-loader?Button!bootstrap/js/dist/button.js',
@@ -138,7 +139,7 @@ const webpackConfig = {
             {
                 ignore: ['.gitkeep'],
                 copyUnmodified: true,
-            }
+            },
         ),
         new ManifestPlugin({
             map: file => {
