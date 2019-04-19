@@ -31,7 +31,7 @@ import exampleImport from './components/example-import';
 (function($) {
     // Use this variable to set up the common and page specific functions. If you
     // rename this variable, you will also need to rename the namespace below.
-    var Sage = {
+    var BasePlate = {
         // All pages
         common: {
             init: function() {
@@ -64,7 +64,7 @@ import exampleImport from './components/example-import';
     var UTIL = {
         fire: function(func, funcname, args) {
             var fire;
-            var namespace = Sage;
+            var namespace = BasePlate;
             funcname = funcname === undefined ? 'init' : funcname;
             fire = func !== '';
             fire = fire && namespace[func];
