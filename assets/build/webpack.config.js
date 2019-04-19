@@ -46,7 +46,6 @@ const webpackConfig = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        babelrc: false,
                         cacheDirectory: true,
                     },
                 },
