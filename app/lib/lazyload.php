@@ -58,6 +58,8 @@ function bp_lazyload_content($content)
     $dom = new DOMDocument();
     libxml_use_internal_errors(true);
     $dom->loadHTML(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'));
+    $dom->removeChild($dom->doctype); // remove added doctype
+    $dom->replaceChild($dom->firstChild->firstChild->firstChild, $dom->firstChild); // remove closing tags
     libxml_clear_errors();
 
     $images = [];
@@ -66,7 +68,10 @@ function bp_lazyload_content($content)
     $videos = [];
 
     foreach ($dom->getElementsByTagName('img') as $node) {
-        $images[] = $node;
+        $string = $node->getAttribute('class');
+        if (strpos($string, 'lazyload') == true) {
+            $images[] = $node;
+        }
     }
 
     foreach ($dom->getElementsByTagName('div') as $node) {
