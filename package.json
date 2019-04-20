@@ -12,7 +12,8 @@
         "dev": "npm run development",
         "development": "NODE_ENV=development webpack --mode development --config assets/build/webpack.config.js",
         "watch": "NODE_ENV=development webpack --mode development --watch --config assets/build/webpack.config.js",
-        "production": "NODE_ENV=production webpack --mode production --config assets/build/webpack.config.js"
+        "production": "NODE_ENV=production webpack --mode production --config assets/build/webpack.config.js",
+        "lint:styles": "stylelint \"assets/styles/**/*.scss\""
     },
     "license": "GPL-3.0",
     "devDependencies": {
