@@ -4,17 +4,17 @@
 // =========================================================================
 
 .alignfull {
-	margin-left: calc(-100vw / 2 + 100% / 2) !important;
-	margin-right: calc(-100vw / 2 + 100% / 2) !important;
-	max-width: none;
 	width: 100vw;
+	max-width: none;
+	margin-right: calc(-100vw / 2 + 100% / 2) !important;
+	margin-left: calc(-100vw / 2 + 100% / 2) !important;
 }
 
 .alignwide {
 	@include media-breakpoint-up(md) {
-		margin-left: calc(-#{$block-wide-width} / 2 + 100% / 2) !important;
-		margin-right: calc(-#{$block-wide-width} / 2 + 100% / 2) !important;
-		max-width: none;
 		width: $block-wide-width;
+		max-width: none;
+		margin-right: calc(-#{$block-wide-width} / 2 + 100% / 2) !important;
+		margin-left: calc(-#{$block-wide-width} / 2 + 100% / 2) !important;
 	}
 }

@@ -5,9 +5,9 @@
 }
 
 .search-form label {
-	font-weight: 400;
-
 	@extend .form-group;
+
+	font-weight: 400;
 }
 
 .search-form .search-field {
@@ -22,17 +22,17 @@
 input,
 select,
 textarea {
+	width: 100%;
+	padding: 10px;
+	color: $base-color;
 	background-color: #ffffff;
 	border: 1px solid $highlight1;
-	color: $base-color;
-	padding: 10px;
-	width: 100%;
 }
 
 input[type="checkbox"],
 input[type="radio"] {
-	margin-right: 10px;
 	width: auto;
+	margin-right: 10px;
 }
 
 input:focus,

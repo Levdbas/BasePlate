@@ -1,7 +1,8 @@
 {
     "extends": [
       	"stylelint-config-standard",
-        "stylelint-config-prettier"
+        "stylelint-config-prettier",
+        "stylelint-config-recess-order",
     ],
     "plugins": [
         "stylelint-order"
@@ -10,9 +11,27 @@
         "no-empty-source": null,
         "order/order": [
             "custom-properties",
-            "declarations"
+            "at-rules",
+            {
+                  "name": "include",
+                  "type": "at-rule",
+                  "hasBlock": false
+            },
+            {
+                  "name": "extend",
+                  "type": "at-rule",
+                  "hasBlock": false
+            },
+            "declarations",
+            "rules",
+            "at-rules",
+            {
+                  "name": "include",
+                  "type": "at-rule",
+                  "hasBlock": true
+            }
         ],
-        "order/properties-alphabetical-order": false,
+        "order/properties-alphabetical-order": null,
         "indentation": "tab",
         "string-quotes": "double",
         "no-duplicate-selectors": null,
@@ -34,6 +53,14 @@
         "font-weight-notation": "numeric",
         "comment-empty-line-before": "always",
         "at-rule-no-vendor-prefix": true,
+        "at-rule-empty-line-before": [
+          "always", {
+            "except": [
+              "blockless-after-blockless",
+               "first-nested"
+             ]
+          }
+        ],
         "rule-empty-line-before": "always",
         "selector-pseudo-class-parentheses-space-inside": "always",
         "declaration-block-no-duplicate-properties": true,

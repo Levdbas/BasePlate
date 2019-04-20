@@ -40,6 +40,7 @@
         "style-loader": "^0.23",
         "stylelint": "^10.0",
         "stylelint-config-prettier": "^5.1",
+        "stylelint-config-recess-order": "^2.0.2",
         "stylelint-config-standard": "^18.3",
         "stylelint-order": "^3.0",
         "stylelint-prettier": "^1.0.6",
