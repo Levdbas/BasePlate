@@ -57,9 +57,8 @@ function bp_lazyload_content($content)
     //$content = mb_convert_encoding($content, 'HTML-ENTITIES', "UTF-8");
     $dom = new DOMDocument();
     libxml_use_internal_errors(true);
-    $dom->loadHTML(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'));
-    $dom->removeChild($dom->doctype); // remove added doctype
-    $dom->replaceChild($dom->firstChild->firstChild->firstChild, $dom->firstChild); // remove closing tags
+    $content = mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8');
+    $dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
     libxml_clear_errors();
 
     $images = [];
@@ -68,10 +67,7 @@ function bp_lazyload_content($content)
     $videos = [];
 
     foreach ($dom->getElementsByTagName('img') as $node) {
-        $string = $node->getAttribute('class');
-        if (strpos($string, 'lazyload') == true) {
-            $images[] = $node;
-        }
+        $images[] = $node;
     }
 
     foreach ($dom->getElementsByTagName('div') as $node) {
@@ -87,7 +83,6 @@ function bp_lazyload_content($content)
     foreach ($dom->getElementsByTagName('video') as $node) {
         $videos[] = $node;
     }
-
     foreach ($images as $node) {
         $fallback = $node->cloneNode(true);
 
@@ -98,8 +93,9 @@ function bp_lazyload_content($content)
             $node->setAttribute('data-srcset', $srcset);
             $node->removeAttribute('sizes');
             $node->removeAttribute('srcset');
-            $node->removeAttribute('src');
             $src = $node->getAttribute('src');
+            $node->setAttribute('data-src', $src);
+            $node->removeAttribute('src');
         } else {
             $src = $node->getAttribute('src');
             $node->setAttribute('data-src', $src);
