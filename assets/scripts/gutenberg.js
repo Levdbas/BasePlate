@@ -1,8 +1,8 @@
-function addListBlockClassName(settings, block) {
-    if (name !== 'core/cover') {
-        return settings;
-    }
+import LazyLoad from 'vanilla-lazyload/dist/lazyload.js';
+import lazyLoad from './components/lazyLoad';
 
-    console.log(settings);
-}
-wp.hooks.addFilter('blocks.registerBlockType', 'my-plugin/class-names/list-block', addListBlockClassName);
+var ll = lazyLoad();
+
+acf.addAction('render_block_preview', function($el, attributes) {
+    ll.update();
+});

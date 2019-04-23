@@ -15,16 +15,16 @@
 }
 
 .alignnone {
-	height: auto;
-	margin-left: 0;
-	margin-right: 0;
 	max-width: 100%;
+	height: auto;
+	margin-right: 0;
+	margin-left: 0;
 }
 
 .aligncenter {
-	clear: both;
 	height: auto;
 	margin: ($spacer) auto;
+	clear: both;
 	text-align: center;
 }
 

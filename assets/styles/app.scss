@@ -7,10 +7,12 @@
 @import "common/styleguide";
 
 // components
+
 @import "components/buttons";
 @import "components/forms";
 
 // layouts
+
 @import "layouts/header";
 @import "layouts/navs";
 @import "layouts/sidebar";
@@ -19,6 +21,7 @@
 @import "layouts/posts";
 
 // gutenberg
+
 @import "gutenberg/blocks";
 @import "gutenberg/gutenberg-frontend";
 @import "gutenberg/gutenberg-general";

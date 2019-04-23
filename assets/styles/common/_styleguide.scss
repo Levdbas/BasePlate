@@ -3,17 +3,17 @@
 // =========================================================================
 
 ::selection {
-	background: $highlight2;
 	color: white;
+	background: $highlight2;
 }
 
 /* Typographical Elements
 --------------------------------------------- */
 
 body {
-	overflow-x: hidden;
-
 	@extend %base-style;
+
+	overflow-x: hidden;
 }
 
 a {
@@ -28,7 +28,7 @@ a {
 }
 
 strong {
-	font-weight: bold;
+	font-weight: 700;
 }
 
 em {
@@ -47,20 +47,20 @@ code {
 
 pre {
 	display: block;
-	line-height: 18px;
-	margin: 0 0 10px;
 	padding: 9.5px;
-	white-space: pre-wrap;
+	margin: 0 0 10px;
+	line-height: 18px;
 	word-break: break-all;
 	word-wrap: break-word;
+	white-space: pre-wrap;
 }
 
 pre code {
+	padding: 0;
+	color: inherit;
+	white-space: pre-wrap;
 	background-color: transparent;
 	border: 0;
-	color: inherit;
-	padding: 0;
-	white-space: pre-wrap;
 }
 
 cite {
@@ -71,22 +71,22 @@ cite {
 --------------------------------------------- */
 
 p {
+	padding: 0;
+	margin: 0 0 $base-margin;
 	font-size: $base-font-size;
 	line-height: 1.4;
-	margin: 0 0 $base-margin;
-	padding: 0;
 
 	&.large,
 	&.wp-block-subhead,
 	&.has-large-font-size {
 		@include pxtorem(18px);
 
+		font-style: normal;
+		opacity: 1;
+
 		@include media-breakpoint-up(lg) {
 			@include pxtorem(20px);
 		}
-
-		font-style: normal;
-		opacity: 1;
 	}
 
 	&.small,
@@ -135,20 +135,20 @@ blockquote,
 blockquote.wp-block-quote {
 	@include pxtorem(20px);
 
-	background: transparent;
-	color: $highlight1;
-	font-style: italic;
-	margin: $margin_2x 0;
 	padding: 0;
+	margin: $margin_2x 0;
+	font-style: italic;
+	color: $highlight1;
 	text-align: center;
+	background: transparent;
 
 	cite {
-		color: $base-color;
-		display: block;
-		font-weight: 700;
-		margin-top: 16px;
-
 		@include pxtorem(16px);
+
+		display: block;
+		margin-top: 16px;
+		font-weight: 700;
+		color: $base-color;
 	}
 
 	p {
@@ -173,13 +173,13 @@ hr,
 hr.wp-block-separator,
 .clear-line,
 img.wp-more-tag {
-	border: none;
-	border-top: 1px solid $base-color;
+	width: 100%;
+	max-width: 100%;
 	height: 1px;
 	margin: $margin_2x 0;
-	max-width: 100%;
 	overflow: hidden;
-	width: 100%;
+	border: none;
+	border-top: 1px solid $base-color;
 }
 
 /* Headings
@@ -191,11 +191,11 @@ h3,
 h4,
 h5,
 h6 {
-	color: $base-color;
-	line-height: 1.2;
+	padding: 0;
 	margin: 0;
 	margin-bottom: $base-margin;
-	padding: 0;
+	line-height: 1.2;
+	color: $base-color;
 
 	a {
 		color: $highlight1;
@@ -238,18 +238,18 @@ embed,
 iframe,
 object,
 video {
-	margin-bottom: $base-margin;
 	max-width: 100%;
+	margin-bottom: $base-margin;
 }
 
 img {
 	display: block;
-	height: auto;
 	width: 100%;
+	height: auto;
 }
 
 figure {
-	margin: 0 0 $base-margin;
-	max-width: 100%;
 	position: relative;
+	max-width: 100%;
+	margin: 0 0 $base-margin;
 }
