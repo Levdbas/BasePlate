@@ -10,7 +10,7 @@
 </div>
 
 <style type="text/css">
-	#<?php echo bp_acf_block_attr('id', $block); ?> {
+	<?php echo bp_acf_block_attr('id', $block); ?> {
 		background: <?php the_field('block_bg_color'); ?>;
 		color: <?php the_field('text_color'); ?>;
 	}
