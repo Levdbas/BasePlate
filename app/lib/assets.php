@@ -55,8 +55,9 @@ function bp_enqueue()
  */
 function bp_editor_assets()
 {
-    wp_enqueue_script('baseplate-block-js', get_asset('gutenberg.js'), array('wp-blocks', 'wp-i18n', 'wp-element'));
-    wp_enqueue_style('baseplate-block-editor-css', get_asset('gutenberg.css'), array('wp-edit-blocks'));
+  wp_enqueue_script('BasePlate/vendor', get_asset('vendor.js'), false);
+  wp_enqueue_script('baseplate-block-js', get_asset('gutenberg.js'), array('wp-blocks', 'wp-i18n', 'wp-element', 'BasePlate/vendor'));
+  wp_enqueue_style('baseplate-block-editor-css', get_asset('gutenberg.css'), array('wp-edit-blocks'));
 }
 
 /**
