@@ -10,7 +10,6 @@
     "rules": {
         "no-empty-source": null,
         "order/order": [
-            "custom-properties",
             "at-rules",
             {
                   "name": "include",
@@ -22,14 +21,15 @@
                   "type": "at-rule",
                   "hasBlock": false
             },
+            "custom-properties",
             "declarations",
-            "rules",
             "at-rules",
             {
                   "name": "include",
                   "type": "at-rule",
                   "hasBlock": true
-            }
+            },
+            "rules"
         ],
         "order/properties-alphabetical-order": null,
         "indentation": "tab",
