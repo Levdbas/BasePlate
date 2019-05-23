@@ -16,7 +16,7 @@ function get_asset($asset)
             $file = $json[$asset];
             return get_template_directory_uri() . '/dist/' . $file;
         else:
-          return __( "File not found", "BasePlate" );
+            return __('File not found', 'BasePlate');
         endif;
     } else {
         wp_die(__('Manifest file not found. Did you run Webpack for the first time?', 'BasePlate'));
@@ -39,14 +39,14 @@ function the_asset($asset)
  * Removes jQuery, app.css, vendor.js and app.js by default.
  * @return [type] [description]
  */
-function bp_enqueue()
+function bp_frontend_assets()
 {
-    wp_deregister_script('jquery');
-    wp_enqueue_style('BasePlate/css', get_asset('app.css'), false);
-    wp_enqueue_script('BasePlate/vendor', get_asset('vendor.js'), false);
-    wp_enqueue_script('BasePlate/js', get_asset('app.js'), 'BasePlate/vendor');
+    wp_enqueue_script('BasePlate/vendor', get_asset('vendor.js'), array(), false, false);
+    wp_enqueue_style('wplemon/css', get_asset('app.css'), false, null);
+    wp_enqueue_script('BasePlate/js', get_asset('app.js'), 'BasePlate/vendor', false, false);
+    wp_register_script('jquery', false, array('BasePlate/js'), '', false); // re-gegister jQuery again as part of BasePlate/js where we import jquery to our window
+    wp_add_inline_style('wplemon/css', get_wp_lemon_custom_styles());
 }
-
 /**
  * the back-end enqueue hook for BasePlate
  * loads the special gutenberg.css file that wraps most, but not all scss partials from our assets/style folder
@@ -55,9 +55,9 @@ function bp_enqueue()
  */
 function bp_editor_assets()
 {
-  wp_enqueue_script('BasePlate/vendor', get_asset('vendor.js'), false);
-  wp_enqueue_script('baseplate-block-js', get_asset('gutenberg.js'), array('wp-blocks', 'wp-i18n', 'wp-element', 'BasePlate/vendor'));
-  wp_enqueue_style('baseplate-block-editor-css', get_asset('gutenberg.css'), array('wp-edit-blocks'));
+    wp_enqueue_script('BasePlate/vendor', get_asset('vendor.js'), false);
+    wp_enqueue_script('baseplate-block-js', get_asset('gutenberg.js'), array('wp-blocks', 'wp-i18n', 'wp-element', 'BasePlate/vendor'));
+    wp_enqueue_style('baseplate-block-editor-css', get_asset('gutenberg.css'), array('wp-edit-blocks'));
 }
 
 /**
@@ -80,6 +80,6 @@ function bp_async_attr($tag, $handle)
     return $tag;
 }
 add_filter('script_loader_tag', 'bp_async_attr', 10, 2);
-add_action('wp_enqueue_scripts', 'bp_enqueue');
+add_action('wp_enqueue_scripts', 'bp_frontend_assets');
 add_action('enqueue_block_editor_assets', 'bp_editor_assets');
 ?>
