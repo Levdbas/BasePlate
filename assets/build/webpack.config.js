@@ -105,7 +105,7 @@ const webpackConfig = {
         new BrowserSyncPlugin({
             host: 'localhost',
             proxy: config.browserSyncURL,
-            files: [config.path.theme + '/**/*.php', config.path.theme + '/**/*.twig'],
+            files: [config.path.theme + '/**/*.php', config.path.theme + '/**/**/*.php', config.path.theme + '/**/*.twig'],
         }),
         new MiniCssExtractPlugin({
             filename: devMode ? 'styles/[name].css' : 'styles/[name].[contenthash].css',
