@@ -45,7 +45,6 @@ function bp_frontend_assets()
     wp_enqueue_style('wplemon/css', get_asset('app.css'), false, null);
     wp_enqueue_script('BasePlate/js', get_asset('app.js'), 'BasePlate/vendor', false, false);
     wp_register_script('jquery', false, array('BasePlate/js'), '', false); // re-gegister jQuery again as part of BasePlate/js where we import jquery to our window
-    wp_add_inline_style('wplemon/css', get_wp_lemon_custom_styles());
 }
 /**
  * the back-end enqueue hook for BasePlate
