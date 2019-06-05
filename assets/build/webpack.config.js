@@ -26,7 +26,7 @@ const config = merge(
     {
         path: {
             theme: path.join(rootPath, userConfig['themePath']), // from root folder path/to/theme
-            dist: path.join(rootPath, userConfig['themePath'], 'dist'), // from root folder path/to/theme
+            dist: path.join(rootPath, 'app/dist'), // from root folder path/to/theme
             assets: path.join(rootPath, userConfig['assetsPath']), // from root folder path/to/assets
         },
     },
@@ -97,7 +97,9 @@ const webpackConfig = {
     },
     output: {
         filename: devMode ? 'scripts/[name].js' : 'scripts/[name].[hash].js',
-        path: path.resolve(__dirname, config.path.dist),
+        chunkFilename: 'scripts/[name].bundle.js',
+        path: config.path.dist,
+        publicPath: `${config.publicPath}/app/${path.basename(config.path.dist)}/`,
         pathinfo: false,
     },
     performance: { hints: false },
@@ -141,6 +143,7 @@ const webpackConfig = {
             },
         ),
         new ManifestPlugin({
+            publicPath: '',
             map: file => {
                 if (process.env.NODE_ENV === 'production') {
                     // Remove hash in manifest key

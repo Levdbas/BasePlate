@@ -2,6 +2,7 @@
     "presets": [
         [
             "@babel/preset-env",
+
             {
                 "debug": false,
                 "targets": {
@@ -9,5 +10,6 @@
                 }
             }
         ]
-    ]
+    ],
+    "plugins": ["@babel/plugin-syntax-dynamic-import"]
 }
