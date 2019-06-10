@@ -32,7 +32,9 @@ const bsOptions = {
                 publicPath: webpackConfig.output.publicPath,
                 noInfo: true,
                 stats: false,
-                writeToDisk: true,
+                writeToDisk: filePath => {
+                    return /^(?!.*(hot-update)).*/.test(filePath);
+                },
             }),
             webpackHotMiddleware(compiler),
         ],
@@ -41,7 +43,6 @@ const bsOptions = {
 browserSync.use(htmlInjector, { restrictions: ['#page'] });
 
 function synchronize(event, file) {
-    console.log(file);
     if (file.endsWith('php')) {
         htmlInjector();
     }
