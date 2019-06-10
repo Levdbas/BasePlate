@@ -10,9 +10,9 @@
     },
     "scripts": {
         "dev": "npm run development",
-        "development": "NODE_ENV=development webpack --mode development --config assets/build/webpack.config.js",
+        "development": "node assets/build/tasks/build.dev",
         "watch": "node assets/build/tasks/watch",
-        "production": "NODE_ENV=production webpack --mode production --config assets/build/webpack.config.js",
+        "production": "node assets/build/tasks/build.production",
         "lint": "yarn run -s lint:scripts && npm run -s lint:styles",
         "lint:styles": "stylelint \"assets/styles/**/*.scss\"",
         "lint:scripts": "eslint assets/scripts assets/build"
@@ -64,8 +64,7 @@
         "webpack-format-messages": "^2.0.5",
         "webpack-hot-middleware": "^2.25.0",
         "webpack-manifest-plugin": "^2.0.4",
-        "webpack-merge": "^4.2.1",
-        "write-file-webpack-plugin": "^4.5.0"
+        "webpack-merge": "^4.2.1"
     },
     "dependencies": {
         "bootstrap": "^4.3.1",

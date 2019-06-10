@@ -4,6 +4,7 @@
 process.noDeprecation = true;
 const env = process.env.NODE_ENV;
 const devMode = process.env.NODE_ENV !== 'production';
+const watchMode = global.watch || false;
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -15,11 +16,10 @@ const imageminGifsicle = require('imagemin-gifsicle');
 const imageminJpegtran = require('imagemin-jpegtran');
 const imageminOptipng = require('imagemin-optipng');
 const imageminSvgo = require('imagemin-svgo');
-const WriteFilePlugin = require('write-file-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
-const WATCH = global.watch || false;
+
 const config = require('./config');
 
 const webpackConfig = {
@@ -27,12 +27,12 @@ const webpackConfig = {
     context: config.path.assets,
     entry: config.entry,
     devtool: config.sourceMaps ? 'source-map' : false,
-    watch: WATCH,
+    watch: watchMode,
     output: {
         filename: devMode ? 'scripts/[name].js' : 'scripts/[name].[hash].js',
         chunkFilename: 'scripts/[name].bundle.js',
         path: config.path.dist,
-        publicPath: `${config.publicPath}${path.basename(config.path.dist)}`,
+        publicPath: watchMode ? config.publicPath + path.basename(config.path.dist) : '/',
         pathinfo: false,
     },
     performance: { hints: false },
@@ -52,25 +52,14 @@ const webpackConfig = {
                 test: /\.scss$/,
                 exclude: /node_modules/,
                 use: [
-                    ...(devMode
-                        ? [
-                              {
-                                  loader: 'style-loader',
-                                  options: {
-                                      hmr: true,
-                                      sourceMap: config.sourceMaps,
-                                  },
-                              },
-                          ]
-                        : [
-                              {
-                                  loader: MiniCssExtractPlugin.loader,
-                                  options: {
-                                      publicPath: '../',
-                                      sourceMap: config.sourceMaps,
-                                  },
-                              },
-                          ]),
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: '../',
+                            sourceMap: config.sourceMaps,
+                            hmr: watchMode === true,
+                        },
+                    },
                     {
                         loader: 'css-loader',
                         options: {
@@ -123,6 +112,9 @@ const webpackConfig = {
             Tooltip: 'exports-loader?Tooltip!bootstrap/js/dist/tooltip.js',
             Util: 'exports-loader?Util!bootstrap/js/dist/util.js',
         }),
+        new MiniCssExtractPlugin({
+            filename: devMode ? 'styles/[name].css' : 'styles/[name].[contenthash].css',
+        }),
         new CopyWebpackPlugin(
             [
                 {
@@ -163,14 +155,11 @@ const webpackConfig = {
     },
 };
 if (devMode) {
-    webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin(), new WriteFilePlugin());
+    webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
 }
 if (!devMode) {
     webpackConfig.plugins.push(
         new CleanWebpackPlugin(),
-        new MiniCssExtractPlugin({
-            filename: devMode ? 'styles/[name].css' : 'styles/[name].[contenthash].css',
-        }),
         new ImageminPlugin({
             bail: false, // Ignore errors on corrupted images
             cache: true,

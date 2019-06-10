@@ -2,11 +2,11 @@ process.env.BABEL_ENV = 'production';
 process.env.NODE_ENV = 'production';
 
 const webpack = require('webpack');
-const webpackConfig = require('../build/webpack.config');
+const webpackConfig = require('../webpack.config');
 const compiler = webpack(webpackConfig);
 const formatMessages = require('webpack-format-messages');
 const chalk = require('chalk');
-const fileSize = require('../fileSize');
+const fileSize = require('../helpers/fileSize');
 
 compiler.run((err, stats) => {
     const messages = formatMessages(stats);

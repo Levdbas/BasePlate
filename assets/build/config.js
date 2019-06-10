@@ -1,7 +1,7 @@
 const path = require('path');
 const rootPath = process.cwd();
 const merge = require('webpack-merge');
-
+const WATCH = global.watch || false;
 var userConfig = require(path.resolve(__dirname, rootPath) + '/assets/config.json');
 
 var config = merge(
@@ -15,6 +15,8 @@ var config = merge(
     userConfig,
 );
 
-config.entry.app.push('webpack-hot-middleware/client');
+if (WATCH) {
+    config.entry.app.push('webpack-hot-middleware/client');
+}
 
 module.exports = config;
