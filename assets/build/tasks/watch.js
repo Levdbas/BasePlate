@@ -5,7 +5,6 @@ global.watch = true;
 const webpack = require('webpack');
 const browserSync = require('browser-sync').create();
 const path = require('path');
-const fs = require('fs-extra');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const formatMessages = require('webpack-format-messages');
@@ -70,7 +69,5 @@ compiler.hooks.done.tap('test', stats => {
     }
 });
 (async () => {
-    //await fs.emptyDir(config.publicPath + '/' + path.basename(config.path.dist));
-    //await utils.addMainCss();
     browserSync.init(bsOptions);
 })();
