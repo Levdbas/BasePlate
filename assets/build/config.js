@@ -1,8 +1,6 @@
 const path = require('path');
 const rootPath = process.cwd();
 const merge = require('webpack-merge');
-const HMR = require('./hmr');
-const hmr = HMR.getClient();
 
 var userConfig = require(path.resolve(__dirname, rootPath) + '/assets/config.json');
 
@@ -18,4 +16,5 @@ var config = merge(
 );
 
 config.entry.app.push('webpack-hot-middleware/client');
+
 module.exports = config;

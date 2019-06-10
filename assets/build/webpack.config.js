@@ -15,10 +15,11 @@ const imageminGifsicle = require('imagemin-gifsicle');
 const imageminJpegtran = require('imagemin-jpegtran');
 const imageminOptipng = require('imagemin-optipng');
 const imageminSvgo = require('imagemin-svgo');
+const WriteFilePlugin = require('write-file-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
-
+const WATCH = global.watch || false;
 const config = require('./config');
 
 const webpackConfig = {
@@ -26,6 +27,7 @@ const webpackConfig = {
     context: config.path.assets,
     entry: config.entry,
     devtool: config.sourceMaps ? 'source-map' : false,
+    watch: WATCH,
     output: {
         filename: devMode ? 'scripts/[name].js' : 'scripts/[name].[hash].js',
         chunkFilename: 'scripts/[name].bundle.js',
@@ -55,6 +57,7 @@ const webpackConfig = {
                               {
                                   loader: 'style-loader',
                                   options: {
+                                      hmr: true,
                                       sourceMap: config.sourceMaps,
                                   },
                               },
@@ -160,7 +163,7 @@ const webpackConfig = {
     },
 };
 if (devMode) {
-    webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
+    webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin(), new WriteFilePlugin());
 }
 if (!devMode) {
     webpackConfig.plugins.push(

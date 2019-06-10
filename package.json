@@ -64,7 +64,8 @@
         "webpack-format-messages": "^2.0.5",
         "webpack-hot-middleware": "^2.25.0",
         "webpack-manifest-plugin": "^2.0.4",
-        "webpack-merge": "^4.2.1"
+        "webpack-merge": "^4.2.1",
+        "write-file-webpack-plugin": "^4.5.0"
     },
     "dependencies": {
         "bootstrap": "^4.3.1",

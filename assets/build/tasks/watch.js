@@ -61,7 +61,6 @@ const bsOptions = {
         ],
     },
 };
-console.log(webpackConfig.output.publicPath);
 browserSync.use(htmlInjector, { restrictions: ['#page'] });
 
 function synchronize(event, file) {
