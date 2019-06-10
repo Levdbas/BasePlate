@@ -8,7 +8,7 @@
 function get_asset($asset)
 {
     $manifest = __DIR__ . '/../dist/manifest.json';
-    if (file_exists($manifest)) {
+    if (file_exists($manifest)):
         $manifest = file_get_contents($manifest);
         $json = json_decode($manifest, true);
 
@@ -16,11 +16,11 @@ function get_asset($asset)
             $file = $json[$asset];
             return get_template_directory_uri() . '/dist/' . $file;
         else:
-            return __('File not found', 'BasePlate');
+            return sprintf(__('File %s not found.', 'BasePlate'), $asset);
         endif;
-    } else {
+    else:
         wp_die(__('Manifest file not found. Did you run Webpack for the first time?', 'BasePlate'));
-    }
+    endif;
 }
 
 /**
