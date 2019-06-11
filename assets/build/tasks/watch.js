@@ -10,18 +10,14 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const formatMessages = require('webpack-format-messages');
 const webpackConfig = require('../webpack.config');
 const chalk = require('chalk');
-const htmlInjector = require('bs-html-injector');
 const compiler = webpack(webpackConfig);
 const config = require('../config');
 const fileSize = require('../helpers/fileSize');
 
-const bsOptions = {
+browserSync.init({
     files: [
         {
-            // js changes are managed by webpack
             match: [config.path.theme + '/**/*.php', config.path.theme + '/**/**/*.php', config.path.theme + '/**/*.twig'],
-            // manually sync everything else
-            fn: synchronize,
         },
     ],
     proxy: {
@@ -35,17 +31,14 @@ const bsOptions = {
                     return /^(?!.*(hot-update)).*/.test(filePath);
                 },
             }),
-            webpackHotMiddleware(compiler),
+            webpackHotMiddleware(compiler, {
+                log: false,
+                logLevel: 'none',
+            }),
         ],
     },
-};
-browserSync.use(htmlInjector, { restrictions: ['#page'] });
+});
 
-function synchronize(event, file) {
-    if (file.endsWith('php')) {
-        htmlInjector();
-    }
-}
 compiler.hooks.done.tap('test', stats => {
     const messages = formatMessages(stats);
     const my_stats = stats.toJson('verbose');
@@ -68,6 +61,3 @@ compiler.hooks.done.tap('test', stats => {
         console.log('\n👉 ', messages.warnings.join('\n\n'));
     }
 });
-(async () => {
-    browserSync.init(bsOptions);
-})();

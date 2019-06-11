@@ -1,7 +1,7 @@
 const path = require('path');
 const rootPath = process.cwd();
 const merge = require('webpack-merge');
-const WATCH = global.watch || false;
+const watchMode = global.watch || false;
 var userConfig = require(path.resolve(__dirname, rootPath) + '/assets/config.json');
 
 var config = merge(
@@ -10,12 +10,13 @@ var config = merge(
             theme: path.join(rootPath, userConfig['themePath']), // from root folder path/to/theme
             dist: path.join(rootPath, userConfig['themePath'] + '/dist/'), // from root folder path/to/theme
             assets: path.join(rootPath, userConfig['assetsPath']), // from root folder path/to/assets
+            public: watchMode ? userConfig['publicPath'] + 'dist/' : '/',
         },
     },
     userConfig,
 );
 
-if (WATCH) {
+if (watchMode) {
     config.entry.app.push('webpack-hot-middleware/client');
 }
 

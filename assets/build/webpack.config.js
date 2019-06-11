@@ -30,9 +30,9 @@ const webpackConfig = {
     watch: watchMode,
     output: {
         filename: devMode ? 'scripts/[name].js' : 'scripts/[name].[hash].js',
-        chunkFilename: 'scripts/[name].bundle.js',
+        chunkFilename: devMode ? 'scripts/[name].bundle.js' : 'scripts/[name].bundle.[hash].js',
         path: config.path.dist,
-        publicPath: watchMode ? config.publicPath + path.basename(config.path.dist) : '/',
+        publicPath: config.path.public,
         pathinfo: false,
     },
     performance: { hints: false },
@@ -57,7 +57,7 @@ const webpackConfig = {
                         options: {
                             publicPath: '../',
                             sourceMap: config.sourceMaps,
-                            hmr: watchMode === true,
+                            hmr: watchMode,
                         },
                     },
                     {
@@ -154,9 +154,26 @@ const webpackConfig = {
         ],
     },
 };
+
+/**
+ * Development mode specific plugins.
+ *
+ * Running in both watch and dev mode.
+ *
+ * @since 1.4
+ * @param  {boolean} devMode if development mode is enabled in Webpack
+ * @return {object}           updated webpackConfig configuration object.
+ */
 if (devMode) {
     webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
 }
+
+/**
+ * Production mode specific plugins.
+ * @since 1.4
+ * @param  {boolean} devMode if development mode is enabled in Webpack
+ * @return {object}           updated webpackConfig configuration object.
+ */
 if (!devMode) {
     webpackConfig.plugins.push(
         new CleanWebpackPlugin(),
