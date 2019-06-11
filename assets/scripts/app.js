@@ -90,3 +90,7 @@ import(/* webpackPreload: true */ './components/example-import');
     // Load Events
     $(document).ready(UTIL.loadEvents);
 })(jQuery); // Fully reference jQuery after this point.
+
+if (module.hot) {
+    module.hot.accept();
+}
