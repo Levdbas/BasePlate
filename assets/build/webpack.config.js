@@ -8,7 +8,7 @@ const watchMode = global.watch || false;
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack');
@@ -29,8 +29,8 @@ const webpackConfig = {
     devtool: config.sourceMaps ? 'source-map' : false,
     watch: watchMode,
     output: {
-        filename: devMode ? 'scripts/[name].js' : 'scripts/[name].[hash].js',
-        chunkFilename: devMode ? 'scripts/[name].bundle.js' : 'scripts/[name].bundle.[hash].js',
+        filename: devMode ? 'scripts/[name].js' : 'scripts/[name].[contenthash:8].js',
+        chunkFilename: devMode ? 'scripts/[name].bundle.js' : 'scripts/[name].bundle.[chunkhash:8].js',
         path: config.path.dist,
         publicPath: config.path.public,
         pathinfo: false,
@@ -141,9 +141,8 @@ const webpackConfig = {
     ],
     optimization: {
         splitChunks: {
-            chunks: 'all',
             automaticNameDelimiter: '-',
-            name: 'vendor',
+            chunks: chunk => chunk.name !== 'gutenberg',
         },
         minimizer: [
             new TerserPlugin({

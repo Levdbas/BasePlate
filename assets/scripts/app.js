@@ -16,7 +16,8 @@ import 'bootstrap/js/dist/collapse';
 //import 'bootstrap/js/dist/tooltip'
 
 import lazyLoad from './components/lazyLoad';
-import(/* webpackPreload: true */ './components/example-import');
+import slider from './components/slider';
+
 /* ========================================================================
  * DOM-based Routing
  * Based on http://goo.gl/EUTi53 by Paul Irish
@@ -36,7 +37,7 @@ import(/* webpackPreload: true */ './components/example-import');
         common: {
             init: function() {
                 lazyLoad();
-                //exampleImport();
+                slider();
             },
             finalize: function() {
                 // JavaScript to be fired on all pages, after page specific JS is fired

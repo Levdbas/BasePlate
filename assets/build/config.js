@@ -10,7 +10,7 @@ var config = merge(
             theme: path.join(rootPath, userConfig['themePath']), // from root folder path/to/theme
             dist: path.join(rootPath, userConfig['themePath'] + '/dist/'), // from root folder path/to/theme
             assets: path.join(rootPath, userConfig['assetsPath']), // from root folder path/to/assets
-            public: watchMode ? userConfig['publicPath'] + 'dist/' : '/',
+            public: userConfig['publicPath'] + 'dist/',
         },
     },
     userConfig,

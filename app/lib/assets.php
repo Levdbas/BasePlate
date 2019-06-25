@@ -41,7 +41,7 @@ function the_asset($asset)
  */
 function bp_frontend_assets()
 {
-    wp_enqueue_script('BasePlate/vendor', get_asset('vendor.js'), array(), false, false);
+    wp_enqueue_script('BasePlate/vendor', get_asset('vendors-app.js'), array(), false, false);
     wp_enqueue_style('wplemon/css', get_asset('app.css'), false, null);
     wp_enqueue_script('BasePlate/js', get_asset('app.js'), 'BasePlate/vendor', false, false);
     wp_register_script('jquery', false, array('BasePlate/js'), '', false); // re-gegister jQuery again as part of BasePlate/js where we import jquery to our window
@@ -54,7 +54,7 @@ function bp_frontend_assets()
  */
 function bp_editor_assets()
 {
-    wp_enqueue_script('BasePlate/vendor', get_asset('vendor.js'), false);
+    wp_enqueue_script('BasePlate/vendor', get_asset('vendor-bundle.js'), false);
     wp_enqueue_script('baseplate-block-js', get_asset('gutenberg.js'), array('wp-blocks', 'wp-i18n', 'wp-element', 'BasePlate/vendor'));
     wp_enqueue_style('baseplate-block-editor-css', get_asset('gutenberg.css'), array('wp-edit-blocks'));
 }
