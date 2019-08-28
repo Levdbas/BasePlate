@@ -8,7 +8,7 @@ const watchMode = global.watch || false;
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack');
@@ -185,18 +185,19 @@ if (!devMode) {
                 // Lossless optimization with custom option
                 // Feel free to experement with options for better result for you
                 plugins: [
-                    imageminGifsicle({
-                        interlaced: true,
-                    }),
-                    imageminJpegtran({
-                        progressive: true,
-                    }),
-                    imageminOptipng({
-                        optimizationLevel: 1,
-                    }),
-                    imageminSvgo({
-                        removeViewBox: false,
-                    }),
+                    ['gifsicle', { interlaced: true }],
+                    ['jpegtran', { progressive: true }],
+                    ['optipng', { optimizationLevel: 1 }],
+                    [
+                        'svgo',
+                        {
+                            plugins: [
+                                {
+                                    removeViewBox: false,
+                                },
+                            ],
+                        },
+                    ],
                 ],
             },
         }),
