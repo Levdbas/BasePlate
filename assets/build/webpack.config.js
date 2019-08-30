@@ -19,6 +19,7 @@ const imageminSvgo = require('imagemin-svgo');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 const config = require('./config');
 
@@ -47,6 +48,10 @@ const webpackConfig = {
                         cacheDirectory: true,
                     },
                 },
+            },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader',
             },
             {
                 test: /\.scss$/,
@@ -112,6 +117,7 @@ const webpackConfig = {
             Tooltip: 'exports-loader?Tooltip!bootstrap/js/dist/tooltip.js',
             Util: 'exports-loader?Util!bootstrap/js/dist/util.js',
         }),
+        new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
             filename: devMode ? 'styles/[name].css' : 'styles/[name].[contenthash].css',
         }),
@@ -184,18 +190,19 @@ if (!devMode) {
                 // Lossless optimization with custom option
                 // Feel free to experement with options for better result for you
                 plugins: [
-                    imageminGifsicle({
-                        interlaced: true,
-                    }),
-                    imageminJpegtran({
-                        progressive: true,
-                    }),
-                    imageminOptipng({
-                        optimizationLevel: 1,
-                    }),
-                    imageminSvgo({
-                        removeViewBox: false,
-                    }),
+                    ['gifsicle', { interlaced: true }],
+                    ['jpegtran', { progressive: true }],
+                    ['optipng', { optimizationLevel: 1 }],
+                    [
+                        'svgo',
+                        {
+                            plugins: [
+                                {
+                                    removeViewBox: false,
+                                },
+                            ],
+                        },
+                    ],
                 ],
             },
         }),
