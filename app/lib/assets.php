@@ -10,15 +10,13 @@ function get_asset($asset)
     $manifest = __DIR__ . '/../dist/manifest.json';
     if (file_exists($manifest)):
         $manifest = file_get_contents($manifest);
-        $json = json_decode($manifest, true);
+    $json = json_decode($manifest, true);
 
-        if (isset($json[$asset])):
+    if (isset($json[$asset])):
             $file = $json[$asset];
-            return get_template_directory_uri() . '/dist/' . $file;
-        else:
+    return get_template_directory_uri() . '/dist/' . $file; else:
             return sprintf(__('File %s not found.', 'BasePlate'), $asset);
-        endif;
-    else:
+    endif; else:
         wp_die(__('Manifest file not found. Did you run Webpack for the first time?', 'BasePlate'));
     endif;
 }
@@ -41,10 +39,18 @@ function the_asset($asset)
  */
 function bp_frontend_assets()
 {
+    $site = [];
     wp_enqueue_script('BasePlate/vendor', get_asset('vendor.js'), array(), false, false);
     wp_enqueue_style('wplemon/css', get_asset('app.css'), false, null);
     wp_enqueue_script('BasePlate/js', get_asset('app.js'), 'BasePlate/vendor', false, false);
     wp_register_script('jquery', false, array('BasePlate/js'), '', false); // re-gegister jQuery again as part of BasePlate/js where we import jquery to our window
+
+    $site = array(
+            'dist' => get_template_directory_uri().'/dist/',
+            'url' => get_bloginfo('url'),
+            'ajax' => admin_url('admin-ajax.php'),
+        );
+    wp_localize_script('BasePlate/js', 'bp_site', $site);
 }
 /**
  * the back-end enqueue hook for BasePlate
@@ -81,4 +87,3 @@ function bp_async_attr($tag, $handle)
 add_filter('script_loader_tag', 'bp_async_attr', 10, 2);
 add_action('wp_enqueue_scripts', 'bp_frontend_assets');
 add_action('enqueue_block_editor_assets', 'bp_editor_assets');
-?>
