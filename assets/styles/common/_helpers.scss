@@ -1,8 +1,19 @@
 .lazyload {
 	opacity: 0;
-	transition: opacity 0.4s ease 0.2s;
+}
 
-	&[data-was-processed="true"] {
-		opacity: 1;
-	}
+.lazyload:not( .initial ) {
+	transition: opacity 1s;
+}
+
+.lazyload.initial,
+.lazyload.loaded,
+.lazyload.error {
+	opacity: 1;
+}
+
+img[data-src],
+img[data-srcset] {
+	display: block;
+	min-height: 1px;
 }
