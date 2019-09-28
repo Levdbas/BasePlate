@@ -35,7 +35,9 @@ const webpackConfig = {
         publicPath: config.path.public,
         pathinfo: false,
     },
-    performance: { hints: false },
+    performance: {
+        hints: false,
+    },
     module: {
         rules: [
             {
@@ -125,11 +127,14 @@ const webpackConfig = {
             ],
             {
                 ignore: ['.gitkeep'],
-                copyUnmodified: true,
             },
         ),
         new ManifestPlugin({
             publicPath: '',
+            seed: {
+                paths: {},
+                entries: {},
+            },
             map: file => {
                 if (process.env.NODE_ENV === 'production') {
                     // Remove hash in manifest key
@@ -185,9 +190,24 @@ if (!devMode) {
                 // Lossless optimization with custom option
                 // Feel free to experement with options for better result for you
                 plugins: [
-                    ['gifsicle', { interlaced: true }],
-                    ['jpegtran', { progressive: true }],
-                    ['optipng', { optimizationLevel: 1 }],
+                    [
+                        'gifsicle',
+                        {
+                            interlaced: true,
+                        },
+                    ],
+                    [
+                        'jpegtran',
+                        {
+                            progressive: true,
+                        },
+                    ],
+                    [
+                        'optipng',
+                        {
+                            optimizationLevel: 1,
+                        },
+                    ],
                     [
                         'svgo',
                         {
