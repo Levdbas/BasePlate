@@ -1,6 +1,6 @@
 import LazyLoad from 'vanilla-lazyload/dist/lazyload.js'; // import UMD version for IE8. see: https://github.com/verlok/lazyload/issues/271
 function lazyLoad() {
-    new LazyLoad({
+    var lazyInstancy = new LazyLoad({
         elements_selector: '.lazyload',
         callback_load: function(el) {
             $(el).css('min-height', 'auto');
@@ -15,6 +15,7 @@ function lazyLoad() {
         height = img.width() / (width / height);
         $(this).css('min-height', height + 'px');
     });
+    return lazyInstancy;
 }
 
 export default lazyLoad;
