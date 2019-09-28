@@ -1,5 +1,6 @@
 /**
- * Assets Config file
+ * Webpack configuration file for BasePlate and BaseBuilder.
+ *
  */
 process.noDeprecation = true;
 const env = process.env.NODE_ENV;
@@ -18,8 +19,6 @@ const imageminOptipng = require('imagemin-optipng');
 const imageminSvgo = require('imagemin-svgo');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const merge = require('webpack-merge');
-
 const config = require('./config');
 
 const webpackConfig = {
