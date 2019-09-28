@@ -10,13 +10,15 @@ function get_asset($asset)
     $manifest = __DIR__ . '/../dist/manifest.json';
     if (file_exists($manifest)):
         $manifest = file_get_contents($manifest);
-    $json = json_decode($manifest, true);
+        $json = json_decode($manifest, true);
 
-    if (isset($json[$asset])):
+        if (isset($json[$asset])):
             $file = $json[$asset];
-    return get_template_directory_uri() . '/dist/' . $file; else:
+            return get_template_directory_uri() . '/dist/' . $file;
+        else:
             return sprintf(__('File %s not found.', 'BasePlate'), $asset);
-    endif; else:
+        endif;
+    else:
         wp_die(__('Manifest file not found. Did you run Webpack for the first time?', 'BasePlate'));
     endif;
 }
@@ -46,10 +48,10 @@ function bp_frontend_assets()
     wp_register_script('jquery', false, array('BasePlate/js'), '', false); // re-gegister jQuery again as part of BasePlate/js where we import jquery to our window
 
     $site = array(
-            'dist' => get_template_directory_uri().'/dist/',
-            'url' => get_bloginfo('url'),
-            'ajax' => admin_url('admin-ajax.php'),
-        );
+        'dist' => get_template_directory_uri() . '/dist/',
+        'url' => get_bloginfo('url'),
+        'ajax' => admin_url('admin-ajax.php')
+    );
     wp_localize_script('BasePlate/js', 'bp_site', $site);
 }
 /**
