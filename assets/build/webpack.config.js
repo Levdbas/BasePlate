@@ -116,6 +116,10 @@ const webpackConfig = {
         new MiniCssExtractPlugin({
             filename: devMode ? 'styles/[name].css' : 'styles/[name].[contenthash].css',
         }),
+        /**
+         * date: 15-10-2019
+         * TODO: fix CopyWebpackPlugin for webpack 5 release
+         */
         new CopyWebpackPlugin(
             [
                 {
@@ -128,6 +132,10 @@ const webpackConfig = {
                 ignore: ['.gitkeep'],
             },
         ),
+        /**
+         * date: 15-10-2019
+         * TODO: fix manifest plugin for webpack 5 release.
+         */
         new ManifestPlugin({
             publicPath: '',
             seed: {

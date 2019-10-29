@@ -14,10 +14,10 @@ compiler.run((err, stats) => {
     const assets = my_stats.assets;
     var totalSize = 0;
 
-    console.log(`\n${chalk.dim('Let\'s build and compile the files...')}`);
+    console.log(`\n${chalk.dim("Let's build and compile the files...")}`);
     if (!messages.errors.length && !messages.warnings.length) {
         console.log('\n✅ ', chalk.black.bgGreen(' Compiled successfully! \n'));
-        console.log(chalk.dim('   Note that the development build is not optimized. \n'), chalk.dim('  To create a production build, use'), chalk.green('yarn run production\n'));
+        console.log(chalk.dim('Note that the development build is not optimized. \n'), chalk.dim('  To create a production build, use'), chalk.green('yarn run production\n'));
 
         assets.forEach(function(element) {
             totalSize = totalSize + element.size;
