@@ -18,7 +18,10 @@ var config = merge(
 
 if (watchMode) {
     config.entry.app.push('webpack-hot-middleware/client');
-    config.entry.app.push('basebuilder-config/publicpath_entry.js');
 }
+/**
+ * Pushes our entry file to the start of the entry array.
+ */
+config.entry.app.unshift('./build/publicpath_entry.js');
 
 module.exports = config;

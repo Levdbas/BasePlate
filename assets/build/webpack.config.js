@@ -137,7 +137,6 @@ const webpackConfig = {
          * TODO: fix manifest plugin for webpack 5 release.
          */
         new ManifestPlugin({
-            publicPath: '',
             seed: {
                 paths: {},
                 entries: {},

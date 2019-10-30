@@ -10,6 +10,7 @@ const fileSize = require('../helpers/fileSize');
 
 compiler.run((err, stats) => {
     console.log(err);
+    //console.log(stats);
     const messages = formatMessages(stats);
     const my_stats = stats.toJson('verbose');
     const assets = my_stats.assets;
