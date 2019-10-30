@@ -61,7 +61,7 @@
         "webpack-dev-middleware": "^3.7.2",
         "webpack-format-messages": "^2.0.5",
         "webpack-hot-middleware": "^2.25.0",
-        "webpack-manifest-plugin": "^2.2.0",
+        "webpack-manifest-plugin": "^3.0.0-rc.0",
         "webpack-merge": "^4.2.2"
     },
     "dependencies": {
