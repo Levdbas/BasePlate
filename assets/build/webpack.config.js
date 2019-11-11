@@ -59,6 +59,7 @@ const webpackConfig = {
                             publicPath: '../',
                             sourceMap: config.sourceMaps,
                             hmr: watchMode,
+                            //reloadAll: true,
                         },
                     },
                     {
@@ -115,6 +116,7 @@ const webpackConfig = {
         }),
         new MiniCssExtractPlugin({
             filename: devMode ? 'styles/[name].css' : 'styles/[name].[contenthash].css',
+            chunkFilename: '[id].css',
         }),
         /**
          * date: 15-10-2019
