@@ -44,7 +44,7 @@ compiler.hooks.done.tap('test', stats => {
     const my_stats = stats.toJson('verbose');
     const assets = my_stats.assets;
     var totalSize = 0;
-    console.log(`\n${chalk.dim('Let\'s build and compile the files...')}`);
+    console.log(`\n${chalk.dim("Let's build and compile the files...")}`);
     if (!messages.errors.length && !messages.warnings.length) {
         console.log('\n✅ ', chalk.black.bgGreen(' Compiled successfully! \n'));
         console.log();

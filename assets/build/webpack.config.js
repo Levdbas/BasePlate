@@ -1,6 +1,5 @@
 /**
- * Webpack configuration file for BasePlate and BaseBuilder.
- *
+ * Assets Config file
  */
 process.noDeprecation = true;
 const env = process.env.NODE_ENV;
@@ -10,7 +9,6 @@ const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack');
 const imageminGifsicle = require('imagemin-gifsicle');
@@ -19,13 +17,16 @@ const imageminOptipng = require('imagemin-optipng');
 const imageminSvgo = require('imagemin-svgo');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const merge = require('webpack-merge');
+
 const config = require('./config');
+const CreateSourceMap = devMode ? config.sourceMaps : false;
 
 const webpackConfig = {
     mode: env,
     context: config.path.assets,
     entry: config.entry,
-    devtool: config.sourceMaps ? 'source-map' : false,
+    devtool: CreateSourceMap ? 'source-map' : false,
     watch: watchMode,
     output: {
         filename: devMode ? 'scripts/[name].js' : 'scripts/[name].[hash].js',
@@ -34,9 +35,7 @@ const webpackConfig = {
         publicPath: config.path.public,
         pathinfo: false,
     },
-    performance: {
-        hints: false,
-    },
+    performance: { hints: false },
     module: {
         rules: [
             {
@@ -57,21 +56,20 @@ const webpackConfig = {
                         loader: MiniCssExtractPlugin.loader,
                         options: {
                             publicPath: '../',
-                            sourceMap: config.sourceMaps,
+                            sourceMap: CreateSourceMap,
                             hmr: watchMode,
-                            //reloadAll: true,
                         },
                     },
                     {
                         loader: 'css-loader',
                         options: {
-                            sourceMap: config.sourceMaps,
+                            sourceMap: CreateSourceMap,
                         },
                     },
                     {
                         loader: 'postcss-loader',
                         options: {
-                            sourceMap: config.sourceMaps,
+                            sourceMap: CreateSourceMap,
                             config: {
                                 path: __dirname + '/postcss.config.js',
                             },
@@ -80,7 +78,7 @@ const webpackConfig = {
                     {
                         loader: 'sass-loader',
                         options: {
-                            sourceMap: config.sourceMaps,
+                            sourceMap: CreateSourceMap,
                         },
                     },
                 ],
@@ -95,6 +93,12 @@ const webpackConfig = {
                 },
             },
         ],
+    },
+    resolve: {
+        alias: {
+            acfBlocks: path.resolve(__dirname, config.path.theme + '/partials/blocks'),
+            twigBlocks: path.resolve(__dirname, config.path.theme + '/resources/views/blocks'),
+        },
     },
     plugins: [
         new webpack.ProvidePlugin({
@@ -116,12 +120,7 @@ const webpackConfig = {
         }),
         new MiniCssExtractPlugin({
             filename: devMode ? 'styles/[name].css' : 'styles/[name].[contenthash].css',
-            chunkFilename: '[id].css',
         }),
-        /**
-         * date: 15-10-2019
-         * TODO: fix CopyWebpackPlugin for webpack 5 release
-         */
         new CopyWebpackPlugin(
             [
                 {
@@ -134,17 +133,14 @@ const webpackConfig = {
                 ignore: ['.gitkeep'],
             },
         ),
-        /**
-         * date: 15-10-2019
-         * TODO: fix manifest plugin for webpack 5 release.
-         */
         new ManifestPlugin({
+            publicPath: '',
             seed: {
                 paths: {},
                 entries: {},
             },
             map: file => {
-                if (process.env.NODE_ENV === 'production') {
+                if (!devMode) {
                     // Remove hash in manifest key
                     file.name = file.name.replace(/(\.[a-f0-9]{32})(\..*)$/, '$2');
                 }
@@ -162,7 +158,7 @@ const webpackConfig = {
             new TerserPlugin({
                 cache: true,
                 parallel: true,
-                sourceMap: config.sourceMaps,
+                sourceMap: CreateSourceMap,
             }),
         ],
     },
@@ -177,7 +173,7 @@ const webpackConfig = {
  * @param  {boolean} devMode if development mode is enabled in Webpack
  * @return {object}           updated webpackConfig configuration object.
  */
-if (devMode) {
+if (watchMode) {
     webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
 }
 
@@ -198,24 +194,9 @@ if (!devMode) {
                 // Lossless optimization with custom option
                 // Feel free to experement with options for better result for you
                 plugins: [
-                    [
-                        'gifsicle',
-                        {
-                            interlaced: true,
-                        },
-                    ],
-                    [
-                        'jpegtran',
-                        {
-                            progressive: true,
-                        },
-                    ],
-                    [
-                        'optipng',
-                        {
-                            optimizationLevel: 1,
-                        },
-                    ],
+                    ['gifsicle', { interlaced: true }],
+                    ['jpegtran', { progressive: true }],
+                    ['optipng', { optimizationLevel: 1 }],
                     [
                         'svgo',
                         {
