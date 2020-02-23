@@ -5,7 +5,7 @@ global.watch = true;
 const webpack = require('webpack');
 const browserSync = require('browser-sync').create();
 const path = require('path');
-const webpackDevMiddleware = require('webpack-dev-middleware');
+const middleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const formatMessages = require('webpack-format-messages');
 const webpackConfig = require('../webpack.config');
@@ -23,7 +23,7 @@ browserSync.init({
     proxy: {
         target: config.browserSyncURL,
         middleware: [
-            webpackDevMiddleware(compiler, {
+            middleware(compiler, {
                 publicPath: webpackConfig.output.publicPath,
                 noInfo: true,
                 stats: false,
