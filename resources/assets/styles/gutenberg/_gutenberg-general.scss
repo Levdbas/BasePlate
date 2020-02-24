@@ -20,10 +20,6 @@
 			width: auto;
 		}
 	}
-
-	@include media-breakpoint-up(lg) {
-		margin-bottom: 2rem;
-	}
 }
 
 .wp-block-button__link {
@@ -43,16 +39,4 @@
 	.wp-block-image {
 		margin-bottom: 1rem;
 	}
-}
-
-.blocks-gallery-item,
-.wp-block-image {
-
-	figure {
-		background-color: #cecece;
-	}
-}
-
-.wp-block-table {
-	@extend .table;
 }
