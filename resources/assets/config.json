@@ -5,7 +5,7 @@
     },
     "sourceMaps": false,
     "themePath": "app",
-    "assetsPath": "assets",
+    "assetsPath": "resources/assets",
     "publicPath": "/wp-content/themes/BasePlate/app/",
     "browserSyncURL": "testenvironment.local/"
 }

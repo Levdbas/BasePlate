@@ -8,10 +8,6 @@
 	&.wp-block-image {
 		padding: 0;
 	}
-
-	@include media-breakpoint-up(xl) {
-		margin-bottom: 4rem;
-	}
 }
 
 .alignnone {

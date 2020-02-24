@@ -2,7 +2,7 @@ const path = require('path');
 const rootPath = process.cwd();
 const merge = require('webpack-merge');
 const watchMode = global.watch || false;
-var userConfig = require(path.resolve(__dirname, rootPath) + '/assets/config.json');
+var userConfig = require(path.resolve(__dirname, rootPath) + '/resources/assets/config.json');
 
 var config = merge(
     {

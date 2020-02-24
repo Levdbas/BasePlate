@@ -2,6 +2,7 @@
 @import "common/vendor";
 @import "common/fonts";
 @import "common/helpers";
+@use "blocks";
 // wrap all styles in the wrapper class of the gutenberg editor
 
 .edit-post-visual-editor {
@@ -11,5 +12,4 @@
 	@import "components/buttons";
 	@import "gutenberg/gutenberg-general";
 	@import "gutenberg/gutenberg-backend";
-	@import "gutenberg/blocks";
 }

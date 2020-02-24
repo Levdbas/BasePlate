@@ -6,55 +6,52 @@
 
 &,
 & p {
-	@extend %base-style;
+    @extend %base-style;
 }
 
 .editor-block-list__block {
+    &[data-align='wide'] {
+        max-width: 1300px !important;
+    }
 
-	&[data-align="wide"] {
-		max-width: 1300px !important;
-	}
-
-	&[data-align="full"] {
-		max-width: 100% !important;
-		margin: 0 auto;
-	}
+    &[data-align='full'] {
+        max-width: 100% !important;
+        margin: 0 auto;
+    }
 }
 
 // lets use the whole width of the editor
 
 .editor-block-list__layout {
-	padding: 0 1px !important;
+    padding: 0 1px !important;
 }
 
 // fix for some flex issue where cols would collapse
 
 .editor-inner-blocks {
-	width: 100%;
+    width: 100%;
 }
 
 .editor-post-title__input,
 .editor-rich-text__tinymce {
-	font-family: $base-font !important;
+    font-family: $base-font !important;
 }
 
 @media screen and (min-width: 768px) {
-
-	.editor-post-title__block,
-	.editor-block-list__block {
-		max-width: 1100px !important;
-	}
+    .editor-post-title__block,
+    .editor-block-list__block {
+        max-width: 1100px !important;
+    }
 }
 
 .wp-block-columns {
-
-	.editor-inner-blocks {
-		width: 100%;
-	}
+    .editor-inner-blocks {
+        width: 100%;
+    }
 }
 // fix where our custom align full width classes would overflow the editor.
 
 .alignfull {
-	left: 0 !important;
-	width: 100% !important;
+    left: 0 !important;
+    width: 100% !important;
 }

@@ -5,13 +5,7 @@
 
 @import "elements/gutenberg-cols";
 @import "elements/gutenberg-alignment";
-@import "elements/gutenberg-captions";
 @import "elements/gutenberg-embeds";
-
-.screen-reader-text {
-	@extend .sr-only;
-	@extend .sr-only-focusable;
-}
 
 .wp-block-gallery {
 	margin-left: 0;

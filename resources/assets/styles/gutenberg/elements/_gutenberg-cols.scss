@@ -1,0 +1,39 @@
+.wp-block-columns {
+    @extend .row;
+
+    &.has-3-columns .wp-block-column {
+        @extend .col-12;
+
+        @include media-breakpoint-up(md) {
+            @include columns(3);
+        }
+    }
+
+    &.has-4-columns .wp-block-column {
+        @extend .col-12;
+
+        @include media-breakpoint-up(md) {
+            @include columns(2);
+        }
+
+        @include media-breakpoint-up(lg) {
+            @include columns(4);
+        }
+    }
+}
+
+.wp-block-column {
+    @extend .col;
+
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+
+    &:nth-child(2n + 1),
+    &:not(:last-child) {
+        padding-left: 15px;
+    }
+
+    @include media-breakpoint-down(md) {
+        flex: 1 auto;
+    }
+}

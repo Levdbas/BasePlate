@@ -22,6 +22,6 @@
 
 // gutenberg
 
-@import "gutenberg/blocks";
+@use "blocks";
 @import "gutenberg/gutenberg-frontend";
 @import "gutenberg/gutenberg-general";
