@@ -4,7 +4,7 @@
         "gutenberg": ["./scripts/gutenberg.js", "./styles/gutenberg.scss"]
     },
     "sourceMaps": false,
-    "themePath": "app",
+    "themePath": "",
     "assetsPath": "resources/assets",
     "publicPath": "/wp-content/themes/BasePlate/app/",
     "browserSyncURL": "testenvironment.local/"

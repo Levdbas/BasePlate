@@ -1,0 +1,17 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+	<div class="container">
+		<a class="navbar-brand" href="{{site.link }}" title="{{site.title}}" rel="home_url">
+			<img itemprop="logo" alt="Logo {{site.title}}" src="{{logo}}">
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="<?php _e('Toggle navigation', 'baseplate'); ?>">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbar">
+			{{primary_menu}}
+			<div class="my-2 my-lg-0">
+				icons
+			</div>
+		</div>
+	</div>
+</nav>
