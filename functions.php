@@ -1,5 +1,23 @@
 <?php
 
+namespace BasePlate;
+
+function frontend_error($message, $subtitle = '', $title = '')
+{
+    $title = $title ?: __('BasePlate &rsaquo; Error', 'sage');
+    $message = "<h1>{$title}<br><small>{$subtitle}</small></h1><p>{$message}</p>";
+    wp_die($message, $title);
+};
+
+function backend_error($message, $subtitle = '', $title = '')
+{
+    $title = $title ?: __('BasePlate &rsaquo; Error', 'sage');
+    $message = "<div class='error'><h2>{$title}<br><small>{$subtitle}</small></h2><p>{$message}</p></div>";
+    add_action('admin_notices', function () use ($message) {
+        echo $message;
+    });
+};
+
 $baseplate_includes = [
     'lib/cleanup.php', // Theme setup
     'lib/setup.php', // Theme setup
@@ -14,9 +32,35 @@ $baseplate_includes = [
 
 foreach ($baseplate_includes as $file) {
     if (!($filepath = locate_template($file))) {
-        trigger_error(sprintf(__('Error locating %s for inclusion', 'BasePlate'), $file), E_USER_ERROR);
+        frontend_error(sprintf(__('Error locating %s for inclusion', 'BasePlate'), $file));
     }
 
     require_once $filepath;
 }
 unset($file, $filepath);
+
+
+
+// Send notice to user if Timber Class cannot be found
+if (!class_exists('Timber')) {
+    // Notice on admin pages
+
+    backend_error('Timber not activated. Make sure you activate the plugin.');
+
+    // Notice on front pages
+    add_filter('template_include', function () {
+        frontend_error(__('Timber not activated. Make sure you activate the plugin.', 'BasePlate'));
+    });
+
+    return 0;
+}
+
+
+/**
+ * Model autoloader
+ *
+ * Include all custom post types and block defintions automamagically
+ */
+foreach (glob(get_template_directory() . '/lib/models/*.php') as $filename) {
+    include $filename;
+}
