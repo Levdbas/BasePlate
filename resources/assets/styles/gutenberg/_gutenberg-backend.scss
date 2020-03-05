@@ -58,3 +58,16 @@
 	left: 0 !important;
 	width: 100% !important;
 }
+
+// Make inline acf editor fields behave. Also disables clicks inside links.
+
+.block-editor-block-list__block:not( .is-selected ) {
+
+	* {
+		box-sizing: border-box;
+	}
+
+	a:not( [href^="#"] ) {
+		cursor: not-allowed;
+	}
+}
