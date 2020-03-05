@@ -1,14 +1,16 @@
 <?php
 
+namespace BasePlate;
+
 /**
  * Lets set up our theme!
  * - default text Domain
  * - navigation menus
  * - theme support
- * @since
+ * @since 1.0
  * @return [type] [description]
  */
-function bp_setup()
+function theme_init()
 {
     load_theme_textdomain('BasePlate', get_template_directory() . '/lang');
     register_nav_menus([
@@ -22,7 +24,8 @@ function bp_setup()
     add_theme_support('align-wide');
     add_theme_support('responsive-embeds');
 }
-add_action('after_setup_theme', 'bp_setup');
+add_action('after_setup_theme', __NAMESPACE__ . '\\theme_init');
+
 
 /**
  * Initialize Advanced custom fields here.
@@ -31,28 +34,9 @@ add_action('after_setup_theme', 'bp_setup');
  * @since 1.1
  * @return [type] [description]
  */
-function baseplate_acf_init()
+function acf_init()
 {
-    //baseplate_register_blocks();
+    register_blocks();
 }
 
-add_action('acf/init', 'baseplate_acf_init');
-
-/**
- * Let's enhance our security.
- * We use this function to append extra htacces rules that block access to the xmlrpc endpoint.
- * @since
- * @param  [type] $rules [description]
- * @return [type]        [description]
- */
-function my_htaccess_contents($rules)
-{
-    return $rules .
-        "
-    #Stop spam attack logins and comments
-    <Files 'xmlrpc.php'>
-    Order Allow,Deny
-    deny from all
-    </Files>\n";
-}
-add_filter('mod_rewrite_rules', 'my_htaccess_contents');
+add_action('acf/init', __NAMESPACE__ . '\\acf_init');

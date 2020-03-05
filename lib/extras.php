@@ -1,11 +1,13 @@
 <?php
 
+namespace BasePlate;
+
 /**
  * Adding extra body classs to the body.
  * @since 1.1
  * @param array $classes origina array of body classes that we are expanding.
  */
-function bp_add_bodyclasses($classes)
+function add_bodyclasses($classes)
 {
     // add featured image class
     global $post;
@@ -22,7 +24,7 @@ function bp_add_bodyclasses($classes)
 
     return $classes;
 }
-add_filter('body_class', 'bp_add_bodyclasses');
+add_filter('body_class', __NAMESPACE__ . '\\add_bodyclasses');
 
 /**
  * Change the default read-more symbols.
@@ -33,7 +35,7 @@ function excerpt_more()
 {
     return ' &hellip;';
 }
-add_filter('excerpt_more', 'excerpt_more');
+add_filter('excerpt_more', __NAMESPACE__ . '\\excerpt_more');
 
 /**
  * Change default excerpt lengt.
@@ -45,4 +47,4 @@ function custom_excerpt_length($length)
 {
     return 20;
 }
-add_filter('excerpt_length', 'custom_excerpt_length', 999);
+add_filter('excerpt_length', __NAMESPACE__ . '\\custom_excerpt_length', 999);

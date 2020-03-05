@@ -1,5 +1,7 @@
 <?php
 
+namespace BasePlate;
+
 /**
  * Class Name: bs4Navwalker
  * GitHub URI: https://github.com/dupkey/bs4navwalker
@@ -8,7 +10,7 @@
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-class bs4Navwalker extends Walker_Nav_Menu
+class bs4Navwalker extends \Walker_Nav_Menu
 {
     /**
      * Starts the list before the elements are added.

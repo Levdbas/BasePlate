@@ -1,26 +1,8 @@
 <?php
 
-/**
- * Function that checks for ACF beta function acf_register_block()
- * and registered blocks.
- * @since 1.1.0
- */
+namespace BasePlate;
 
-function baseplate_register_blocks()
-{
-    if (function_exists('acf_register_block')) {
-        // register a testimonial block
-        acf_register_block(array(
-            'name' => 'tabs',
-            'title' => __('Tabbed content'),
-            'description' => __('Tabbed content'),
-            'render_callback' => 'bp_acf_block_render_callback',
-            'category' => 'formatting',
-            'icon' => 'admin-comments',
-            'keywords' => array('tabs', 'tab')
-        ));
-    }
-}
+use Timber;
 
 /**
  * Function that matches the block file to the above defined acf_blocks
@@ -28,34 +10,22 @@ function baseplate_register_blocks()
  * @since 	1.1.0
  */
 
-function bp_acf_block_render_callback($block)
+function render_acf_block($block, $content = '', $is_preview = false, $post_id = 0)
 {
     $slug = str_replace('acf/', '', $block['name']);
-    if (file_exists(get_stylesheet_directory() . "/partials/blocks/block-{$slug}.php")) {
-        include get_stylesheet_directory() . "/partials/blocks/block-{$slug}.php";
-    }
-}
+    $context = Timber\Timber::context();
+    $context['slug'] = $slug;
+    $context['block'] = $block;
+    $context['post_id'] = $post_id;
+    $context['is_preview'] = $is_preview;
+    $context['post'] = new Timber\Post();
+    $context['fields'] = get_fields();
+    $context['classes'] = block_classes($block);
 
-/**
- * returns one of the the elements of the $block element.
- * Currently only handles the ID of $block.
- * @since 1.1
- * @param  string $attr  the attribute you want to retrun
- * @param  object $block the block object passed by ACF
- * @return string        the attribute you need
- */
-
-function bp_acf_block_attr($attr, $block)
-{
-    $slug = str_replace('acf/', '', $block['name']);
-    switch ($attr) {
-        case 'id':
-            return $slug . '-' . $block['id'];
-            break;
-
-        default:
-            return $slug . '-' . $block['id'];
-            break;
+    if (file_exists(get_stylesheet_directory() . "/resources/views/blocks/{$slug}.twig")) {
+        Timber\Timber::render("resources/views/blocks/{$slug}.twig", $context);
+    } elseif (file_exists(get_stylesheet_directory() . "/resources/views/blocks/{$slug}/{$slug}.twig")) {
+        Timber\Timber::render("resources/views/blocks/{$slug}/{$slug}.twig", $context);
     }
 }
 
@@ -68,27 +38,14 @@ function bp_acf_block_attr($attr, $block)
  * @return string                string with all combined classnames.
  */
 
-function bp_acf_block_classes($block, $extra_classes = '')
+function block_classes($block, $extra_classes = '')
 {
     $slug = str_replace('acf/', '', $block['name']);
     $align_class = $block['align'] ? 'align' . $block['align'] : '';
     $classes = '';
-    $classes .= 'block block-' . $slug . ' ';
+    $classes .= 'block ' . $slug . ' ';
     $classes .= $align_class . ' ';
     $classes .= $extra_classes . ' ';
-    $classes = trim($classes, " ");
+    $classes = trim($classes, ' ');
     return $classes;
 }
-
-/**
- * Echoes bp_block_classes()
- * @since 1.1
- * @param  [type] $block         the block object passed by ACF
- * @param  string $extra_classes string of extra classes passed to the block class attr
- */
-
-function the_bp_acf_block_classes($block, $extra_classes = '')
-{
-    echo bp_acf_block_classes($block, $extra_classes);
-}
-?>

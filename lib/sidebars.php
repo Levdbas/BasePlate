@@ -1,5 +1,7 @@
 <?php
 
+namespace BasePlate;
+
 /**
  * Initize the sidebars.
  * @since
@@ -26,4 +28,4 @@ function widgets_init()
         'after_title' => '</h3>'
     ]);
 }
-add_action('widgets_init', 'widgets_init');
+add_action('widgets_init', __NAMESPACE__ . '\\widgets_init');

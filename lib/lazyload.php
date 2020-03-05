@@ -1,5 +1,7 @@
 <?php
 
+namespace BasePlate;
+
 /**
  * Based on wp_get_attachment_image() but now lazyload ready.
  * @since 1.1
@@ -9,12 +11,12 @@
  * @param  string  $attr          Attributes for the image markup
  * @return string                 HTML img element or empty string on failure.
  */
-function bp_lazyload_img($attachment_id, $size = 'large', $icon = false, $attr = '')
+function lazyload_img($attachment_id, $size = 'large', $icon = false, $attr = '')
 {
     $image = '';
     $image = wp_get_attachment_image($attachment_id, $size, $icon, $attr);
 
-    if (!is_admin()):
+    if (!is_admin()) :
         $image = str_replace('src=', 'data-src=', $image);
         $image = str_replace('srcset=', 'data-srcset=', $image);
         $image = str_replace('class="', 'class="lazyload ', $image);
@@ -31,11 +33,11 @@ function bp_lazyload_img($attachment_id, $size = 'large', $icon = false, $attr =
  * @param  string $size     Image size.
  * @return string           HTML attr for lazyloading a background image. Do not forget to set the class .lazyload as well.
  */
-function bp_lazyload_bg_img($image_id, $size = 'large')
+function lazyload_bg_img($image_id, $size = 'large')
 {
     $image = '';
     $image = wp_get_attachment_image_src($image_id, $size);
-    if (!is_admin()):
+    if (!is_admin()) :
         $image = $image[0];
         $image = 'data-bg="url(' . $image . ')"';
     endif;
@@ -49,13 +51,13 @@ function bp_lazyload_bg_img($image_id, $size = 'large')
  * @return [type]          returns the_content with images now containing ready for lazyloading
  */
 
-function bp_lazyload_content($content)
+function lazyload_content($content)
 {
     if (empty($content)) {
         return $content;
     }
     //$content = mb_convert_encoding($content, 'HTML-ENTITIES', "UTF-8");
-    $dom = new DOMDocument();
+    $dom = new \DOMDocument();
     libxml_use_internal_errors(true);
     $content = mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8');
     $dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
@@ -102,7 +104,7 @@ function bp_lazyload_content($content)
             $node->removeAttribute('src');
         }
 
-        bp_lazyload_content_attr($dom, $node, $fallback);
+        lazyload_content_attr($dom, $node, $fallback);
     }
     // Convert iframs
 
@@ -112,7 +114,7 @@ function bp_lazyload_content($content)
         $node->setAttribute('data-src', $oldsrc);
         $newsrc = '';
         $node->setAttribute('src', $newsrc);
-        bp_lazyload_content_attr($dom, $node, $fallback);
+        lazyload_content_attr($dom, $node, $fallback);
     }
 
     foreach ($videos as $node) {
@@ -121,7 +123,7 @@ function bp_lazyload_content($content)
         $node->setAttribute('data-src', $oldsrc);
         $newsrc = '';
         $node->setAttribute('src', $newsrc);
-        bp_lazyload_content_attr($dom, $node, $fallback);
+        lazyload_content_attr($dom, $node, $fallback);
     }
 
     foreach ($background_images as $node) {
@@ -130,20 +132,20 @@ function bp_lazyload_content($content)
         $element_style = $node->getAttribute('style');
         preg_match('/background-image:url\((.*?)\)(.*?)/i', $element_style, $matches);
 
-        if ($matches):
+        if ($matches) :
             $element_style = preg_replace('/background-image:url\((.*?)\)(.*?)/i', '', $element_style);
             $node->setAttribute('style', $element_style);
             $node->setAttribute('data-bg', 'url(' . $matches[1] . ')');
         endif;
 
-        bp_lazyload_content_attr($dom, $node, $fallback);
+        lazyload_content_attr($dom, $node, $fallback);
     }
 
     return $dom->saveHTML($dom->documentElement);
 }
-add_filter('the_content', 'bp_lazyload_content', 11);
+add_filter('the_content', __NAMESPACE__ . '\\lazyload_content', 11);
 
-function bp_lazyload_content_attr($dom, $node, $fallback)
+function lazyload_content_attr($dom, $node, $fallback)
 {
     $classes = $node->getAttribute('class');
     $newclasses = $classes . ' lazyload';
