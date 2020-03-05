@@ -13,15 +13,21 @@
 
 // layouts
 
-@import "layouts/header";
-@import "layouts/navs";
-@import "layouts/sidebar";
-@import "layouts/footer";
 @import "layouts/pages";
 @import "layouts/posts";
 
-// gutenberg
+// partials
+
+@import "partials/header";
+@import "partials/navs";
+@import "partials/sidebar";
+@import "partials/footer";
+
+// editor blocks
 
 @use "blocks";
 @import "gutenberg/gutenberg-frontend";
+
+// Gutenberg related
+
 @import "gutenberg/gutenberg-general";
