@@ -18,6 +18,21 @@ function backend_error($message, $subtitle = '', $title = '')
     });
 };
 
+
+// Send notice to user if Timber Class cannot be found
+if (!class_exists('Timber')) {
+    // Notice on admin pages
+
+    backend_error('Timber not activated. Make sure you activate the plugin.');
+
+    // Notice on front pages
+    add_filter('template_include', function () {
+        frontend_error(__('Timber not activated. Make sure you activate the plugin.', 'BasePlate'));
+    });
+
+    return 0;
+}
+
 $baseplate_includes = [
     'lib/cleanup.php', // Theme setup
     'lib/setup.php', // Theme setup
@@ -38,22 +53,6 @@ foreach ($baseplate_includes as $file) {
     require_once $filepath;
 }
 unset($file, $filepath);
-
-
-
-// Send notice to user if Timber Class cannot be found
-if (!class_exists('Timber')) {
-    // Notice on admin pages
-
-    backend_error('Timber not activated. Make sure you activate the plugin.');
-
-    // Notice on front pages
-    add_filter('template_include', function () {
-        frontend_error(__('Timber not activated. Make sure you activate the plugin.', 'BasePlate'));
-    });
-
-    return 0;
-}
 
 
 /**
