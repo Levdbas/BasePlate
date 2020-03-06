@@ -3,7 +3,7 @@
         "app": ["./scripts/app.js", "./styles/app.scss"],
         "gutenberg": ["./scripts/gutenberg.js", "./styles/gutenberg.scss"]
     },
-    "sourceMaps": false,
+    "sourceMaps": true,
     "themePath": "",
     "assetsPath": "resources/assets",
     "publicPath": "/wp-content/themes/BasePlate/",
