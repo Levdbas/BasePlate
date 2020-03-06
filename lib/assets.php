@@ -22,7 +22,7 @@ function get_asset($asset)
             return sprintf(__('File %s not found.', 'BasePlate'), $asset);
         endif;
     else :
-    //wp_die(__('Manifest file not found. Did you run Webpack for the first time?', 'BasePlate'));
+        frontend_error(__('Did you run Webpack for the first time?', 'BasePlate'), 'Manifest file not found');
     endif;
 }
 
