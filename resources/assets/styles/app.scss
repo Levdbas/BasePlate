@@ -1,33 +1,23 @@
-@import "common/variables";
-@import "common/mixins";
-@import "common/vendor";
-@import "common/fonts";
-@import "common/base";
-@import "common/helpers";
-@import "common/styleguide";
+// ==========================================================================
+// Common imports, site wide settings.
+// ==========================================================================
 
-// components
+@import "1_common";
 
-@import "components/buttons";
-@import "components/forms";
+// ==========================================================================
+// SCSS partials, ordered from large side-wide partials to small objects.
+// You can load extra scss file, you can add them by adding the file to the
+// _index.scss in the folder.
+// ==========================================================================
 
-// layouts
+@import "2_layouts";
+@import "3_partials";
+@import "4_blocks";
+@import "5_components";
 
-@import "layouts/pages";
-@import "layouts/posts";
+// ==========================================================================
+// Gutenberg editor specific files for the frontend.
+// ==========================================================================
 
-// partials
-
-@import "partials/header";
-@import "partials/navs";
-@import "partials/sidebar";
-@import "partials/footer";
-
-// editor blocks
-
-@use "blocks";
-@import "gutenberg/gutenberg-frontend";
-
-// Gutenberg related
-
-@import "gutenberg/gutenberg-general";
+@import "6_gutenberg/gutenberg-frontend";
+@import "6_gutenberg/gutenberg-general";

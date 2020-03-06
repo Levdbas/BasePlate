@@ -26,3 +26,8 @@ input[type="reset"],
 input[type="submit"] {
 	@extend %button;
 }
+
+@include media-breakpoint-up(md) {
+	text-align: left;
+	background: red;
+}

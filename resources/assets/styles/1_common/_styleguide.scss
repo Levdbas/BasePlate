@@ -18,7 +18,7 @@ a {
 	text-decoration: none;
 
 	&:hover {
-		text-decoration: underline;
+		text-decoration: none;
 	}
 }
 
@@ -60,17 +60,12 @@ p {
 	&.has-small-font-size {
 		@include pxtorem(14px);
 	}
-
-	&.extra-margin {
-		margin-bottom: $margin_2x;
-	}
 }
 
 /* List Items
 --------------------------------------------- */
 
 ol {
-	margin: 0 0 $margin_2x 32px;
 
 	li {
 		font-size: $base-font-size;
@@ -83,7 +78,6 @@ ol {
 }
 
 ul {
-	margin: 0 0 $margin_2x 32px;
 
 	li {
 		font-size: $base-font-size;
@@ -91,44 +85,6 @@ ul {
 	}
 
 	ul {
-		margin-bottom: 0;
-	}
-}
-
-/* Blockquote
---------------------------------------------- */
-
-blockquote,
-blockquote.wp-block-quote {
-	@include pxtorem(20px);
-
-	padding: 0;
-	margin: $margin_2x 0;
-	font-style: italic;
-	color: $highlight1;
-	text-align: center;
-	background: transparent;
-
-	cite {
-		@include pxtorem(16px);
-
-		display: block;
-		margin-top: 16px;
-		font-weight: 700;
-		color: $base-color;
-	}
-
-	p {
-		font-size: 1.5rem;
-		font-weight: 300;
-		line-height: 1.4;
-
-		@include media-breakpoint-up(md) {
-			font-size: 2rem;
-		}
-	}
-
-	p:last-of-type {
 		margin-bottom: 0;
 	}
 }
@@ -188,14 +144,6 @@ h3 {
 
 h4 {
 	//	@include font-sizes(18px, 20px, 24px);
-}
-
-h5 {
-	//	@include font-sizes(16px, 18px, 20px);
-}
-
-h6 {
-	//	@include font-sizes(16px, 18px);
 }
 
 /* Objects
