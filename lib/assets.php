@@ -8,22 +8,33 @@ namespace BasePlate;
  * @param string $asset the name of the asset including the actual path
  * @return string
  */
-function get_asset($asset)
+function get_asset($asset, string $return_variant = null)
 {
     $manifest = __DIR__ . '/../dist/manifest.json';
-    if (file_exists($manifest)) :
+    if (file_exists($manifest)) {
         $manifest = file_get_contents($manifest);
         $json = json_decode($manifest, true);
 
-        if (isset($json[$asset])) :
+        if (isset($json[$asset])) {
             $file = $json[$asset];
-            return get_template_directory_uri() . '/dist/' . $file;
-        else :
+
+            switch ($return_variant) {
+                case 'path':
+                    return get_stylesheet_directory() . '/dist/' . $file;
+                    break;
+                case 'contents':
+                    return file_get_contents(get_stylesheet_directory() . '/dist/' . $file, true);
+                    break;
+                default:
+                    return get_stylesheet_directory_uri() . '/dist/' . $file;
+                    break;
+            }
+        } else {
             return sprintf(__('File %s not found.', 'BasePlate'), $asset);
-        endif;
-    else :
+        }
+    } else {
         frontend_error(__('Did you run Webpack for the first time?', 'BasePlate'), 'Manifest file not found');
-    endif;
+    }
 }
 
 /**
