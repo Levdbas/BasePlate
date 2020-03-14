@@ -49,17 +49,17 @@ function the_asset($asset)
 }
 
 /**
- * The front-end enqueue hook for BasePlate.
- * Removes jQuery, app.css, vendor.js and app.js by default.
+ * The front-end enqueue function for BasePlate.
+ * 
  * @return [type] [description]
  */
 function frontend_assets()
 {
     $site = [];
     wp_enqueue_script('BasePlate/vendor', get_asset('vendor.js'), array(), false, false);
-    wp_enqueue_style('wplemon/css', get_asset('app.css'), false, null);
     wp_enqueue_script('BasePlate/js', get_asset('app.js'), 'BasePlate/vendor', false, false);
     wp_register_script('jquery', false, array('BasePlate/js'), '', false); // re-gegister jQuery again as part of BasePlate/js where we import jquery to our window
+    wp_enqueue_style('BasePlate/css', get_asset('app.css'), false, null);
 
     $site = array(
         'dist' => get_template_directory_uri() . '/dist/',
@@ -69,7 +69,7 @@ function frontend_assets()
     wp_localize_script('BasePlate/js', 'bp_site', $site);
 }
 /**
- * the back-end enqueue hook for BasePlate
+ * the back-end enqueue function for BasePlate
  * loads the special gutenberg.css file that wraps most, but not all scss partials from our assets/style folder
  * and wraps them in the gutenberg editor class.
  * This hook can later be expanded to include custom javascript as well.
@@ -77,8 +77,8 @@ function frontend_assets()
 function editor_assets()
 {
     wp_enqueue_script('BasePlate/vendor', get_asset('vendor.js'), false);
-    wp_enqueue_script('baseplate-block-js', get_asset('gutenberg.js'), array('wp-blocks', 'wp-i18n', 'wp-element', 'BasePlate/vendor'));
-    wp_enqueue_style('baseplate-block-editor-css', get_asset('gutenberg.css'), array('wp-edit-blocks'));
+    wp_enqueue_script('BasePlate/gutenberg-js', get_asset('gutenberg.js'), array('wp-blocks', 'wp-i18n', 'wp-element', 'BasePlate/vendor', 'acf-blocks'));
+    wp_enqueue_style('BasePlate/gutenberg-css', get_asset('gutenberg.css'), array('wp-edit-blocks'));
 }
 
 /**
