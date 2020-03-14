@@ -1,0 +1,7 @@
+{% set botton_alignment ? botton_alignment: 'left'  %}
+
+<div class="theme-button-row theme-button-row--{{botton_alignment}}">
+	<a href="{{button_link}}" class="theme-button" {{ blank ? 'target="_blank"': '' }} title="{{button_title}}">
+		{{button_label}}
+	</a>
+</div>

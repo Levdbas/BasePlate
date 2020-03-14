@@ -1,0 +1,7 @@
+<section class="section {{classes}} {{ color ? 'section--color-'~color : '' }} {{custom_class}}">
+	<div class="{{ fluid ? 'container-fluid' : 'container' }}">
+		{% block section__inner %}
+			innerblock
+		{% endblock %}
+	</div>
+</section>

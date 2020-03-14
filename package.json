@@ -1,6 +1,6 @@
 {
     "name": "baseplate",
-    "version": "1.1.0",
+    "version": "2.0.0",
     "author": "Based Online <erik@basedonline.nl>",
     "homepage": "https://basedonline.nl",
     "private": true,
@@ -10,9 +10,9 @@
     },
     "scripts": {
         "dev": "npm run development",
-        "development": "node assets/build/tasks/build.dev",
-        "production": "node assets/build/tasks/build.production",
-        "watch": "node assets/build/tasks/watch",
+        "development": "node resources/assets/build/tasks/build.dev",
+        "production": "node resources/assets/build/tasks/build.production",
+        "watch": "node resources/assets/build/tasks/watch",
         "lint": "yarn run -s lint:scripts && npm run -s lint:styles",
         "lint:styles": "stylelint \"assets/styles/**/*.scss\"",
         "lint:scripts": "eslint assets/scripts assets/build"
@@ -70,6 +70,6 @@
         "bootstrap": "^4.4.1",
         "jquery": "^3.4",
         "popper.js": "^1.16",
-        "vanilla-lazyload": "12.4.0"
+        "vanilla-lazyload": "13.0.1"
     }
 }

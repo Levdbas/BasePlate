@@ -1,0 +1,170 @@
+// ==========================================================================
+// 1. COMMON / styleguide
+// =========================================================================
+
+/* Typographical Elements
+--------------------------------------------- */
+
+body {
+	@extend %base-style;
+
+	overflow-x: hidden;
+}
+
+a {
+	@include transition(all);
+
+	color: $highlight1;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+strong {
+	font-weight: 700;
+}
+
+em {
+	font-style: italic;
+}
+
+cite {
+	font-style: normal;
+}
+
+/* Paragraph
+--------------------------------------------- */
+
+p {
+	padding: 0;
+	margin: 0 0 $base-margin;
+	font-size: $base-font-size;
+	line-height: 1.4;
+
+	&.large,
+	&.wp-block-subhead,
+	&.has-large-font-size {
+		@include pxtorem(18px);
+
+		font-style: normal;
+		opacity: 1;
+
+		@include media-breakpoint-up(lg) {
+			@include pxtorem(20px);
+		}
+	}
+
+	&.small,
+	&.has-small-font-size {
+		@include pxtorem(14px);
+	}
+}
+
+/* List Items
+--------------------------------------------- */
+
+ol {
+
+	li {
+		font-size: $base-font-size;
+		list-style-type: decimal;
+	}
+
+	ol {
+		margin-bottom: 0;
+	}
+}
+
+ul {
+
+	li {
+		font-size: $base-font-size;
+		list-style-type: disc;
+	}
+
+	ul {
+		margin-bottom: 0;
+	}
+}
+
+/* Horizontal Rule
+--------------------------------------------- */
+
+hr,
+hr.wp-block-separator,
+.clear-line,
+img.wp-more-tag {
+	width: 100%;
+	max-width: 100%;
+	height: 1px;
+	margin: $margin_2x 0;
+	overflow: hidden;
+	border: none;
+	border-top: 1px solid $base-color;
+}
+
+/* Headings
+--------------------------------------------- */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	padding: 0;
+	margin: 0;
+	margin-bottom: $base-margin;
+	line-height: 1.2;
+	color: $base-color;
+
+	a {
+		color: $highlight1;
+
+		&:hover {
+			color: $highlight2;
+			text-decoration: none;
+		}
+	}
+}
+
+h1 {
+	//@include font-sizes(30px, 36px, 40px);
+}
+
+h2 {
+	//@include font-sizes(24px, 30px, 36px);
+}
+
+h3 {
+	//	@include font-sizes(20px, 24px, 30px);
+}
+
+h4 {
+	//	@include font-sizes(18px, 20px, 24px);
+}
+
+/* Objects
+--------------------------------------------- */
+
+embed,
+iframe,
+object,
+video {
+	max-width: 100%;
+	margin-bottom: $base-margin;
+}
+
+img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+figure {
+	position: relative;
+	max-width: 100%;
+	margin: 0 0 $base-margin;
+}

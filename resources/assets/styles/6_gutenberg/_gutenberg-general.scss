@@ -1,0 +1,140 @@
+// ==========================================================================
+// Gutenberg / general
+// We use this file to load Gutengerg specific styles for both the front- and backend
+// =========================================================================
+
+.wp-block-gallery {
+	margin-left: 0;
+}
+
+.wp-block-image {
+	margin-bottom: 1rem;
+
+	@include media-breakpoint-up(md) {
+
+		img {
+			width: auto;
+		}
+	}
+}
+
+.wp-block-button__link {
+	@extend %button;
+}
+
+// ==========================================================================
+// Block alignment - both front- and backend
+// ==========================================================================
+
+.alignfull {
+	padding: 0 15px;
+}
+
+.alignfull,
+.alignwide {
+
+	&.wp-block-image {
+		padding: 0;
+	}
+}
+
+.alignnone {
+	max-width: 100%;
+	height: auto;
+	margin-right: 0;
+	margin-left: 0;
+}
+
+.aligncenter {
+	height: auto;
+	margin: ($spacer) auto;
+	clear: both;
+	text-align: center;
+}
+
+
+// ==========================================================================
+// Block cols
+// ==========================================================================
+
+.wp-block-columns {
+    @extend .row;
+
+    &.has-3-columns .wp-block-column {
+        @extend .col-12;
+
+        @include media-breakpoint-up(md) {
+            @include columns(3);
+        }
+    }
+
+    &.has-4-columns .wp-block-column {
+        @extend .col-12;
+
+        @include media-breakpoint-up(md) {
+            @include columns(2);
+        }
+
+        @include media-breakpoint-up(lg) {
+            @include columns(4);
+        }
+    }
+}
+
+.wp-block-column {
+    @extend .col;
+
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+
+    &:nth-child(2n + 1),
+    &:not(:last-child) {
+        padding-left: 15px;
+    }
+
+    @include media-breakpoint-down(md) {
+        flex: 1 auto;
+    }
+}
+
+.wp-block-column {
+
+	.wp-block-quote {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		height: 100%;
+		margin: 0;
+	}
+
+	.wp-block-image {
+		margin-bottom: 1rem;
+	}
+}
+
+// ==========================================================================
+// Block embeds.
+// ==========================================================================
+
+.wp-block-embed-vimeo {
+
+    .wp-block-embed__wrapper {
+        @extend .embed-responsive;
+    }
+
+    &.wp-embed-aspect-4-3 .wp-block-embed__wrapper {
+        @extend .embed-responsive-4by3;
+    }
+
+    &.wp-embed-aspect-16-9 .wp-block-embed__wrapper {
+        @extend .embed-responsive-16by9;
+    }
+
+    iframe {
+        @extend .embed-responsive-item;
+    }
+
+    iframe {
+        width: 100%;
+    }
+}

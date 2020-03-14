@@ -5,3 +5,4 @@ npm-debug.log
 vendor
 dist
 .vscode
+baseplate.code-workspace

@@ -1,0 +1,33 @@
+// Search form
+
+input,
+select,
+textarea {
+	width: 100%;
+	padding: 10px;
+	color: $base-color;
+	background-color: #ffffff;
+	border: 1px solid $highlight1;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+	width: auto;
+	margin-right: 10px;
+}
+
+input:focus,
+textarea:focus {
+	outline: none;
+}
+
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+	@extend %button;
+}
+
+@include media-breakpoint-up(md) {
+	text-align: left;
+	background: red;
+}

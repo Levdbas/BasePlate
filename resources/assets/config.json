@@ -1,0 +1,11 @@
+{
+    "entry": {
+        "app": ["./scripts/app.js", "./styles/app.scss"],
+        "gutenberg": ["./scripts/gutenberg.js", "./styles/gutenberg.scss"]
+    },
+    "sourceMaps": true,
+    "themePath": "",
+    "assetsPath": "resources/assets",
+    "publicPath": "/web/app/themes/BasePlate/",
+    "browserSyncURL": "testenvironment.local/"
+}

@@ -1,0 +1,20 @@
+<!doctype html>
+<html class="no-js app" {{site.language_attributes}}>
+
+	{% include 'partials/head.twig' %}
+
+	<body class="{{ body_class }}">
+
+		{% include 'partials/header.twig' %}
+
+		<main class="main">
+			{% block content %}
+				{{ messages.base.no_content }}
+			{% endblock %}
+		</main>
+
+		{% include 'partials/footer.twig' %}
+
+		{{ function('wp_footer') }}
+	</body>
+</html>
