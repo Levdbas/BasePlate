@@ -18,7 +18,7 @@ var config = merge(
 
 if (watchMode) {
     config.entry.app.push('webpack-hot-middleware/client');
-    config.entry.app.push('./build/publicpath_entry.js');
 }
+config.entry.app.unshift('./build/publicpath_entry.js');
 
 module.exports = config;
