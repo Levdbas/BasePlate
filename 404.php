@@ -1,7 +1,7 @@
 <?php
 
 /**
- * The main template file
+ * The 404 template file
  *
  * @since 2.0.0
  */

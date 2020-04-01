@@ -35,9 +35,9 @@ if (!class_exists('Timber')) {
 
 $baseplate_includes = [
     'lib/cleanup.php', // Theme setup
+    'lib/assets.php', // Theme asset functions
     'lib/setup.php', // Theme setup
     'lib/timber.php', // Theme setup
-    'lib/assets.php', // Theme asset functions
     'lib/lazyload.php', // lazyload functionality
     'lib/blocks.php', // Gutengerb blocks
     'lib/bootstrap_navwalker.php', // navwalker
