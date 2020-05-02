@@ -19,6 +19,7 @@ const imageminOptipng = require('imagemin-optipng');
 const imageminSvgo = require('imagemin-svgo');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const PalettePlugin = require('palette-webpack-plugin');
 const config = require('./config');
 
 const webpackConfig = {
@@ -95,6 +96,12 @@ const webpackConfig = {
             },
         ],
     },
+    resolve: {
+        alias: {
+            acfBlocks: path.resolve(__dirname, config.path.theme + '/partials/blocks'),
+            twigBlocks: path.resolve(__dirname, config.path.theme + '/resources/views/blocks'),
+        },
+    },
     plugins: [
         new webpack.ProvidePlugin({
             $: 'jquery',
@@ -116,6 +123,7 @@ const webpackConfig = {
         new MiniCssExtractPlugin({
             filename: devMode ? 'styles/[name].css' : 'styles/[name].[contenthash].css',
         }),
+
         new CopyWebpackPlugin(
             [
                 {
@@ -128,6 +136,17 @@ const webpackConfig = {
                 ignore: ['.gitkeep'],
             },
         ),
+
+        new PalettePlugin({
+            output: 'palette.json',
+            blacklist: ['transparent', 'inherit'],
+            pretty: false,
+            sass: {
+                path: 'resources/assets/styles/1_common',
+                files: ['_variables.scss'],
+                variables: ['colors'],
+            },
+        }),
         new ManifestPlugin({
             publicPath: '',
             seed: {
@@ -154,6 +173,11 @@ const webpackConfig = {
                 cache: true,
                 parallel: true,
                 sourceMap: config.sourceMaps,
+                terserOptions: {
+                    output: {
+                        comments: false,
+                    },
+                },
             }),
         ],
     },

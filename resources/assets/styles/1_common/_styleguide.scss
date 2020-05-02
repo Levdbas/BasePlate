@@ -14,7 +14,6 @@ body {
 a {
 	@include transition(all);
 
-	color: $highlight1;
 	text-decoration: none;
 
 	&:hover {
@@ -121,10 +120,8 @@ h6 {
 	color: $base-color;
 
 	a {
-		color: $highlight1;
 
 		&:hover {
-			color: $highlight2;
 			text-decoration: none;
 		}
 	}

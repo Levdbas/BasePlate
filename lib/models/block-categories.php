@@ -6,11 +6,10 @@ function block_categories($categories, $post)
 {
    return array_merge($categories, array(
 
-      /* array(
+      array(
          'slug' => 'example',
          'title' => 'Example Category'
-      ) */
-      //
+      )
    ));
 }
 
