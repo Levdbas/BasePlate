@@ -2,18 +2,19 @@
  * Custom import of Bootstrap modules
  * comment/uncomment the things you do/don't need.
  * ======================================================================== */
-//import 'bootstrap';
-import 'bootstrap/js/dist/util';
-import 'bootstrap/js/dist/dropdown';
+
 //import 'bootstrap/js/dist/alert'
-import 'bootstrap/js/dist/button';
-import 'bootstrap/js/dist/carousel';
+//import 'bootstrap/js/dist/button';
+//import 'bootstrap/js/dist/carousel';
 import 'bootstrap/js/dist/collapse';
+//import 'bootstrap/js/dist/dropdown';
 //import 'bootstrap/js/dist/modal'
-//import 'bootstrap/js/dist/popover'
+//import 'bootstrap/js/dist/popover';
 //import 'bootstrap/js/dist/scrollspy'
 //import 'bootstrap/js/dist/tab'
+//import 'bootstrap/js/dist/toast'
 //import 'bootstrap/js/dist/tooltip'
+import 'bootstrap/js/dist/util';
 
 import lazyLoad from './components/lazyLoad';
 import(/* webpackPreload: true */ './components/example-import');
@@ -28,32 +29,32 @@ import(/* webpackPreload: true */ './components/example-import');
  * The routing is enclosed within an anonymous function so that you can
  * always reference jQuery with $, even when in .noConflict() mode.
  * ======================================================================== */
-(function($) {
+(function ($) {
     // Use this variable to set up the common and page specific functions. If you
     // rename this variable, you will also need to rename the namespace below.
     var BasePlate = {
         // All pages
         common: {
-            init: function() {
+            init: function () {
                 lazyLoad();
                 //exampleImport();
             },
-            finalize: function() {
+            finalize: function () {
                 // JavaScript to be fired on all pages, after page specific JS is fired
             },
         },
         // Home page
         home: {
-            init: function() {
+            init: function () {
                 // JavaScript to be fired on the home page
             },
-            finalize: function() {
+            finalize: function () {
                 // JavaScript to be fired on the home page, after the init JS
             },
         },
         // About us page, note the change from about-us to about_us.
         about_us: {
-            init: function() {
+            init: function () {
                 // JavaScript to be fired on the about us page
             },
         },
@@ -62,7 +63,7 @@ import(/* webpackPreload: true */ './components/example-import');
     // The routing fires all common scripts, followed by the page specific scripts.
     // Add additional events for more control over timing e.g. a finalize event
     var UTIL = {
-        fire: function(func, funcname, args) {
+        fire: function (func, funcname, args) {
             var fire;
             var namespace = BasePlate;
             funcname = funcname === undefined ? 'init' : funcname;
@@ -74,11 +75,11 @@ import(/* webpackPreload: true */ './components/example-import');
                 namespace[func][funcname](args);
             }
         },
-        loadEvents: function() {
+        loadEvents: function () {
             // Fire common init JS
             UTIL.fire('common');
             // Fire page-specific init JS, and then finalize JS
-            $.each(document.body.className.replace(/-/g, '_').split(/\s+/), function(i, classnm) {
+            $.each(document.body.className.replace(/-/g, '_').split(/\s+/), function (i, classnm) {
                 UTIL.fire(classnm);
                 UTIL.fire(classnm, 'finalize');
             });
