@@ -124,18 +124,18 @@ const webpackConfig = {
             filename: devMode ? 'styles/[name].css' : 'styles/[name].[contenthash].css',
         }),
 
-        new CopyWebpackPlugin(
-            [
+        new CopyWebpackPlugin({
+            patterns: [
                 {
                     context: config.path.assets + '/images',
                     from: '**/*',
-                    to: devMode ? 'images/[path][name].[ext]' : 'images/[path][name].[hash].[ext]',
+                    to: devMode ? 'images/[path][name].[ext]' : 'images/[path][name].[contenthash].[ext]',
+                    globOptions: {
+                        ignore: ['.gitkeep'],
+                    },
                 },
             ],
-            {
-                ignore: ['.gitkeep'],
-            },
-        ),
+        }),
 
         new PalettePlugin({
             output: 'palette.json',
@@ -153,7 +153,7 @@ const webpackConfig = {
                 paths: {},
                 entries: {},
             },
-            map: file => {
+            map: (file) => {
                 if (process.env.NODE_ENV === 'production') {
                     // Remove hash in manifest key
                     file.name = file.name.replace(/(\.[a-f0-9]{32})(\..*)$/, '$2');
