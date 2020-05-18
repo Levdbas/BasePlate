@@ -3,11 +3,11 @@
 // ==========================================================================
 
 @import "1_common/variables";
+@import "1_common/vendor";
 @import "1_common/mixins";
 @import "1_common/base";
 @import "1_common/fonts";
 @import "1_common/helpers";
-@import "1_common/vendor";
 
 // ==========================================================================
 // SCSS partials, ordered from global classes to small objects.

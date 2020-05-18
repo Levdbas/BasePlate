@@ -21,16 +21,17 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const PalettePlugin = require('palette-webpack-plugin');
 const config = require('./config');
+const CreateSourceMap = devMode ? CreateSourceMap : false;
 
 const webpackConfig = {
     mode: env,
     context: config.path.assets,
     entry: config.entry,
-    devtool: config.sourceMaps ? 'source-map' : false,
+    devtool: CreateSourceMap ? 'source-map' : false,
     watch: watchMode,
     output: {
-        filename: devMode ? 'scripts/[name].js' : 'scripts/[name].[hash].js',
-        chunkFilename: devMode ? 'scripts/[name].bundle.js' : 'scripts/[name].bundle.[hash].js',
+        filename: devMode ? 'scripts/[name].js' : 'scripts/[name].[contenthash].js',
+        chunkFilename: devMode ? 'scripts/[name].bundle.js' : 'scripts/[name].bundle.[contenthash].js',
         path: config.path.dist,
         publicPath: config.path.public,
         pathinfo: false,
@@ -58,20 +59,20 @@ const webpackConfig = {
                         loader: MiniCssExtractPlugin.loader,
                         options: {
                             publicPath: '../',
-                            sourceMap: config.sourceMaps,
+                            sourceMap: CreateSourceMap,
                             hmr: watchMode,
                         },
                     },
                     {
                         loader: 'css-loader',
                         options: {
-                            sourceMap: config.sourceMaps,
+                            sourceMap: CreateSourceMap,
                         },
                     },
                     {
                         loader: 'postcss-loader',
                         options: {
-                            sourceMap: config.sourceMaps,
+                            sourceMap: CreateSourceMap,
                             config: {
                                 path: __dirname + '/postcss.config.js',
                             },
@@ -80,7 +81,7 @@ const webpackConfig = {
                     {
                         loader: 'sass-loader',
                         options: {
-                            sourceMap: config.sourceMaps,
+                            sourceMap: CreateSourceMap,
                         },
                     },
                 ],
@@ -91,7 +92,7 @@ const webpackConfig = {
                 loader: 'url-loader',
                 options: {
                     limit: 4096,
-                    name: devMode ? '[path][name].[ext]' : '[path][name].[hash].[ext]',
+                    name: devMode ? '[path][name].[ext]' : '[path][name].[contenthash].[ext]',
                 },
             },
         ],
@@ -155,7 +156,7 @@ const webpackConfig = {
             },
             map: (file) => {
                 if (process.env.NODE_ENV === 'production') {
-                    // Remove hash in manifest key
+                    // Remove contenthash in manifest key
                     file.name = file.name.replace(/(\.[a-f0-9]{32})(\..*)$/, '$2');
                 }
                 return file;
@@ -172,7 +173,7 @@ const webpackConfig = {
             new TerserPlugin({
                 cache: true,
                 parallel: true,
-                sourceMap: config.sourceMaps,
+                sourceMap: CreateSourceMap,
                 terserOptions: {
                     output: {
                         comments: false,
