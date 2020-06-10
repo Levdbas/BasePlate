@@ -25,26 +25,3 @@ function add_bodyclasses($classes)
     return $classes;
 }
 add_filter('body_class', __NAMESPACE__ . '\\add_bodyclasses');
-
-/**
- * Change the default read-more symbols.
- * @since
- * @return string returns ...
- */
-function excerpt_more()
-{
-    return ' &hellip;';
-}
-add_filter('excerpt_more', __NAMESPACE__ . '\\excerpt_more');
-
-/**
- * Change default excerpt lengt.
- * @since
- * @param  [type] $length [description]
- * @return [type]         [description]
- */
-function custom_excerpt_length($length)
-{
-    return 20;
-}
-add_filter('excerpt_length', __NAMESPACE__ . '\\custom_excerpt_length', 999);
