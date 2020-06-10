@@ -17,8 +17,7 @@ const imageminOptipng = require('imagemin-optipng');
 const imageminSvgo = require('imagemin-svgo');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const merge = require('webpack-merge');
-
+const PalettePlugin = require('palette-webpack-plugin');
 const config = require('./config');
 const CreateSourceMap = devMode ? config.sourceMaps : false;
 
@@ -29,8 +28,8 @@ const webpackConfig = {
     devtool: CreateSourceMap ? 'source-map' : false,
     watch: watchMode,
     output: {
-        filename: devMode ? 'scripts/[name].js' : 'scripts/[name].[hash].js',
-        chunkFilename: devMode ? 'scripts/[name].bundle.js' : 'scripts/[name].bundle.[hash].js',
+        filename: devMode ? 'scripts/[name].js' : 'scripts/[name].[contenthash].js',
+        chunkFilename: devMode ? 'scripts/[name].bundle.js' : 'scripts/[name].bundle.[contenthash].js',
         path: config.path.dist,
         publicPath: config.path.public,
         pathinfo: false,
@@ -89,7 +88,7 @@ const webpackConfig = {
                 loader: 'url-loader',
                 options: {
                     limit: 4096,
-                    name: devMode ? '[path][name].[ext]' : '[path][name].[hash].[ext]',
+                    name: devMode ? '[path][name].[ext]' : '[path][name].[contenthash].[ext]',
                 },
             },
         ],
@@ -105,43 +104,42 @@ const webpackConfig = {
             $: 'jquery',
             jQuery: 'jquery',
             'window.jQuery': 'jquery',
-            Popper: 'popper.js/dist/umd/popper.js',
-            Alert: 'exports-loader?Alert!bootstrap/js/dist/alert',
-            Button: 'exports-loader?Button!bootstrap/js/dist/button.js',
-            Carousel: 'exports-loader?Carousel!bootstrap/js/dist/carousel.js',
-            Collapse: 'exports-loader?Collapse!bootstrap/js/dist/collapse.js',
-            Dropdown: 'exports-loader?Dropdown!bootstrap/js/dist/dropdown.js',
-            Modal: 'exports-loader?Modal!bootstrap/js/dist/modal.js',
-            Popover: 'exports-loader?Popover!bootstrap/js/dist/popover.js',
-            Scrollspy: 'exports-loader?Scrollspy!bootstrap/js/dist/scrollspy.js',
-            Tab: 'exports-loader?Tab!bootstrap/js/dist/tab.js',
-            Tooltip: 'exports-loader?Tooltip!bootstrap/js/dist/tooltip.js',
-            Util: 'exports-loader?Util!bootstrap/js/dist/util.js',
         }),
         new MiniCssExtractPlugin({
             filename: devMode ? 'styles/[name].css' : 'styles/[name].[contenthash].css',
         }),
-        new CopyWebpackPlugin(
-            [
+
+        new CopyWebpackPlugin({
+            patterns: [
                 {
-                    context: config.path.assets + '/images',
-                    from: '**/*',
-                    to: devMode ? 'images/[path][name].[ext]' : 'images/[path][name].[hash].[ext]',
+                    from: config.path.assets + '/images',
+                    to: devMode ? 'images/[path][name].[ext]' : 'images/[path][name].[contenthash].[ext]',
+                    globOptions: {
+                        ignore: ['.gitkeep'],
+                    },
                 },
             ],
-            {
-                ignore: ['.gitkeep'],
+        }),
+
+        new PalettePlugin({
+            output: 'palette.json',
+            blacklist: ['transparent', 'inherit'],
+            pretty: false,
+            sass: {
+                path: 'resources/assets/styles/1_common',
+                files: ['_variables.scss'],
+                variables: ['colors'],
             },
-        ),
+        }),
         new ManifestPlugin({
             publicPath: '',
             seed: {
                 paths: {},
                 entries: {},
             },
-            map: file => {
-                if (!devMode) {
-                    // Remove hash in manifest key
+            map: (file) => {
+                if (process.env.NODE_ENV === 'production') {
+                    // Remove contenthash in manifest key
                     file.name = file.name.replace(/(\.[a-f0-9]{32})(\..*)$/, '$2');
                 }
                 return file;
@@ -159,6 +157,11 @@ const webpackConfig = {
                 cache: true,
                 parallel: true,
                 sourceMap: CreateSourceMap,
+                terserOptions: {
+                    output: {
+                        comments: false,
+                    },
+                },
             }),
         ],
     },

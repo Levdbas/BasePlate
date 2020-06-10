@@ -38,14 +38,14 @@ function render_acf_block($block, $content = '', $is_preview = false, $post_id =
  * @return string                string with all combined classnames.
  */
 
-function block_classes($block, $extra_classes = '')
+function block_classes($block)
 {
     $slug = str_replace('acf/', '', $block['name']);
     $align_class = $block['align'] ? 'align' . $block['align'] : '';
     $classes = '';
-    $classes .= 'block ' . $slug . ' ';
+    $classes .= $slug . ' ';
+    $classes .= 'block ';
     $classes .= $align_class . ' ';
-    $classes .= $extra_classes . ' ';
     $classes = trim($classes, ' ');
     return $classes;
 }

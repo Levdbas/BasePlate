@@ -44,8 +44,8 @@ add_filter('timber_context', __NAMESPACE__ . '\\add_to_context');
 function add_to_twig($twig)
 {
    // Adding a function.
-   $twig->addFunction(new Timber\Twig_Function('bp_lazyload_img', 'bp_lazyload_img'));
-   $twig->addFunction(new Timber\Twig_Function('bp_lazyload_bg_img', 'bp_lazyload_bg_img'));
+   $twig->addFunction(new Timber\Twig_Function('lazyload_img', __NAMESPACE__ . '\\lazyload_img'));
+   $twig->addFunction(new Timber\Twig_Function('lazyload_bg_img', __NAMESPACE__ . '\\lazyload_bg_img'));
    return $twig;
 }
 add_filter('timber/twig', __NAMESPACE__ . '\\add_to_twig');
