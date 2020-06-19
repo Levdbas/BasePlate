@@ -10,7 +10,6 @@ const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack');
 const imageminGifsicle = require('imagemin-gifsicle');
@@ -21,7 +20,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const PalettePlugin = require('palette-webpack-plugin');
 const config = require('./config');
-const CreateSourceMap = devMode ? CreateSourceMap : false;
+const CreateSourceMap = devMode ? config.sourceMaps : false;
 
 const webpackConfig = {
     mode: env,
@@ -36,9 +35,7 @@ const webpackConfig = {
         publicPath: config.path.public,
         pathinfo: false,
     },
-    performance: {
-        hints: false,
-    },
+    performance: { hints: false },
     module: {
         rules: [
             {
@@ -116,8 +113,7 @@ const webpackConfig = {
         new CopyWebpackPlugin({
             patterns: [
                 {
-                    context: config.path.assets + '/images',
-                    from: '**/*',
+                    from: config.path.assets + '/images',
                     to: devMode ? 'images/[path][name].[ext]' : 'images/[path][name].[contenthash].[ext]',
                     globOptions: {
                         ignore: ['.gitkeep'],
@@ -181,7 +177,7 @@ const webpackConfig = {
  * @param  {boolean} devMode if development mode is enabled in Webpack
  * @return {object}           updated webpackConfig configuration object.
  */
-if (devMode) {
+if (watchMode) {
     webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
 }
 
@@ -202,24 +198,9 @@ if (!devMode) {
                 // Lossless optimization with custom option
                 // Feel free to experement with options for better result for you
                 plugins: [
-                    [
-                        'gifsicle',
-                        {
-                            interlaced: true,
-                        },
-                    ],
-                    [
-                        'jpegtran',
-                        {
-                            progressive: true,
-                        },
-                    ],
-                    [
-                        'optipng',
-                        {
-                            optimizationLevel: 1,
-                        },
-                    ],
+                    ['gifsicle', { interlaced: true }],
+                    ['jpegtran', { progressive: true }],
+                    ['optipng', { optimizationLevel: 1 }],
                     [
                         'svgo',
                         {
