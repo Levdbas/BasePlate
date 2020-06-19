@@ -4,11 +4,6 @@
 // Mainly contains special alignment css and some fixes regarding our custom css.
 // =========================================================================
 
-&,
-& p {
-	@extend %base-style;
-}
-
 .block-editor-block-list__block {
 
 	&[data-align="wide"] {
