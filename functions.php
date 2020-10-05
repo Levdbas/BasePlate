@@ -20,18 +20,20 @@ function backend_error($message, $subtitle = '', $title = '')
 
 
 // Send notice to user if Timber Class cannot be found
-if (!class_exists('Timber')) {
+if (!class_exists('Timber\Timber')) {
     // Notice on admin pages
 
-    backend_error('Timber not activated. Make sure you activate the plugin.');
+    backend_error('Timber not activated. Make sure to composer require timber/timber');
 
     // Notice on front pages
     add_filter('template_include', function () {
-        frontend_error(__('Timber not activated. Make sure you activate the plugin.', 'BasePlate'));
+        frontend_error(__('Timber not activated. Make sure to composer require timber/timber', 'BasePlate'));
     });
 
     return 0;
 }
+
+$timber = new \Timber\Timber();
 
 $baseplate_includes = [
     'lib/cleanup.php', // Theme setup

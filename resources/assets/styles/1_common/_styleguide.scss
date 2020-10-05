@@ -2,15 +2,19 @@
 // 1. COMMON / styleguide
 // =========================================================================
 
+body {
+	margin: 0;
+	overflow-x: hidden;
+	font-family: $base-font;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1.4;
+	color: $base-color;
+	background-color: yellow;
+}
+
 /* Typographical Elements
 --------------------------------------------- */
-
-body {
-	@extend %base-style;
-
-	overflow-x: hidden;
-	background-color: red;
-}
 
 a {
 	@include transition(all);
@@ -155,14 +159,12 @@ video {
 	margin-bottom: $base-margin;
 }
 
-img {
-	display: block;
-	width: 100%;
-	height: auto;
-}
-
 figure {
 	position: relative;
 	max-width: 100%;
 	margin: 0 0 $base-margin;
+}
+
+picture {
+	display: block;
 }

@@ -109,17 +109,6 @@ const webpackConfig = {
             filename: devMode ? 'styles/[name].css' : 'styles/[name].[contenthash].css',
         }),
 
-        new CopyWebpackPlugin({
-            patterns: [
-                {
-                    from: config.path.assets + '/images',
-                    to: devMode ? 'images/[path][name].[ext]' : 'images/[path][name].[contenthash].[ext]',
-                    globOptions: {
-                        ignore: ['.gitkeep'],
-                    },
-                },
-            ],
-        }),
 
         new PalettePlugin({
             output: 'palette.json',

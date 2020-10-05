@@ -1,7 +1,6 @@
 {
     "extends": [
       	"stylelint-config-standard",
-        "stylelint-config-prettier",
         "stylelint-config-recess-order",
     ],
     "plugins": [
@@ -37,6 +36,7 @@
             },
             "rules"
         ],
+        "block-opening-brace-space-before": "always",
         "order/properties-alphabetical-order": null,
         "indentation": "tab",
         "string-quotes": "double",

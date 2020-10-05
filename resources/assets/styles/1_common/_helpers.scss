@@ -17,3 +17,9 @@ img[data-srcset] {
 	display: block;
 	min-height: 1px;
 }
+
+img[src] {
+	display: block;
+	width: 100%;
+	height: auto;
+}
