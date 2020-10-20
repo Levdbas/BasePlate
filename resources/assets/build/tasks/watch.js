@@ -26,8 +26,8 @@ browserSync.init({
                 publicPath: webpackConfig.output.publicPath,
             }),
             webpackHotMiddleware(compiler, {
-                log: false,
-                logLevel: 'none',
+                log: true,
+                path: "/__webpack_hmr",
             }),
         ],
     },

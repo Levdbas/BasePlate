@@ -1,6 +1,6 @@
 {
     "entry": {
-        "app": ["./scripts/app.js", "./styles/app.scss"]
+        "app": ["./styles/app.scss", "./scripts/app.js"]
     },
     "sourceMaps": true,
     "themePath": "",

@@ -66,15 +66,6 @@ const webpackConfig = {
                         },
                     },
                     {
-                        loader: 'postcss-loader',
-                        options: {
-                            sourceMap: CreateSourceMap,
-                            config: {
-                                path: __dirname + '/postcss.config.js',
-                            },
-                        },
-                    },
-                    {
                         loader: 'sass-loader',
                         options: {
                             sourceMap: CreateSourceMap,
@@ -110,30 +101,6 @@ const webpackConfig = {
         }),
 
 
-        new PalettePlugin({
-            output: 'palette.json',
-            blacklist: ['transparent', 'inherit'],
-            pretty: false,
-            sass: {
-                path: 'resources/assets/styles/1_common',
-                files: ['_variables.scss'],
-                variables: ['colors'],
-            },
-        }),
-        new ManifestPlugin({
-            publicPath: '',
-            seed: {
-                paths: {},
-                entries: {},
-            },
-            map: (file) => {
-                if (process.env.NODE_ENV === 'production') {
-                    // Remove contenthash in manifest key
-                    file.name = file.name.replace(/(\.[a-f0-9]{32})(\..*)$/, '$2');
-                }
-                return file;
-            },
-        }),
     ],
     optimization: {
         splitChunks: {
@@ -143,15 +110,13 @@ const webpackConfig = {
         },
         minimizer: [
             new TerserPlugin({
-                cache: true,
-                parallel: true,
-                sourceMap: CreateSourceMap,
-                terserOptions: {
-                    output: {
-                        comments: false,
-                    },
-                },
-            }),
+				parallel: true,
+				terserOptions: {
+					output: {
+						comments: false,
+					},
+				},
+			}),
         ],
     },
 };
