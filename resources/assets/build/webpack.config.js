@@ -55,21 +55,13 @@ const webpackConfig = {
                         loader: MiniCssExtractPlugin.loader,
                         options: {
                             publicPath: '../',
-                            sourceMap: CreateSourceMap,
-                            hmr: watchMode,
                         },
                     },
                     {
                         loader: 'css-loader',
-                        options: {
-                            sourceMap: CreateSourceMap,
-                        },
                     },
                     {
                         loader: 'sass-loader',
-                        options: {
-                            sourceMap: CreateSourceMap,
-                        },
                     },
                 ],
             },
