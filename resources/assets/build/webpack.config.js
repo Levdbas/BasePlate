@@ -89,10 +89,34 @@ const webpackConfig = {
             'window.jQuery': 'jquery',
         }),
         new MiniCssExtractPlugin({
-            filename: devMode ? 'styles/[name].css' : 'styles/[name].[contenthash].css',
+            filename: devMode ? 'styles/[name].css' : 'styles/[name].[contenthash].css'
         }),
 
 
+        new PalettePlugin({
+            output: 'palette.json',
+            blacklist: ['transparent', 'inherit'],
+            pretty: false,
+            sass: {
+                path: 'resources/assets/styles/1_common',
+                files: ['_variables.scss'],
+                variables: ['colors'],
+            },
+        }),
+        new WebpackManifestPlugin({
+            publicPath: '',
+            seed: {
+                paths: {},
+                entries: {},
+            },
+            map: (file) => {
+                if (process.env.NODE_ENV === 'production') {
+                    // Remove contenthash in manifest key
+                    file.name = file.name.replace(/(\.[a-f0-9]{32})(\..*)$/, '$2');
+                }
+                return file;
+            },
+        }),
     ],
     optimization: {
         splitChunks: {

@@ -3,16 +3,36 @@ const rootPath = process.cwd();
 const { merge } = require('webpack-merge');
 const watchMode = global.watch || false;
 var userConfig = require(path.resolve(__dirname, rootPath) + '/resources/assets/config.json');
+var themePath = '/';
 
-var themeURLPath = userConfig['themePath'].replace('/web/', '');
+/**
+ * Check if root to theme path is set.
+ * Sets up proper publicPath and removes extra slashes from the url.
+ */
+if (userConfig['rootToThemePath']) {
+	var publicPath = 'http://localhost:3000/' + userConfig['rootToThemePath'] + '/dist/';
+	publicPath = publicPath.replace(/([^:])(\/\/+)/g, '$1/');
+} else {
+	console.log('\n❌ ', chalk.black.bgRed('Variable rootToThemePath not set in config.json'));
+	console.log('This is probably /app/themes/YOURTHEMENAME/ or /wp-content/themes/YOURTHEMENAME/ \n');
+	process.exit(1);
+}
+
+/**
+ * If the /assets/config.json file has a themePath option
+ * we overwrite the themePath var with this new path.
+ */
+if (userConfig['themePath']) {
+	themePath = userConfig['themePath'];
+}
+
 var config = merge(
     {
         path: {
-            themeURI: userConfig['themePath'],
-            theme: path.join(rootPath, userConfig['themePath']), // from root folder path/to/theme
-            dist: path.join(rootPath, userConfig['themePath'] + '/dist/'), // from root folder path/to/theme
-            assets: path.join(rootPath, userConfig['assetsPath']), // from root folder path/to/assets
-            public: 'http://localhost:3000/' + themeURLPath + '/dist/', // Used for webpack.output.publicpath - Had to be set this way to overcome middleware issues with dynamic path.
+            theme: path.join(rootPath, themePath), // from root folder path/to/theme
+			dist: path.join(rootPath, themePath + '/dist/'), // from root folder path/to/theme
+			assets: path.join(rootPath, userConfig['assetsPath']), // from folder containing the package.json to the theme folder.
+            public: publicPath, // Used for webpack.output.publicpath - Had to be set this way to overcome middleware issues with dynamic path.
         },
     },
     userConfig,

@@ -2,9 +2,8 @@
     "entry": {
         "app": ["./styles/app.scss", "./scripts/app.js"]
     },
-    "sourceMaps": true,
-    "themePath": "",
-    "assetsPath": "resources/assets",
-    "publicPath": "/web/app/themes/BasePlate/",
-    "browserSyncURL": "testenvironment.local/"
+    "sourceMaps": false,
+    "assetsPath": "/resources/assets/",
+    "rootToThemePath": "/app/themes/baseplate/",
+    "browserSyncURL": "http://testenvironment.local"
 }
