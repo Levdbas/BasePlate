@@ -2,12 +2,6 @@
 	transition: $property 0.4s ease-in;
 }
 
-@mixin pxtorem($size) {
-	$remSize: $size / 16px;
-
-	font-size: #{$remSize}rem;
-}
-
 @mixin columns($number) {
 	flex: 0 0 (100% / $number);
 	max-width: (100% / $number);

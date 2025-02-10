@@ -1,11 +1,11 @@
 {
     "entry": {
         "app": ["./scripts/app.js", "./styles/app.scss"],
-        "gutenberg": ["./scripts/gutenberg.js", "./styles/gutenberg.scss"]
+        "gutenberg": ["./scripts/editor.js", "./styles/editor.scss"]
     },
     "sourceMaps": true,
-    "themePath": "",
-    "assetsPath": "resources/assets",
-    "publicPath": "/wp-content/themes/BasePlate/",
+    "scssSettingsFolder": "01-settings/",
+    "assetsPath": "/resources/assets/",
+    "rootToThemePath": "/wp-content/themes/BasePlate/",
     "browserSyncURL": "testenvironment.local/"
 }

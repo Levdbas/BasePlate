@@ -4,6 +4,11 @@
     "semi": true,
     "singleQuote": true,
     "printWidth": 200,
-    "plugins": ["./node_modules/prettier-plugin-twig-melody"],
-    "twigPrintWidth": 200
+    "twigPrintWidth": 150,
+    "overrides": [
+        {
+            "files": "*.twig",
+            "options": { "plugins": ["@zackad/prettier-plugin-twig"] }
+        }
+    ]
 }

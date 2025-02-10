@@ -1,23 +1,13 @@
 // ==========================================================================
-// Common imports, site wide settings.
+// Main stylesheet
 // ==========================================================================
 
-@import "1_common";
-
-// ==========================================================================
-// SCSS partials, ordered from large side-wide partials to small objects.
-// You can load extra scss file, you can add them by adding the file to the
-// _index.scss in the folder.
-// ==========================================================================
-
-@import "2_layouts";
-@import "3_partials";
-@import "4_blocks";
-@import "5_components";
-
-// ==========================================================================
-// Gutenberg editor specific files for the frontend.
-// ==========================================================================
-
-@import "6_gutenberg/gutenberg-frontend";
-@import "6_gutenberg/gutenberg-general";
+@use "02-tools/functions" as *;
+@import "01-settings";
+@import "02-tools";
+@import "03-elements";
+@import "04-components";
+@import "05-blocks";
+@import "06-partials";
+@import "07-layouts";
+@import "08-utilities";

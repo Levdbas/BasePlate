@@ -1,0 +1,19 @@
+@use "02-tools/functions" as *;
+@import "01-settings/variables";
+@import "01-settings/fonts";
+@import "01-settings/vendor";
+@import "02-tools";
+
+.editor-styles-wrapper {
+	@import "03-elements";
+	@import "08-utilities";
+
+	*,
+	::after,
+	::before {
+		box-sizing: border-box;
+	}
+}
+
+@import "04-components";
+@import "05-blocks";

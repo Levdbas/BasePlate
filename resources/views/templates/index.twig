@@ -1,6 +1,7 @@
 {% extends 'layouts/app.twig' %}
 {% block content %}
-    {% for post in posts %}
+    <div class="entry">
+    <h1>{{ post.title }}</h1>
         {{ post.content }}
-    {% endfor %}
+    </div>
 {% endblock %}

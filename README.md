@@ -6,18 +6,18 @@ BasePlate is a starter theme for WordPress that includes an up-to-date asset man
 
 ## Features
 
--   Twig as a templating engine
--   Scss for stylesheets
--   Modular JavaScript via import
--   Webpack 4 for compiling assets, moving & optimizing images, transpiling & minifying JS/CSS and cache busting.
+- Twig as a templating engine
+- Scss for stylesheets
+- Modular JavaScript via import
+- Webpack 5 for compiling assets, moving & optimizing images, transpiling & minifying JS/CSS and cache busting.
 
--   Ready for lazyloading WordPress attachment images, theme images, theme background images & iframes
+- Ready for lazyloading WordPress attachment images, theme images, theme background images & iframes
 
--   Gutenberg ready.
+- Gutenberg ready.
 
--   [Browsersync](http://www.browsersync.io/) for synchronized browser testing
+- [Browsersync](http://www.browsersync.io/) for synchronized browser testing
 
--   [Bootstrap 4](http://getbootstrap.com/), but import whatever you like.
+- [Bootstrap 5](http://getbootstrap.com/), but import whatever you like.
 
 ## Installation
 
@@ -25,7 +25,7 @@ To use BasePlate, you need to have PHP 7.0+ installed on your machine. You'll al
 
 Install WordPress locally on your AMP stack with a virtual hostname, create a new folder in `wp-content/themes` with the desired name of your template. Clone the latest version of BasePlate inside your new folder.
 
-Next step is to set the proxy adress for BrowserSync with hot module reload in the `resources/assets/config.json` file.
+Next step is to set the proxy address for BrowserSync with hot module reload in the `resources/assets/config.json` file.
 
 **To install required node modules:**
 

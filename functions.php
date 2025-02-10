@@ -60,7 +60,7 @@ unset($file, $filepath);
 /**
  * Model autoloader
  *
- * Include all custom post types and block defintions automamagically
+ * Include all custom post types and block definitions automamagically
  */
 foreach (glob(get_template_directory() . '/lib/models/*.php') as $filename) {
     include $filename;

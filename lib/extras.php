@@ -3,9 +3,9 @@
 namespace BasePlate;
 
 /**
- * Adding extra body classs to the body.
+ * Adding extra body classes to the body.
  * @since 1.1
- * @param array $classes origina array of body classes that we are expanding.
+ * @param array $classes original array of body classes that we are expanding.
  */
 function add_bodyclasses($classes)
 {

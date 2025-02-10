@@ -12,7 +12,7 @@ namespace BasePlate;
  */
 function theme_init()
 {
-    load_theme_textdomain('BasePlate', get_template_directory() . '/lang');
+    load_theme_textdomain('BasePlate', get_template_directory() . '/resources/lang');
     register_nav_menus([
         'primary_navigation' => __('Main menu', 'BasePlate'),
         'footer_navigation' => __('Footer navigation', 'BasePlate')

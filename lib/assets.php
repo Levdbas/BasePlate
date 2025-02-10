@@ -13,7 +13,7 @@ function get_asset($asset, string $return_variant = null)
     $manifest = __DIR__ . '/../dist/manifest.json';
     if (file_exists($manifest)) {
         $manifest = file_get_contents($manifest);
-        $json = json_decode($manifest, true);
+        $json     = json_decode($manifest, true);
 
         if (isset($json[$asset])) {
             $file = $json[$asset];
@@ -50,22 +50,22 @@ function the_asset($asset)
 
 /**
  * The front-end enqueue function for BasePlate.
- * 
+ *
  * @return [type] [description]
  */
 function frontend_assets()
 {
     $site = [];
-    wp_enqueue_script('BasePlate/vendor', get_asset('vendor.js'), array(), false, false);
+    wp_enqueue_script('BasePlate/vendor', get_asset('vendor.js'), [], false, false);
     wp_enqueue_script('BasePlate/js', get_asset('app.js'), 'BasePlate/vendor', false, false);
-    wp_register_script('jquery', false, array('BasePlate/js'), '', false); // re-gegister jQuery again as part of BasePlate/js where we import jquery to our window
+    wp_register_script('jquery', false, ['BasePlate/js'], '', false); // re-gegister jQuery again as part of BasePlate/js where we import jquery to our window
     wp_enqueue_style('BasePlate/css', get_asset('app.css'), false, null);
 
-    $site = array(
+    $site = [
         'dist' => get_template_directory_uri() . '/dist/',
-        'url' => get_bloginfo('url'),
-        'ajax' => admin_url('admin-ajax.php')
-    );
+        'url'  => get_bloginfo('url'),
+        'ajax' => admin_url('admin-ajax.php'),
+    ];
     wp_localize_script('BasePlate/js', 'bp_site', $site);
 }
 /**
@@ -77,8 +77,8 @@ function frontend_assets()
 function editor_assets()
 {
     wp_enqueue_script('BasePlate/vendor', get_asset('vendor.js'), false);
-    wp_enqueue_script('BasePlate/gutenberg-js', get_asset('gutenberg.js'), array('wp-blocks', 'wp-i18n', 'wp-element', 'BasePlate/vendor', 'acf-blocks'));
-    wp_enqueue_style('BasePlate/gutenberg-css', get_asset('gutenberg.css'), array('wp-edit-blocks'));
+    wp_enqueue_script('BasePlate/gutenberg-js', get_asset('gutenberg.js'), ['wp-blocks', 'wp-i18n', 'wp-element', 'BasePlate/vendor', 'acf-blocks']);
+    wp_enqueue_style('BasePlate/gutenberg-css', get_asset('gutenberg.css'), ['wp-edit-blocks']);
 }
 
 /**
@@ -91,7 +91,7 @@ function editor_assets()
 function async_attr($tag, $handle)
 {
     // add script handles to the array below
-    $scripts_to_async = array('BasePlate/js', 'BasePlate/vendor');
+    $scripts_to_async = ['BasePlate/js', 'BasePlate/vendor'];
 
     foreach ($scripts_to_async as $async_script) {
         if ($async_script === $handle) {

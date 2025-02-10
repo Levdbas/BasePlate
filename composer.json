@@ -16,8 +16,8 @@
         "roave/security-advisories": "dev-master"
     },
     "require": {
-        "php": "^7.0",
-        "wpackagist-plugin/timber-library": "^1.15"
+        "php": "^8.0",
+        "timber/timber": "^2.0"
     },
     "extra": {
         "installer-paths": {

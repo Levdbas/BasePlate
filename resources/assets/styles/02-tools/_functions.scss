@@ -1,0 +1,39 @@
+@use "sass:math";
+
+@mixin transition($property) {
+	transition: $property 0.3s ease-in;
+}
+
+@function pxtorem($size) {
+	$size: strip-units($size);
+
+	$rem-size: math.div($size, 16);
+
+	@return #{$rem-size}rem;
+}
+
+@function calculate-clamp($minimum, $maximum, $fluid-size: 3vw) {
+	$min: pxtorem($minimum);
+	$max: pxtorem($maximum);
+
+	@return clamp(#{$min}, #{$fluid-size} + 1rem, #{$max});
+}
+
+@function strip-units($number) {
+	@return math.div($number, ($number * 0 + 1));
+}
+
+/**
+ * Overwrite icon variable
+
+ * @param {string} $icon-variable icon variable, can be with or without quotes
+ * @return {string} icon variable escaped and with quotes
+ */
+
+@function overwrite-icon($icon-variable) {
+	@if str-slice($icon-variable, 1, 1) != '"' {
+		@return #{"'" + $icon-variable + "'"};
+	}
+
+	@return $icon-variable;
+}
