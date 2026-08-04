@@ -2,6 +2,8 @@
 
 namespace BasePlate;
 
+use Timber\Timber;
+
 function frontend_error($message, $subtitle = '', $title = '')
 {
     $title = $title ?: __('BasePlate &rsaquo; Error', 'sage');
@@ -33,14 +35,13 @@ if (!class_exists('Timber\Timber')) {
     return 0;
 }
 
-$timber = new \Timber\Timber();
+Timber::init();
 
 $baseplate_includes = [
     'lib/cleanup.php', // Theme setup
     'lib/assets.php', // Theme asset functions
     'lib/setup.php', // Theme setup
     'lib/timber.php', // Theme setup
-    'lib/lazyload.php', // lazyload functionality
     'lib/blocks.php', // Gutengerb blocks
     'lib/bootstrap_navwalker.php', // navwalker
     'lib/extras.php', // Custom functions

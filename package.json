@@ -29,19 +29,19 @@
     },
     "license": "GPL-3.0",
     "devDependencies": {
-        "@wordpress/browserslist-config": "^6.13",
-        "@zackad/prettier-plugin-twig": "^0.13.0",
-        "basebuilder-config": "^5.0",
-        "prettier": "^3.4.2",
-        "stylelint": "^16.11",
-        "stylelint-basebuilder": "^3.2"
+        "@wordpress/browserslist-config": "^6.48",
+        "@zackad/prettier-plugin-twig": "^0.17.0",
+        "basebuilder-config": "^6.5",
+        "prettier": "^3.8.4",
+        "stylelint": "^17.13",
+        "stylelint-basebuilder": "^3.5"
     },
     "dependencies": {
         "@popperjs/core": "^2.11.8",
         "aos": "^3.0.0-beta.6",
         "bootstrap": "^5.3",
         "lodash.throttle": "^4.1.1",
-        "swiper": "^11.1",
-        "vanilla-lazyload": "18.0"
+        "swiper": "^12.2",
+        "vanilla-lazyload": "19.1"
     }
 }

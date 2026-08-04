@@ -8,7 +8,7 @@ namespace BasePlate;
  * - navigation menus
  * - theme support
  * @since 1.0
- * @return [type] [description]
+ * @return void
  */
 function theme_init()
 {
@@ -23,20 +23,16 @@ function theme_init()
     add_theme_support('title-tag');
     add_theme_support('align-wide');
     add_theme_support('responsive-embeds');
+
+    add_theme_support('quartermaster-clean-up');
+    add_theme_support('quartermaster-development-helpers');
+    add_theme_support('quartermaster-theme-helpers');
+    add_theme_support('quartermaster-disable-posts-comments',);
+    add_theme_support('quartermaster-disable-trackbacks');
+    add_theme_support('quartermaster-disable-feeds');
+    add_theme_support('quartermaster-disable-rest-api');
+    add_theme_support('quartermaster-security');
+    add_theme_support('quartermaster-nice-search');
+    add_theme_support('quartermaster-content-lock');
 }
 add_action('after_setup_theme', __NAMESPACE__ . '\\theme_init');
-
-
-/**
- * Initialize Advanced custom fields here.
- * We run our block function over here.
- * We can also use this to run any other acf hooks.
- * @since 1.1
- * @return [type] [description]
- */
-function acf_init()
-{
-    register_blocks();
-}
-
-add_action('acf/init', __NAMESPACE__ . '\\acf_init');

@@ -51,4 +51,4 @@ function add_to_context($data)
    return $data;
 }
 
-add_filter('timber_context', __NAMESPACE__ . '\\add_to_context');
+add_filter('timber/context', __NAMESPACE__ . '\\add_to_context');
